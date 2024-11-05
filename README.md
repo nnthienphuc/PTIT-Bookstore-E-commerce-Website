@@ -1,4 +1,4 @@
-# PTIT Bookstore E-commerce Website
+# Intelligent Bookstore eCommerce Website
 This e-commerce bookstore was meticulously developed to offer an unparalleled online shopping experience for book enthusiasts. By leveraging a robust technology stack, including Spring Boot for backend services and Python (FastAPI) for AI-driven functionalities, the platform ensures seamless and efficient operations. The integration of these technologies allows for the delivery of personalized book recommendations, enhancing user engagement and satisfaction.
 <br>
 The underlying database architecture is designed in Third Normal Form (3NF), ensuring optimal data integrity, consistency, and scalability. This meticulous design supports the platform’s ability to handle a large volume of transactions and user interactions without compromising performance.
