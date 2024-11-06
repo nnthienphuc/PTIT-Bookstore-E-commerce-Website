@@ -12,9 +12,10 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.SQLServerDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
 
   security:
     user:
       name: admin
+      password: 77fdf34f-8266-4aeb-97d9-6d1f710d108e
