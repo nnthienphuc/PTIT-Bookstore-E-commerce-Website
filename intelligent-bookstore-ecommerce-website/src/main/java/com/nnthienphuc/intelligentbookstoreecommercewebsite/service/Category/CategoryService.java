@@ -31,10 +31,7 @@ public class CategoryService {
     // Thêm mới category
     @Transactional
     public CategoryEntity createCategory(CategoryEntity category) {
-        // Kiểm tra tên category đã tồn tại chưa
-        if (categoryRepository.existsByCategoryName(category.getCategoryName())) {
-            throw new RuntimeException("Category name already exists");
-        }
+       
         return categoryRepository.save(category);
     }
 
@@ -47,10 +44,7 @@ public class CategoryService {
         }
 
         // Kiểm tra nếu tên mới đã tồn tại và khác với tên hiện tại
-        if (!category.getCategoryName().equals(categoryDetails.getCategoryName()) && 
-            categoryRepository.existsByCategoryName(categoryDetails.getCategoryName())) {
-            throw new RuntimeException("Category name already exists");
-        }
+        
 
         // Cập nhật thông tin
         category.setCategoryName(categoryDetails.getCategoryName());
@@ -60,21 +54,14 @@ public class CategoryService {
     // Xóa category
     @Transactional
     public void deleteCategory(Long id) {
-        CategoryEntity category = getCategoryById(id);
-        if (category == null) {
+        if (!categoryRepository.existsById(id)) {
             throw new RuntimeException("Category not found with id: " + id);
         }
-        
-        // Có thể thêm kiểm tra ràng buộc trước khi xóa
-        // Ví dụ: kiểm tra xem category có đang được sử dụng không
-        
         categoryRepository.deleteById(id);
     }
 
     // Tìm category theo tên
-    public CategoryEntity findByName(String name) {
-        return categoryRepository.findByCategoryName(name);
-    }
+  
 
     // Kiểm tra category tồn tại theo ID
     public boolean existsById(Long id) {

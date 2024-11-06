@@ -89,12 +89,12 @@ public class CategoryController {
     }
 
     // Tìm category theo tên
-    @GetMapping("/search")
-    public ResponseEntity<CategoryEntity> findByName(@RequestParam String name) {
-        CategoryEntity category = categoryService.findByName(name);
-        if (category == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(category, HttpStatus.OK);
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<CategoryEntity> findByName(@RequestParam String name) {
+//        CategoryEntity category = categoryService.findByName(name);
+//        if (category == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(category, HttpStatus.OK);
+//    }
 }
