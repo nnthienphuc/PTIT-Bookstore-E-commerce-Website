@@ -18,4 +18,3 @@ spring:
   security:
     user:
       name: admin
-      password: 77fdf34f-8266-4aeb-97d9-6d1f710d108e
