@@ -1,0 +1,47 @@
+.products {
+  margin-top: 50px;
+  margin-bottom: 150px;
+  .product-items {
+    width: 80%;
+    .popular-product {
+      margin-bottom: 40px;
+    }
+    .action {
+      h2 {
+        font-size: 30px;
+        color: var(--color-heading);
+      }
+      nav {
+        ul {
+          > li {
+            font-size: 16px;
+            color: var(--color-heading);
+            margin-left: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+            &:hover {
+              color: var(--primary-color);
+              transform: translateY(-5px);
+            }
+          }
+          .active {
+            color: var(--primary-color);
+          }
+        }
+      }
+      .all-deals {
+        color: var(--primary-color);
+        font-size: 16px;
+        i {
+          margin-left: 5px;
+        }
+      }
+    }
+    .Deal-of-the-day {
+      .action {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
