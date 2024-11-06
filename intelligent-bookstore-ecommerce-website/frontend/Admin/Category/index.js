@@ -7,7 +7,7 @@ function loadHTML(id, file) {
     });
     }
 // Load header and footer
-loadHTML('NavBar', '../../Component/NavBar/NavBar.html');
+loadHTML('NavBar', '../NavBar/NavBar.html');
 
 // Hàm mở modal
 function openModal(id) {
