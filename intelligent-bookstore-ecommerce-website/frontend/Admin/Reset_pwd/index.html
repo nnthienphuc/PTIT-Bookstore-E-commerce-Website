@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animated Login Form</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <style>
+        body {
+            background-color: #f7f9fc; /* Màu nền sáng hơn */
+        }
+        .card {
+            border-radius: 10px; /* Bo góc cho các thẻ card */
+        }
+        .user-avatar img {
+            border-radius: 50%; /* Hình avatar tròn */
+            width: 80px; /* Kích thước hình */
+            height: 80px;
+        }
+        .account-settings {
+            margin-bottom: 20px; /* Khoảng cách dưới */
+        }
+        .gender-details {
+            display: flex; /* Để căn chỉnh các nút radio */
+            align-items: center; /* Căn giữa theo chiều dọc */
+        }
+        .gender-title {
+            margin-right: 15px; /* Khoảng cách giữa tiêu đề và radio */
+        }
+        .btn {
+            border-radius: 5px; /* Bo góc cho nút */
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px; /* Khoảng cách giữa footer và nội dung */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row gutters">
+            <!-- Sidebar -->
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img src="img/logo.png" alt="Admin">
+                            </div>
+                            <h5 class="user-name">NAPUNO</h5>
+                            <h6 class="user-email">NAPUNO@gmail.com</h6>
+                        </div>
+                        <hr>
+                        <div class="account-settings">
+                            <h5 class="mb-2" style="color: #32be8f;">
+                                <a href="#personal-info" class="link">Thông tin cá nhân</a>
+                            </h5>
+                            <h5 class="mb-2" style="color: #32be8f;">
+                                <a href="#change-password" class="link">Đổi mật khẩu</a>
+                            </h5>
+                            <h5 class="mb-2" style="color: #32be8f;">
+                                <a href="#shopping-cart" class="link">Giỏ Hàng</a>
+                            </h5>
+                            <h5 class="mb-2" style="color: #32be8f;">
+                                <a href="#favorite-products" class="link">Sản Phẩm Yêu Thích</a>
+                            </h5>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="container mt-5">
+                <div class="card login-form">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Lấy Lại Mật Khẩu </h3>
+                        
+                        <div class="card-text">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nhập địa chỉ email của bạn và chúng tối sẽ gửi cho bạn một liên kết để khôi phục mật khẩu của bạn.</label>
+                                    <input type="email" class="form-control form-control-sm mt-2" id="exampleInputEmail1" placeholder="Nhập địa chỉ email của bạn" required>
+                                </div>
+        
+                                <button type="submit" class="btn btn-primary btn-block" style="background-color: #32be8f;">Gửi email khôi phục mật khẩu</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
