@@ -19,7 +19,6 @@ body{
 }
 
 .container{
-    
     display: grid;
     padding: 0 2rem;
     background: #ffffff; /* Nền trắng cho container */
@@ -27,9 +26,9 @@ body{
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Đổ bóng */
     padding: 10px; /* Thêm khoảng cách bên trong */
     width: 600px; /* Chiều rộng cố định cho container */
-    height: 705px;
+    height: 810px;
     align-items: center;
-    
+
 }
 
 .img{
@@ -144,7 +143,7 @@ form .gender-details .category {
 	align-items: center;
 	text-align: center;
     flex-direction: column;
-    
+
 }
 
 .gender-title {
@@ -230,7 +229,7 @@ body {
     margin: 1rem auto; /* Tự động căn giữa theo chiều ngang */
     cursor: pointer;
     transition: .5s;
-    
+
 }
 
 .btn:hover {
@@ -297,7 +296,7 @@ input[type="file"] {
 
 .toggle-password {
     position: absolute; /* Đặt vị trí tuyệt đối cho icon */
-    
+
     cursor: pointer; /* Đổi con trỏ khi hover */
     font-size: 20px; /* Kích thước của icon */
 }

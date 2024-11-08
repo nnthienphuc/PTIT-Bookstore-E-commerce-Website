@@ -120,8 +120,6 @@ form .gender-details .category {
     padding: 20px; /* Thêm khoảng cách bên trong */
 }
 
-
-
 .input-box {
     display: flex; /* Sử dụng flexbox cho nội dung bên trong */
     flex-direction: column; /* Đặt hướng theo cột */
