@@ -22,5 +22,6 @@ import jakarta.persistence.TypedQuery;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
-      
+	 // Tìm kiếm theo categoryName chứa keyword (không phân biệt hoa thường)
+    List<CategoryEntity> findByCategoryNameContainingIgnoreCase(String keyword);
 }
