@@ -1,4 +1,4 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.Category;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.repository;
 
 import java.util.List;
 

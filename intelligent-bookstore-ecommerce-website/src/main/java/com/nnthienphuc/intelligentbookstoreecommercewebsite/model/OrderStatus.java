@@ -1,4 +1,7 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.model;
 
-public class FileToHoldPackage {
+public enum OrderStatus {
+    processing,
+    cancel,
+    success
 }

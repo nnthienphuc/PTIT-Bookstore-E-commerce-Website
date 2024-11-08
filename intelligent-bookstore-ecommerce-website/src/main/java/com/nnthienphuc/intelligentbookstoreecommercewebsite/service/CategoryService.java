@@ -2,19 +2,20 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
 import java.util.List;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.CategoryEntity;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.Category.CategoryRepository;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.CategoryRepository;
 
 @Service
 public class CategoryService {
 
-	@Autowired
+    @Autowired
     private CategoryRepository categoryRepository;
 
-    
+
     public List<CategoryEntity> getAllCategories() {
         return categoryRepository.findAll();
     }
@@ -25,12 +26,12 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với id: " + id));
     }
 
-    
+
     public CategoryEntity saveCategory(CategoryEntity category) {
         return categoryRepository.save(category);
     }
 
-    
+
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
