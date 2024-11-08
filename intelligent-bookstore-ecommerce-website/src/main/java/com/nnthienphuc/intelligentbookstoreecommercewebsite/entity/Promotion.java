@@ -10,22 +10,22 @@ import java.util.Set;
 
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Table(name = "Promotion")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "User")
-public class User {
+public class Promotion {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String userID;
-    String email;
-    String fullName;
-    boolean gender;
-    Date birthDay;
-    String pwd;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int promotionID;
+    String promotionName;
+    Date startDate;
+    Date endDate;
+    long condition;
+    float discountPercent;
 
-    @OneToMany(mappedBy = "userID")
-    Set<Order> orders = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "promotionID")
+    private Set<Order> orders = new LinkedHashSet<>();
 
 }

@@ -21,10 +21,13 @@ public class Staff {
     String email;
     String phone;
     String idCard;
-    boolean roleID;
     boolean gender;
     Date birthday;
     String address;
     String pwd;
     boolean isQuit;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RoleID")
+    Role roleID;
 }
