@@ -12,7 +12,7 @@ public class AdminController {
         return "admin/login";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/register")
     public String adminRegisterForm() {
         return "admin/register";
     }
