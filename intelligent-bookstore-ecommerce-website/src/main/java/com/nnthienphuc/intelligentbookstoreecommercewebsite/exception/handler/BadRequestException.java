@@ -1,4 +1,4 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.exception;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,4 +1,4 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

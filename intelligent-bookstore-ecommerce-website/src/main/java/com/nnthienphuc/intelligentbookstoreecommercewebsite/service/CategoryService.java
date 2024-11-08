@@ -1,15 +1,12 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category.CategoryEntity;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.CategoryEntity;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.Category.CategoryRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class CategoryService {
