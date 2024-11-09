@@ -1,3 +1,6 @@
+<%@ page pageEncoding="utf-8"%>
+<%@ page import="com.nnthienphuc.intelligentbookstoreecommercewebsite.model.Category" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -378,6 +381,23 @@
                 <li class="nav-item">
                   <a class="nav-link me-4 active" href="index.html">Home</a>
                 </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    Categories
+                  </a>
+                  <ul class="dropdown-menu animate slide border">
+                    <%
+                      List<Category> cates = (List<Category>) request.getAttribute("cates");
+                      for (Category category : cates) {
+                    %>
+                    <li>
+                      <a class="dropdown-item fw-light">
+                        <span><%= category.getCategoryName() %></span>
+                      </a>
+                    </li>
+                    <% } %>
+                  </ul>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link me-4" href="index.html">About</a>
                 </li>
@@ -386,58 +406,6 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link me-4" href="index.html">Blogs</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a
-                    class="nav-link me-4 dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    role="button"
-                    aria-expanded="false"
-                    >Pages</a
-                  >
-                  <ul class="dropdown-menu animate slide border">
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >About</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Shop</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Single Product</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Cart</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Checkout</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Blog</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Single Post</a
-                      >
-                    </li>
-                    <li>
-                      <a href="index.html" class="dropdown-item fw-light"
-                        >Contact</a
-                      >
-                    </li>
-                  </ul>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link me-4" href="index.html">Contact</a>
