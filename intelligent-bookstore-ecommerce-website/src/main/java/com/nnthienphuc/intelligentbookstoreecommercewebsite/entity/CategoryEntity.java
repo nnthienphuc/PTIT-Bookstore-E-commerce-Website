@@ -12,10 +12,10 @@ import jakarta.persistence.Table;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    @Column(name = "CategoryId", nullable = false)
+    @Column(name = "Categoryid", nullable = false)
     private Long categoryId;
 
-    @Column(name = "CategoryName", nullable = false)
+    @Column(name = "Categoryname", nullable = false)
     private String categoryName;
 
     public CategoryEntity() {}

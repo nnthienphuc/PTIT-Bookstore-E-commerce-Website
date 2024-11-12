@@ -1,0 +1,41 @@
+.sidemenu-action {
+  position: fixed;
+  top: 25%;
+  right: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  transition: 0.5s;
+  border: 1px solid var(--border-color-1);
+}
+.sidemenu-action button {
+  cursor: pointer;
+  padding: 10px;
+  position: relative;
+}
+.sidemenu-action button i {
+  font-size: 20px;
+  color: var(--primary-color);
+}
+.sidemenu-action button:first-child {
+  border: 1px solid var(--border-color-1);
+}
+.sidemenu-action button:hover .infor {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%);
+}
+.sidemenu-action button .infor {
+  position: absolute;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 5px 20px;
+  font-size: 12px;
+  border-radius: 5px;
+  right: 100%;
+  top: 50%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(10px, -50%);
+  transition: 0.5s;
+}/*# sourceMappingURL=SideMenuAction.css.map */
