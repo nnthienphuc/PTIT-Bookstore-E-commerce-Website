@@ -1,0 +1,114 @@
+.header-top {
+  border-bottom: 1px solid #ececec;
+  padding: 10px 0;
+}
+.header-top .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-top .one ul {
+  display: flex;
+}
+.header-top .one ul a {
+  color: var(--text-color);
+}
+.header-top .one ul a:hover {
+  color: #333;
+  transition: 0.2s;
+}
+.header-top .one ul li {
+  margin-right: 10px;
+  display: flex;
+}
+.header-top .one ul .space::after {
+  content: "";
+  width: 2px;
+  height: 100%;
+  background-color: #dedfe2;
+  margin-left: 10px;
+}
+.header-top p {
+  color: var(--primary-color);
+  font-weight: 700;
+  cursor: pointer;
+}
+.header-top p:hover {
+  color: #c25;
+  transition: 0.2s;
+}
+.header-top .three > ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-color);
+}
+.header-top .three > ul .phone a {
+  display: inline-block;
+  color: var(--primary-color);
+}
+.header-top .three > ul .phone a:hover {
+  color: green;
+}
+.header-top .three > ul .space::after {
+  content: "";
+  width: 2px;
+  height: 100%;
+  background-color: #dedfe2;
+  margin-left: 10px;
+}
+.header-top .three > ul .space::before {
+  content: "";
+  width: 2px;
+  height: 100%;
+  background-color: #dedfe2;
+  margin-right: 10px;
+}
+.header-top .three > ul > li {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 30px;
+}
+.header-top .three > ul > li > a {
+  margin-right: 3px;
+  color: var(--text-color);
+}
+.header-top .three > ul > li > a:hover {
+  color: #333;
+  transition: 0.2s;
+}
+.header-top .three > ul > li i {
+  font-size: 7px;
+  margin-left: 3px;
+}
+.header-top .three > ul > li:hover .dropdown-language {
+  opacity: 1;
+  visibility: visible;
+}
+.header-top .three > ul > li .dropdown-language {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 0 3px -1px #333;
+  top: 100%;
+  left: 15%;
+  z-index: 999 !important;
+  background-color: #ffffff;
+  transition: 0.3s;
+  padding: 10px 15px;
+  width: 120px;
+  border-radius: 10px;
+  border: 1px solid var(--boder-color-1);
+}
+.header-top .three > ul > li .dropdown-language > li > a {
+  color: var(--text-color);
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.header-top .three > ul > li .dropdown-language > li > a img {
+  width: 15px;
+  margin-right: 5px;
+}/*# sourceMappingURL=HeaderTop.css.map */

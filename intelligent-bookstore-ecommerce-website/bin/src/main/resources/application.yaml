@@ -2,6 +2,11 @@ server:
   port: 8080
 
 spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
   datasource:
     url: "jdbc:sqlserver://localhost:1433;database=OnlineBookStore;encrypt=true;trustServerCertificate=true"
     username: sa
@@ -12,10 +17,12 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.SQLServerDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
 
   security:
     user:
       name: admin
-      password: 77fdf34f-8266-4aeb-97d9-6d1f710d108e
+  web:
+    resources:
+      static-locations: classpath:/static/

@@ -1,0 +1,50 @@
+.card_2 {
+  width: 24%;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  &:hover {
+    transform: translateY(-5px);
+  }
+  img {
+    width: 112px;
+    margin-right: 15px;
+  }
+  .title {
+    max-width: 190px;
+    color: var(--color-heading);
+    margin-bottom: 9px;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+  .rating {
+    span {
+      color: var(--color-muted);
+      font-size: 13px;
+      margin-left: 10px;
+    }
+    margin-bottom: 10px;
+  }
+  .yellow {
+    color: var(--color-brand-2);
+  }
+  .gray {
+    color: var(--color-muted);
+  }
+  .price {
+    .new-price {
+      color: var(--primary-color);
+      font-size: 18px;
+      font-weight: 800;
+      margin-right: 5px;
+      text-decoration: underline;
+    }
+    .old-price {
+      color: var(--color-gray-4);
+      font-size: 14px;
+      text-decoration: line-through;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+.products {
+  margin-top: 50px;
+  margin-bottom: 150px;
+}
+.products .product-items {
+  width: 80%;
+}
+.products .product-items .popular-product {
+  margin-bottom: 40px;
+}
+.products .product-items .action h2 {
+  font-size: 30px;
+  color: var(--color-heading);
+}
+.products .product-items .action nav ul > li {
+  font-size: 16px;
+  color: var(--color-heading);
+  margin-left: 20px;
+  font-weight: 600;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.products .product-items .action nav ul > li:hover {
+  color: var(--primary-color);
+  transform: translateY(-5px);
+}
+.products .product-items .action nav ul .active {
+  color: var(--primary-color);
+}
+.products .product-items .action .all-deals {
+  color: var(--primary-color);
+  font-size: 16px;
+}
+.products .product-items .action .all-deals i {
+  margin-left: 5px;
+}
+.products .product-items .Deal-of-the-day .action {
+  margin-bottom: 15px;
+}/*# sourceMappingURL=Products.css.map */

@@ -11,9 +11,9 @@ public class AdminController {
     public String adminLoginForm() {
         return "admin/login";
     }
-
-    @RequestMapping("/register")
-    public String adminRegisterForm() {
-        return "admin/register";
-    }
+//
+//    @RequestMapping("/login")
+//    public String adminRegisterForm() {
+//        return "admin/register";
+//    }
 }
