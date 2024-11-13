@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.CategoryEntity;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
 
 @Controller
@@ -29,23 +29,23 @@ public class CategoryController {
     @GetMapping("")
     public String showCategoryPage(Model model) {
         // Lấy danh sách categories
-        List<CategoryEntity> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategories();
         
         // Thêm dữ liệu vào model để truyền xuống view
         model.addAttribute("categories", categories);
         
         // Thêm một category mới trống để dùng cho form thêm mới
-        model.addAttribute("newCategory", new CategoryEntity());
+        model.addAttribute("newCategory", new Category());
 
         return "admin/Category"; // Trả về tên view
     }
     @GetMapping("/{id}")
     @ResponseBody
-    public CategoryEntity getCategoryById(@PathVariable Long id) {
+    public Category getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }
     @PostMapping("/add")
-    public String addCategory(@ModelAttribute CategoryEntity category, RedirectAttributes redirectAttributes) {
+    public String addCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         try {
             categoryService.saveCategory(category);
             // Thêm thông báo thành công
@@ -65,7 +65,7 @@ public class CategoryController {
     }
 
     @PostMapping("/edit")
-    public String editCategory(@ModelAttribute CategoryEntity category, RedirectAttributes redirectAttributes) {
+    public String editCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         try {
             categoryService.saveCategory(category);
             redirectAttributes.addAttribute("success", "edit");
@@ -77,9 +77,9 @@ public class CategoryController {
     }
     @GetMapping("/search")
     @ResponseBody
-    public ResponseEntity<List<CategoryEntity>> searchCategories(@RequestParam(required = false) String keyword) {
+    public ResponseEntity<List<Category>> searchCategories(@RequestParam(required = false) String keyword) {
         try {
-            List<CategoryEntity> results = categoryService.searchByKeyword(keyword);
+            List<Category> results = categoryService.searchByKeyword(keyword);
             return ResponseEntity.ok(results);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
