@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/user/bookdetail/css/style.css}" />
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <button>☰</button>
+    <div>Napuno.com</div>
+    <input type="search" placeholder="Hinted search text">
+    <div>🛒</div>
+    <div>👤</div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="#" th:text="${book.getCategory_id().getCategoryName()}"></a> >
+    <a href="#" th:text="${book.getTitle()}"></a>
+</div>
+
+<main class="main-content">
+    <div class="product-gallery">
+        <img th:src="@{'/bookImage/' + ${book.getUrl1()}}" alt="Book Image" class="main-image">
+        <div class="thumbnail-container">
+            <img src="/api/placeholder/80/80" alt="Thumbnail 1" class="thumbnail active">
+            <img src="/api/placeholder/80/80" alt="Thumbnail 2" class="thumbnail">
+            <img src="/api/placeholder/80/80" alt="Thumbnail 3" class="thumbnail">
+            <img src="/api/placeholder/80/80" alt="Thumbnail 4" class="thumbnail">
+        </div>
+    </div>
+
+    <div class="product-info">
+        <h1 th:text="${book.getTitle()}"></h1>
+
+        <div class="product-meta">
+            <div>Tác giả:</div>
+            <div th:text="${book.getAuthor_id().getAuthorName()}"></div>
+            <div>Nhà xuất bản:</div>
+            <div th:text="${book.getPublisher_id().getPublisherName()}"></div>
+            <div>Hình thức bìa:</div>
+            <div th:if="${book.getCover()}">Bìa Cứng</div>
+            <div th:if="${not book.getCover()}">Bìa Mềm</div>
+        </div>
+
+        <div class="rating">
+            <span class="star-rating">★★★★★</span>
+            5.0 (95) | Đã bán 1k
+        </div>
+
+        <div class="price">
+            <span th:text="${book.getPrice() * book.getDiscount_percent() + ' đ'}"></span>
+            <span class="original-price" th:text="${book.getPrice() + ' đ'}"></span>
+            <span class="discount" th:text="${book.getDiscount_percent() + '%'}"></span>
+        </div>
+
+        <div class="quantity">
+            <span>Số lượng:</span>
+            <button onclick="decreaseQuantity()">-</button>
+            <input type="number" value="1" min="1" id="quantity">
+            <button onclick="increaseQuantity()">+</button>
+        </div>
+
+        <div class="buttons">
+            <button class="add-to-cart">Thêm vào giỏ hàng</button>
+            <button class="buy-now">Mua ngay</button>
+        </div>
+
+        <div class="product-description">
+            <h2>Mô tả sản phẩm</h2>
+            <p th:text="${book.getDescription()}"></p>
+        </div>
+    </div>
+
+    <!-- Thêm phần Thông tin chi tiết -->
+    <div class="product-details">
+        <h2>Thông tin chi tiết</h2>
+        <table class="details-table">
+            <tr>
+                <td>Mã sách</td>
+                <td th:text="${book.getIsbn()}"></td>
+            </tr>
+            <tr>
+                <td>Nhà xuất bản</td>
+                <td th:text="${book.getPublisher_id().getPublisherName()}"></td>
+            </tr>
+            <tr>
+                <td>Tác giả</td>
+                <td th:text="${book.getAuthor_id().getAuthorName()}"></td>
+            </tr>
+            <tr>
+                <td>Năm XB</td>
+                <td th:text="${book.getYear_of_publication()}"></td>
+            </tr>
+            <tr>
+                <td>Ngôn ngữ</td>
+                <td>Tiếng Việt</td>
+            </tr>
+            <tr>
+                <td>Trọng lượng (gr)</td>
+                <td>390</td>
+            </tr>
+            <tr>
+                <td>Kích thước</td>
+                <td>20 × 13 × 1.8 cm</td>
+            </tr>
+            <tr>
+                <td>Số trang</td>
+                <td>378</td>
+            </tr>
+            <tr>
+                <td>Hình thức</td>
+                <td th:text="${book.getCover() ? 'Bìa cứng' : 'Bìa mềm'}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Thêm phần Có thể bạn sẽ thích -->
+    <div class="recommended-products">
+        <h2>Có thể bạn sẽ thích</h2>
+        <div class="product-slider">
+            <button class="slider-btn prev">‹</button>
+            <div class="product-cards">
+                <div class="product-card">
+                    <img src="/api/placeholder/200/300" alt="Book 1">
+                    <h3>Unstoppable Us - Tập 1</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/api/placeholder/200/300" alt="Book 2">
+                    <h3>Unstoppable Us - Tập 2</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/api/placeholder/200/300" alt="Book 3">
+                    <h3>Unstoppable Us - Tập 3</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/api/placeholder/200/300" alt="Book 4">
+                    <h3>Unstoppable Us - Tập 4</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+            </div>
+            <button class="slider-btn next">›</button>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript" src="/user/bookdetail/js/script.js"></script>
+
+</body>
+</html>

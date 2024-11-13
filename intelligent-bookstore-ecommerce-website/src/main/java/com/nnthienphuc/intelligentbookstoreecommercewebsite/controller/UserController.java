@@ -12,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserController {
     public String userRegisterForm() {
         return "user/register";
     }
+
     @RequestMapping("/home")
     public String home(Model model) {
         List<Category> cates = categoryService.getAllCategories();
@@ -50,5 +52,14 @@ public class UserController {
         for (Book book : books) {
             System.out.println(book.getTitle());
         }
-    return "user/home";}
+    return "user/home";
+    }
+
+    @RequestMapping("/bookdetail/{id}")
+    public String home(Model model, @PathVariable("id") String id) {
+        Book book = bookService.getBookById(id);
+        model.addAttribute("book", book);
+
+        return "user/bookDetail";
+    }
 }
