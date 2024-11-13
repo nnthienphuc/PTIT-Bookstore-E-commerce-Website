@@ -1,9 +1,6 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,13 +12,15 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "Role")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
     @Id
-    String roleID;
-    String roleName;
+    @Column(name = "role_id", nullable = false, length = 5)
+    private String roleId;
 
-    @OneToMany(mappedBy = "roleID")
-    Set<Staff> staff = new LinkedHashSet<>();
+    @Column(name = "role_name", nullable = false, length = 50)
+    private String roleName;
+
+    @OneToMany(mappedBy = "role")
+    private Set<Staff> staff = new LinkedHashSet<>();
 }

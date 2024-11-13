@@ -1,10 +1,8 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Nationalized;
 
 import java.util.LinkedHashSet;
@@ -15,17 +13,17 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Publisher {
-
+public class Category {
     @Id
-    @Column(name = "publisher_id", nullable = false)
+    @Column(name = "category_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
     @Nationalized
-    @Column(name = "publisher_name", nullable = false, length = 50)
-    private String publisherName;
+    @Column(name = "category_name", nullable = false, length = 50)
+    private String categoryName;
 
-    @OneToMany(mappedBy = "publisher_id")
+    @OneToMany(mappedBy = "category_id")
     private Set<Book> books = new LinkedHashSet<>();
 
 }
