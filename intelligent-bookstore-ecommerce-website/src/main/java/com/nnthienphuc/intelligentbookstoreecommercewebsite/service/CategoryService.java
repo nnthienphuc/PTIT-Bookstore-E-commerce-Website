@@ -6,8 +6,7 @@ import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.CategoryR
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.CategoryEntity;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.CategoryRepository;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 
 @Service
 public class CategoryService {
@@ -16,18 +15,18 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
 
-    public List<CategoryEntity> getAllCategories() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
 
-    public CategoryEntity getCategoryById(Long id) {
+    public Category getCategoryById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với id: " + id));
     }
 
 
-    public CategoryEntity saveCategory(CategoryEntity category) {
+    public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
 
@@ -35,7 +34,7 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
-    public List<CategoryEntity> searchByKeyword(String keyword) {
+    public List<Category> searchByKeyword(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
             return categoryRepository.findAll(); // Trả về tất cả nếu keyword trống
         }
