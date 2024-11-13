@@ -19,3 +19,33 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "phucnaoto.buildweb@gmail.com"
+    password: "zngrnfezimttrrxr"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  security:
+    user:
+      name: admin
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+paypal:
+  mode: sandbox
+  client:
+    id: AYT99CXHWXT6XvDrhF5Y__PyQTNAnFGUvkhogPDFG9-uEtU2S6HhpFsY2O5Si5KVpiMJjmTolKJpmQLf
+    secret: EBi7f2MVPcYFNxE49x7vbtNfiTrjqb_pRNg4M4DQEGaD0LeUwzfMfendhd0R_XXeqU1Vvc-nQtVLciYZ
+
+apilayer:
+  apikey: 1NVe80aJkZEdKJWU57SVD8OX28ih1J4u

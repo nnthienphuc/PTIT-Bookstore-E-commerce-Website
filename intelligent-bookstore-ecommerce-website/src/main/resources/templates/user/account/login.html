@@ -19,6 +19,7 @@
 		<form id="loginForm" th:action="@{login}" method="post">
 			<img src="/user/loginform/img/logo.png" style="max-width: 250px; height: 250px; position: relative;">
 			<h2 class="title">Welcome</h2>
+			<h4 th:text="${message}"></h4>
 
 			<div class="input-div one">
 				<div class="i">
