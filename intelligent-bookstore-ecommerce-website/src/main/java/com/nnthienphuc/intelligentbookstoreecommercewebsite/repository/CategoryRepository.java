@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.CategoryEntity;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 	 // Tìm kiếm theo categoryName chứa keyword (không phân biệt hoa thường)
-    List<CategoryEntity> findByCategoryNameContainingIgnoreCase(String keyword);
+    List<Category> findByCategoryNameContainingIgnoreCase(String keyword);
 }
