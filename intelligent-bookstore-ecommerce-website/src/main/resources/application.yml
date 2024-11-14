@@ -36,7 +36,7 @@ spring:
   security:
     user:
       name: admin
-
+      password: "{noop}nnthienphuc"
   web:
     resources:
       static-locations: classpath:/static/

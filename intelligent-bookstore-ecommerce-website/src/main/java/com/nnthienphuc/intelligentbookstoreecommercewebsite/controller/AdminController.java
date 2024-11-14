@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
-    @RequestMapping("/login")
+    @RequestMapping("account/login")
     public String adminLoginForm() {
-        return "admin/login";
+        return "admin/account/login";
     }
-//
-//    @RequestMapping("/login")
-//    public String adminRegisterForm() {
-//        return "admin/register";
-//    }
+
+    @RequestMapping("account/register")
+    public String adminRegisterForm() {
+        return "admin/account/register";
+    }
 }

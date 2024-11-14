@@ -3,6 +3,7 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Nationalized;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class User {
     @Column(name = "full_name", nullable = false, length = 60)
     private String fullName;
 
+    @ColumnDefault("0")
     @Column(name = "gender", nullable = false)
     private Boolean gender = false;
 
@@ -35,9 +37,10 @@ public class User {
     @Column(name = "pwd", nullable = false, length = 60)
     private String pwd;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Order> orders = new LinkedHashSet<>();
-
+    @ColumnDefault("0")
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = false;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders = new LinkedHashSet<>();
 }

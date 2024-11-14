@@ -2,13 +2,10 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Nationalized;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
@@ -35,7 +32,7 @@ public class Staff {
     private String idCard;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @ColumnDefault("0")
+    @ColumnDefault("'staff'")
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
@@ -57,6 +54,7 @@ public class Staff {
     @Column(name = "is_quit", nullable = false)
     private Boolean isQuit = false;
 
+    @ColumnDefault("0")
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = false;
 }
