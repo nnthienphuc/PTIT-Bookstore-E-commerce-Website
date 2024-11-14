@@ -15,6 +15,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "`User`")
 public class User {
     @Id
     @Column(name = "user_id", nullable = false, length = 50)
@@ -43,4 +44,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Cart> carts = new LinkedHashSet<>();
+
 }

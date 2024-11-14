@@ -16,7 +16,7 @@
 		<img src="/user/loginform/img/book1.svg">
 	</div>
 	<div class="login-content">
-		<form id="loginForm" th:action="@{user/account/login}" method="post">
+		<form id="loginForm" th:action="@{login}" method="post">
 			<img src="/user/loginform/img/logo.png" style="max-width: 250px; height: 250px; position: relative;">
 			<h2 class="title">Welcome</h2>
 			<h4 th:text="${message}"></h4>
@@ -27,7 +27,7 @@
 				</div>
 				<div class="div">
 					<h5>Username</h5>
-					<input type="text" class="input" id="username" name="id" required>
+					<input type="text" class="input" id="username" name="userId" required>
 				</div>
 				<span id="usernameError" class="error"></span>
 			</div>
@@ -41,10 +41,10 @@
 					<input type="password" class="input" id="password" name="pwd" required>
 				</div>
 				<span id="passwordError" class="error"></span>
-				<span class="toggle-password" onclick="togglePassword()"></span>
+				<span class="toggle-password" onclick="togglePassword(password)"></span>
 			</div>
 
-			<p class="error-message" style="display:none;">Password must include number, lowercase, uppercase, and special character</p>
+<!--			<p class="error-message" style="display:none;">Password must include number, lowercase, uppercase, and special character</p>-->
 
 			<!-- Thêm checkbox "Remember Me" -->
 			<div class="remember-me">

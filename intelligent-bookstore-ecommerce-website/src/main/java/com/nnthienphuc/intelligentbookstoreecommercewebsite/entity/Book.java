@@ -15,6 +15,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Book")
 public class Book {
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
@@ -83,5 +84,8 @@ public class Book {
 
     @OneToMany(mappedBy = "isbn")
     private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "isbn")
+    private Set<Cart> carts = new LinkedHashSet<>();
 
 }

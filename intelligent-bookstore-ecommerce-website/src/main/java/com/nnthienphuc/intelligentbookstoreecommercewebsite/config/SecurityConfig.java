@@ -19,20 +19,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .antMatchers("/user/account/login", "/user/account/register").permitAll()  // Cho phép truy cập không cần đăng nhập
-                                .anyRequest().authenticated()  // Các trang khác cần đăng nhập
-                )
-                .formLogin()
-                .loginPage("/user/account/login")  // Trang đăng nhập tùy chỉnh
-                .loginProcessingUrl("/user/account/login")  // URL xử lý đăng nhập
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();  // Cho phép đăng xuất không cần xác thực
-
+        http.authorizeHttpRequests(
+                authorizeRequests ->   authorizeRequests.anyRequest().permitAll()
+        );
         return http.build();
     }
+
 }

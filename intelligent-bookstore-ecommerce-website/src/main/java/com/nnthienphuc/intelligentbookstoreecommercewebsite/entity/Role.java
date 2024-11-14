@@ -12,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Table(name = "`Role`")
 public class Role {
     @Id
     @Column(name = "role_id", nullable = false, length = 5)

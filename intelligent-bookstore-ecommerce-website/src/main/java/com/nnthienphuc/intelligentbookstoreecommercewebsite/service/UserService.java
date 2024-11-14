@@ -3,6 +3,7 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,22 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User create(User user) {
+    public User create(User user) throws Exception {
+        if(userRepository.existsById(user.getUserId())) {
+            throw new Exception("Username has exist!");
+        }
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPwd(passwordEncoder.encode(user.getPwd()));
+
         return userRepository.save(user);
     }
 
-    public User update(User user) {
+    public User update(User user) throws Exception {
+        if(userRepository.existsById(user.getUserId())) {
+            throw new Exception("Username has exist!");
+        }
+
         return userRepository.save(user);
     }
 

@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "`Staff`")
 public class Staff {
-
     @Id
     @Column(name = "staff_id", nullable = false, length = 36)
     private String staffId;

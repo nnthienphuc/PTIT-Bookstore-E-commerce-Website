@@ -12,6 +12,8 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

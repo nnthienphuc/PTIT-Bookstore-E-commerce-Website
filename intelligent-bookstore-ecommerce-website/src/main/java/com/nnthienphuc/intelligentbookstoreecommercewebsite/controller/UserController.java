@@ -4,19 +4,15 @@ import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.BookService;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.UserService;
-import jakarta.mail.MessagingException;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CookieService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -59,35 +55,35 @@ public class UserController {
     @PostMapping("/account/login")
     public String login(
             Model model,
-            @RequestParam("id") @NotEmpty(message = "Username is required!") String id,
+            @RequestParam("userId") @NotEmpty(message = "Username is required!") String userId,
             @RequestParam("pwd") @NotEmpty(message = "Password is required!") String pwd,
             @RequestParam(value = "rm", defaultValue = "false") boolean rememberMe) {
 
-        if (id.isEmpty() || pwd.isEmpty()) {
+        if (userId.isEmpty() || pwd.isEmpty()) {
             model.addAttribute("message", "Password, Username is not null!");
-            return "user/account/login";
+            return "redirect:/user/account/login";
         }
 
-        Optional<User> userOptional = userService.findById(id);
+        Optional<User> userOptional = userService.findById(userId);
         if (userOptional.isEmpty()) {
             model.addAttribute("message", "Invalid username!");
-            return "user/account/login";
+            return "redirect:/user/account/login";
         }
 
         User user = userOptional.get();
 
         if (!passwordEncoder.matches(pwd, user.getPwd())) {
             model.addAttribute("message", "Invalid password!");
-            return "user/account/login";
+            return "redirect:/user/account/login";
         }
 
         if (!user.getIsActive()) {
             model.addAttribute("message", "Your account is Inactivated!");
-            return "user/account/login";
+            return "redirect:/user/account/login";
         }
 
         model.addAttribute("message", "Login successfully!");
-        session.setAttribute("user", user);
+        session.setAttribute("userId", user);
 
         if (rememberMe) {
             cookie.create("userid", user.getUserId(), 30);
@@ -98,7 +94,7 @@ public class UserController {
         }
 
         String backUrl = (String) session.getAttribute("back-url");
-        return (backUrl != null) ? "redirect:" + backUrl : "user/account/success";
+        return (backUrl != null) ? "redirect:" + backUrl : "user/home";
     }
 
     @GetMapping("/account/register")
@@ -110,23 +106,27 @@ public class UserController {
     @PostMapping("/account/register")
     public String register(
             Model model,
-            @Validated @ModelAttribute("user") User user,
-            BindingResult error) throws IllegalStateException, IOException, MessagingException {
+            @ModelAttribute("user") User user,
+            BindingResult error) throws Exception {
 
+        System.out.println("1");
         if (error.hasErrors()) {
+            System.out.println("2");
             model.addAttribute("message", "Please fill all the required fields!");
-            return "user/account/register";
+            return "redirect:/user/account/register";
         }
 
-        // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-        String encodedPassword = passwordEncoder.encode(user.getPwd());
-        user.setPwd(encodedPassword);
+//        Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
+//        String encodedPassword = passwordEncoder.encode(user.getPwd());
+//        user.setPwd(encodedPassword);
 
         user.setIsActive(false);
         userService.create(user);
 
+        System.out.println("3");
+
         model.addAttribute("message", "Registration successful. Please check your email for activation.");
-        return "user/account/login";
+        return "redirect:/user/account/login";
     }
 
     @RequestMapping("/account/logoff")

@@ -1317,10 +1317,12 @@ select#input-sort {
 /* 5.1 Single Product Page
 /*----------------------------------------------*/
 .thumb-swiper .swiper-slide{
-  height: auto;
+  height: 150px;
 }
 .swiper-slide-thumb-active img{
   border: var(--bs-border-width) var(--bs-border-style) var(--primary-color) !important;
+  width: 100px; /* Đặt chiều rộng cố định, ví dụ 100px */
+  height: 100px; /* Đặt chiều cao cố định, ví dụ 100px */
 }
 .product-info del{
   color: var(--gray-color-500);

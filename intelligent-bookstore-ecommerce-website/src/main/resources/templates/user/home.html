@@ -12,33 +12,46 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
 
-    <!-- Bootstrap CSS -->
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossorigin="anonymous"
-    />
+    <!-- Preconnect to required origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-    <!-- Your custom CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/user/homepage/style.css}" />
-
-    <!-- Swiper CSS -->
-    <link
-            href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
-            rel="stylesheet"
-    />
+    <!-- Critical CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+          rel="stylesheet">
 
-    <!-- Custom Script -->
-    <script type="text/javascript" src="@{/user/homepage/js/script.js}"></script>
+    <!-- Third-party CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/user/homepage/style.css}">
+
+    <!--    &lt;!&ndash; Responsive CSS &ndash;&gt;-->
+    <!--    <link rel="stylesheet"-->
+    <!--          th:href="@{/user/homepage/responsive.css}"-->
+    <!--          media="(max-width: 768px)">-->
+
+    <!--    &lt;!&ndash; Favicons &ndash;&gt;-->
+    <!--    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">-->
+    <!--    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/apple-touch-icon.png}">-->
+
+    <!--    &lt;!&ndash; Meta tags &ndash;&gt;-->
+    <!--    <meta name="description" content="Your website description">-->
+    <!--    <meta name="keywords" content="your, keywords">-->
+
+    <!--    &lt;!&ndash; Open Graph tags &ndash;&gt;-->
+    <!--    <meta property="og:title" content="Your Website Title">-->
+    <!--    <meta property="og:description" content="Your website description">-->
+    <!--    <meta property="og:image" th:content="@{/images/og-image.jpg}">-->
+
 </head>
 
 <body>
@@ -321,421 +334,8 @@
     </div>
 </div>
 
-<header id="header" class="site-header">
-    <nav id="header-nav" class="navbar navbar-expand-lg py-3">
-        <div class="container">
-            <a class="navbar-brand" href="/user/bookdetail">
-                <img src="/user/homepage/images/main-logo.png" class="logo" />
-            </a>
-            <button
-                    class="navbar-toggler d-flex d-lg-none order-3 p-2"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#bdNavbar"
-                    aria-controls="bdNavbar"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <svg class="navbar-icon">
-                    <use xlink:href="#navbar-icon"></use>
-                </svg>
-            </button>
-            <div
-                    class="offcanvas offcanvas-end"
-                    tabindex="-1"
-                    id="bdNavbar"
-                    aria-labelledby="bdNavbarOffcanvasLabel"
-            >
-                <div class="offcanvas-header px-4 pb-0">
-                    <a class="navbar-brand" href="index.html">
-                        <img src="/user/homepage/images/main-logo.png" class="logo" />
-                    </a>
-                    <button
-                            type="button"
-                            class="btn-close btn-close-black"
-                            data-bs-dismiss="offcanvas"
-                            aria-label="Close"
-                            data-bs-target="#bdNavbar"
-                    ></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul
-                            id="navbar"
-                            class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1"
-                    >
-                        <li class="nav-item">
-                            <a class="nav-link me-4 active" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                Categories
-                            </a>
-                            <ul class="dropdown-menu animate slide border">
-                                <tr th:each="cate, iterStat : ${cates}">
-
-                                <li>
-                                    <a class="dropdown-item fw-light">
-
-                                          <span th:text="${cate.categoryName}"></span>
-
-                                    </a>
-                                </li>
-<!--                                <% } %>-->
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-4" href="index.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-4" href="index.html">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-4" href="index.html">Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-4" href="index.html">Contact</a>
-                        </li>
-                    </ul>
-                    <div class="user-items d-flex">
-                        <ul class="d-flex justify-content-end list-unstyled mb-0">
-                            <li class="search-item pe-3">
-                                <a href="#" class="search-button">
-                                    <svg class="search">
-                                        <use xlink:href="#search"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="pe-3">
-                                <a
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"
-                                >
-                                    <svg class="user">
-                                        <use xlink:href="#user"></use>
-                                    </svg>
-                                </a>
-                                <!-- Modal -->
-                                <div
-                                        class="modal fade"
-                                        id="exampleModal"
-                                        tabindex="-1"
-                                        aria-labelledby="exampleModalLabel"
-                                        aria-hidden="true"
-                                >
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header border-bottom-0">
-                                                <button
-                                                        type="button"
-                                                        class="btn-close"
-                                                        data-bs-dismiss="modal"
-                                                        aria-label="Close"
-                                                ></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="tabs-listing">
-                                                    <nav>
-                                                        <div
-                                                                class="nav nav-tabs d-flex justify-content-center"
-                                                                id="nav-tab"
-                                                                role="tablist"
-                                                        >
-                                                            <button
-                                                                    class="nav-link text-capitalize active"
-                                                                    id="nav-sign-in-tab"
-                                                                    data-bs-toggle="tab"
-                                                                    data-bs-target="#nav-sign-in"
-                                                                    type="button"
-                                                                    role="tab"
-                                                                    aria-controls="nav-sign-in"
-                                                                    aria-selected="true"
-                                                            >
-                                                                Sign In
-                                                            </button>
-                                                            <button
-                                                                    class="nav-link text-capitalize"
-                                                                    id="nav-register-tab"
-                                                                    data-bs-toggle="tab"
-                                                                    data-bs-target="#nav-register"
-                                                                    type="button"
-                                                                    role="tab"
-                                                                    aria-controls="nav-register"
-                                                                    aria-selected="false"
-                                                            >
-                                                                Register
-                                                            </button>
-                                                        </div>
-                                                    </nav>
-                                                    <div class="tab-content" id="nav-tabContent">
-                                                        <div
-                                                                class="tab-pane fade active show"
-                                                                id="nav-sign-in"
-                                                                role="tabpanel"
-                                                                aria-labelledby="nav-sign-in-tab"
-                                                        >
-<!--                                                            <div class="form-group py-3">-->
-<!--                                                                <label class="mb-2" for="sign-in"-->
-<!--                                                                >Username or email address *</label-->
-<!--                                                                >-->
-<!--                                                                <input-->
-<!--                                                                        type="text"-->
-<!--                                                                        minlength="2"-->
-<!--                                                                        name="username"-->
-<!--                                                                        placeholder="Your Username"-->
-<!--                                                                        class="form-control w-100 rounded-3 p-3"-->
-<!--                                                                        required-->
-<!--                                                                />-->
-<!--                                                            </div>-->
-<!--                                                            <div class="form-group pb-3">-->
-<!--                                                                <%&#45;&#45;@declare id="sign-in"&#45;&#45;%><label class="mb-2" for="sign-in"-->
-<!--                                                            >Password *</label-->
-<!--                                                            >-->
-<!--                                                                <input-->
-<!--                                                                        type="password"-->
-<!--                                                                        minlength="2"-->
-<!--                                                                        name="password"-->
-<!--                                                                        placeholder="Your Password"-->
-<!--                                                                        class="form-control w-100 rounded-3 p-3"-->
-<!--                                                                        required-->
-<!--                                                                />-->
-<!--                                                            </div>-->
-                                                            <label class="py-3">
-                                                                <input
-                                                                        type="checkbox"
-                                                                        required=""
-                                                                        class="d-inline"
-                                                                />
-                                                                <span class="label-body">Remember me</span>
-                                                                <span class="label-body"
-                                                                ><a href="#" class="fw-bold"
-                                                                >Forgot Password</a
-                                                                ></span
-                                                                >
-                                                            </label>
-                                                            <button
-                                                                    type="submit"
-                                                                    name="submit"
-                                                                    class="btn btn-dark w-100 my-3"
-                                                            >
-                                                                Login
-                                                            </button>
-                                                        </div>
-                                                        <div
-                                                                class="tab-pane fade"
-                                                                id="nav-register"
-                                                                role="tabpanel"
-                                                                aria-labelledby="nav-register-tab"
-                                                        >
-<!--                                                            <div class="form-group py-3">-->
-<!--                                                                <%&#45;&#45;@declare id="register"&#45;&#45;%><label class="mb-2" for="register"-->
-<!--                                                            >Your email address *</label-->
-<!--                                                            >-->
-<!--                                                                <input-->
-<!--                                                                        type="text"-->
-<!--                                                                        minlength="2"-->
-<!--                                                                        name="username"-->
-<!--                                                                        placeholder="Your Email Address"-->
-<!--                                                                        class="form-control w-100 rounded-3 p-3"-->
-<!--                                                                        required-->
-<!--                                                                />-->
-<!--                                                            </div>-->
-<!--                                                            <div class="form-group pb-3">-->
-<!--                                                                <label class="mb-2" for="sign-in"-->
-<!--                                                                >Password *</label-->
-<!--                                                                >-->
-<!--                                                                <input-->
-<!--                                                                        type="password"-->
-<!--                                                                        minlength="2"-->
-<!--                                                                        name="password"-->
-<!--                                                                        placeholder="Your Password"-->
-<!--                                                                        class="form-control w-100 rounded-3 p-3"-->
-<!--                                                                        required-->
-<!--                                                                />-->
-<!--                                                            </div>-->
-                                                            <label class="py-3">
-                                                                <input
-                                                                        type="checkbox"
-                                                                        required=""
-                                                                        class="d-inline"
-                                                                />
-                                                                <span class="label-body"
-                                                                >I agree to the
-                                      <a href="#" class="fw-bold"
-                                      >Privacy Policy</a
-                                      ></span
-                                                                >
-                                                            </label>
-                                                            <button
-                                                                    type="submit"
-                                                                    name="submit"
-                                                                    class="btn btn-dark w-100 my-3"
-                                                            >
-                                                                Register
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="wishlist-dropdown dropdown pe-3">
-                                <a
-                                        href="#"
-                                        class="dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        role="button"
-                                        aria-expanded="false"
-                                >
-                                    <svg class="wishlist">
-                                        <use xlink:href="#heart"></use>
-                                    </svg>
-                                </a>
-                                <div
-                                        class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3"
-                                >
-                                    <h4
-                                            class="d-flex justify-content-between align-items-center mb-3"
-                                    >
-                                        <span class="text-primary">Your wishlist</span>
-                                        <span class="badge bg-primary rounded-pill">2</span>
-                                    </h4>
-                                    <ul class="list-group mb-3">
-                                        <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between lh-sm"
-                                        >
-                                            <div>
-                                                <h5>
-                                                    <a href="index.html">The Emerald Crown</a>
-                                                </h5>
-                                                <small>Special discounted price.</small>
-                                                <a
-                                                        href="#"
-                                                        class="d-block fw-medium text-capitalize mt-2"
-                                                >Add to cart</a
-                                                >
-                                            </div>
-                                            <span class="text-primary">$2000</span>
-                                        </li>
-                                        <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between lh-sm"
-                                        >
-                                            <div>
-                                                <h5>
-                                                    <a href="index.html">The Last Enchantment</a>
-                                                </h5>
-                                                <small>Perfect for enlightened people.</small>
-                                                <a
-                                                        href="#"
-                                                        class="d-block fw-medium text-capitalize mt-2"
-                                                >Add to cart</a
-                                                >
-                                            </div>
-                                            <span class="text-primary">$400</span>
-                                        </li>
-                                        <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between"
-                                        >
-                          <span class="text-capitalize"
-                          ><b>Total (USD)</b></span
-                          >
-                                            <strong>$1470</strong>
-                                        </li>
-                                    </ul>
-                                    <div class="d-flex flex-wrap justify-content-center">
-                                        <a
-                                                href="#"
-                                                class="w-100 btn btn-dark mb-1"
-                                                type="submit"
-                                        >Add all to cart</a
-                                        >
-                                        <a
-                                                href="index.html"
-                                                class="w-100 btn btn-primary"
-                                                type="submit"
-                                        >View cart</a
-                                        >
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cart-dropdown dropdown">
-                                <a
-                                        href="index.html"
-                                        class="dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        role="button"
-                                        aria-expanded="false"
-                                >
-                                    <svg class="cart">
-                                        <use xlink:href="#cart"></use></svg
-                                    ><span class="fs-6 fw-light">(02)</span>
-                                </a>
-                                <div
-                                        class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3"
-                                >
-                                    <h4
-                                            class="d-flex justify-content-between align-items-center mb-3"
-                                    >
-                                        <span class="text-primary">Your cart</span>
-                                        <span class="badge bg-primary rounded-pill">2</span>
-                                    </h4>
-                                    <ul class="list-group mb-3">
-                                        <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between lh-sm"
-                                        >
-                                            <div>
-                                                <h5>
-                                                    <a href="index.html">Secrets of the Alchemist</a>
-                                                </h5>
-                                                <small>High quality in good price.</small>
-                                            </div>
-                                            <span class="text-primary">$870</span>
-                                        </li>
-                                        <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between lh-sm"
-                                        >
-                                            <div>
-                                                <h5>
-                                                    <a href="index.html">Quest for the Lost City</a>
-                                                </h5>
-                                                <small>Professional Quest for the Lost City.</small>
-                                            </div>
-                                            <span class="text-primary">$600</span>
-                                        </li>
-                                        <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between"
-                                        >
-                          <span class="text-capitalize"
-                          ><b>Total (USD)</b></span
-                          >
-                                            <strong>$1470</strong>
-                                        </li>
-                                    </ul>
-                                    <div class="d-flex flex-wrap justify-content-center">
-                                        <a
-                                                href="index.html"
-                                                class="w-100 btn btn-dark mb-1"
-                                                type="submit"
-                                        >View Cart</a
-                                        >
-                                        <a
-                                                href="index.html"
-                                                class="w-100 btn btn-primary"
-                                                type="submit"
-                                        >Go to checkout</a
-                                        >
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+<!-- Include header -->
+<div th:include="fragments/header :: header"></div>
 
 <section
         id="billboard"
@@ -921,113 +521,113 @@
   </div>
 </section> -->
 
-<!--<section id="best-selling-items-1" class="position-relative padding-large">-->
-<!--    <div class="container">-->
-<!--        <div-->
-<!--                class="section-title d-md-flex justify-content-between align-items-center mb-4"-->
-<!--        >-->
-<!--            <h3 class="d-flex align-items-center">Sách mới</h3>-->
-<!--            <a href="index.html" class="btn">View All</a>-->
-<!--        </div>-->
-<!--        <div-->
-<!--                class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next"-->
-<!--        >-->
-<!--            <svg-->
-<!--                    class="chevron-forward-circle d-flex justify-content-center align-items-center p-2"-->
-<!--                    width="80"-->
-<!--                    height="80"-->
-<!--            >-->
-<!--                <use xlink:href="#alt-arrow-right-outline"></use>-->
-<!--            </svg>-->
-<!--        </div>-->
-<!--        <div-->
-<!--                class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev"-->
-<!--        >-->
-<!--            <svg-->
-<!--                    class="chevron-back-circle d-flex justify-content-center align-items-center p-2"-->
-<!--                    width="80"-->
-<!--                    height="80"-->
-<!--            >-->
-<!--                <use xlink:href="#alt-arrow-left-outline"></use>-->
-<!--            </svg>-->
-<!--        </div>-->
-<!--        <div class="swiper product-swiper">-->
-<!--            <div class="swiper-wrapper">-->
-<!--                <tr th:each="book, iterStat : ${books}">-->
-<!--                <div class="swiper-slide">-->
-<!--                    <div class="card position-relative p-4 border rounded-3">-->
-<!--                        <div class="position-absolute">-->
-<!--                            &lt;!&ndash; Kiểm tra nếu là sách có giảm giá &ndash;&gt;-->
-<!--                            <span th:if="${book.getIs_discount()}">-->
-<!--                                &lt;!&ndash; Hiển thị tỷ lệ giảm giá &ndash;&gt;-->
-<!--                                <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"-->
-<!--                                   th:text="${book.getDiscount_percent() + ' % off'}"></p>-->
-<!--                            </span>-->
-<!--                        </div>-->
+<section id="best-selling-items-1" class="position-relative padding-large">
+    <div class="container">
+        <div
+                class="section-title d-md-flex justify-content-between align-items-center mb-4"
+        >
+            <h3 class="d-flex align-items-center">Sách mới</h3>
+            <a href="index.html" class="btn">View All</a>
+        </div>
+        <div
+                class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next"
+        >
+            <svg
+                    class="chevron-forward-circle d-flex justify-content-center align-items-center p-2"
+                    width="80"
+                    height="80"
+            >
+                <use xlink:href="#alt-arrow-right-outline"></use>
+            </svg>
+        </div>
+        <div
+                class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev"
+        >
+            <svg
+                    class="chevron-back-circle d-flex justify-content-center align-items-center p-2"
+                    width="80"
+                    height="80"
+            >
+                <use xlink:href="#alt-arrow-left-outline"></use>
+            </svg>
+        </div>
+        <div class="swiper product-swiper">
+            <div class="swiper-wrapper">
+                <tr th:each="book, iterStat : ${books}">
+                <div class="swiper-slide">
+                    <div class="card position-relative p-4 border rounded-3">
+                        <div class="position-absolute">
+                            <!-- Kiểm tra nếu là sách có giảm giá -->
+                            <span th:if="${book.getIs_discount()}">
+                                <!-- Hiển thị tỷ lệ giảm giá -->
+                                <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"
+                                   th:text="${book.getDiscount_percent() + ' % off'}"></p>
+                            </span>
+                        </div>
 
-<!--                        <img-->
-<!--                                th:src="'/bookImage/' + ${book.getUrl1()}"-->
-<!--                                class="img-fluid shadow-sm"-->
-<!--                                alt="product item"-->
-<!--                        />-->
-<!--                        <h6 class="mt-4 mb-0 fw-bold">-->
-<!--                            <a href="index.html" th:text="${book.getTitle()}"></a>-->
-<!--                        </h6>-->
+                        <img
+                                th:src="'/bookImage/' + ${book.getUrl1()}"
+                                class="img-fluid shadow-sm"
+                                alt="product item"
+                        />
+                        <h6 class="mt-4 mb-0 fw-bold">
+                            <a href="index.html" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
+                        </h6>
 
-<!--                        <div class="review-content d-flex">-->
-<!--                            <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthor_id().getAuthorName()}"></p>-->
+                        <div class="review-content d-flex">
+                            <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthor_id().getAuthorName()}"></p>
 
 
-<!--                            <div class="rating text-warning d-flex align-items-center">-->
-<!--                                <svg class="star star-fill">-->
-<!--                                    <use xlink:href="#star-fill"></use>-->
-<!--                                </svg>-->
-<!--                                <svg class="star star-fill">-->
-<!--                                    <use xlink:href="#star-fill"></use>-->
-<!--                                </svg>-->
-<!--                                <svg class="star star-fill">-->
-<!--                                    <use xlink:href="#star-fill"></use>-->
-<!--                                </svg>-->
-<!--                                <svg class="star star-fill">-->
-<!--                                    <use xlink:href="#star-fill"></use>-->
-<!--                                </svg>-->
-<!--                                <svg class="star star-fill">-->
-<!--                                    <use xlink:href="#star-fill"></use>-->
-<!--                                </svg>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>-->
+                            <div class="rating text-warning d-flex align-items-center">
+                                <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                </svg>
+                                <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                </svg>
+                                <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                </svg>
+                                <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                </svg>
+                                <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                </svg>
+                            </div>
+                        </div>
+                        <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>
 
-<!--                        <div-->
-<!--                                class="card-concern position-absolute start-0 end-0 d-flex gap-2"-->
-<!--                        >-->
-<!--                            <button-->
-<!--                                    type="button"-->
-<!--                                    href="#"-->
-<!--                                    class="btn btn-dark"-->
-<!--                                    data-bs-toggle="tooltip"-->
-<!--                                    data-bs-placement="top"-->
-<!--                                    data-bs-title="Tooltip on top"-->
-<!--                            >-->
-<!--                                <svg class="cart">-->
-<!--                                    <use xlink:href="#cart"></use>-->
-<!--                                </svg>-->
-<!--                            </button>-->
-<!--                            <a href="#" class="btn btn-dark">-->
-<!--                    <span>-->
-<!--                      <svg class="wishlist">-->
-<!--                        <use xlink:href="#heart"></use>-->
-<!--                      </svg>-->
-<!--                    </span>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                        <div
+                                class="card-concern position-absolute start-0 end-0 d-flex gap-2"
+                        >
+                            <button
+                                    type="button"
+                                    href="#"
+                                    class="btn btn-dark"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-bs-title="Tooltip on top"
+                            >
+                                <svg class="cart">
+                                    <use xlink:href="#cart"></use>
+                                </svg>
+                            </button>
+                            <a href="#" class="btn btn-dark">
+                    <span>
+                      <svg class="wishlist">
+                        <use xlink:href="#heart"></use>
+                      </svg>
+                    </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-<!--    </div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--</section>-->
+    </div>
+    </div>
+    </div>
+</section>
 <!--<section id="best-selling-items-2" class="position-relative padding-large">-->
 <!--    <div class="container">-->
 <!--        <div-->
@@ -2271,130 +1871,8 @@
   </div>
 </section> -->
 
-<footer id="footer" class="padding-large">
-    <div class="container">
-        <div class="row">
-            <div class="footer-top-area">
-                <div class="row d-flex flex-wrap justify-content-between">
-                    <div class="col-lg-3 col-sm-6 pb-3">
-                        <div class="footer-menu">
-                            <img
-                                    src="/user/homepage/images/main-logo.png"
-                                    alt="logo"
-                                    class="img-fluid mb-2"
-                            />
-                            <p>
-                                Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit
-                                hendrerit. Gravida massa volutpat aenean odio erat nullam
-                                fringilla.
-                            </p>
-                            <div class="social-links">
-                                <ul class="d-flex list-unstyled">
-                                    <li>
-                                        <a href="#">
-                                            <svg class="facebook">
-                                                <use xlink:href="#facebook" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="instagram">
-                                                <use xlink:href="#instagram" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="twitter">
-                                                <use xlink:href="#twitter" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="linkedin">
-                                                <use xlink:href="#linkedin" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="youtube">
-                                                <use xlink:href="#youtube" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-6 pb-3">
-                        <div class="footer-menu text-capitalize">
-                            <h5 class="widget-title pb-2">Quick Links</h5>
-                            <ul class="menu-list list-unstyled text-capitalize">
-                                <li class="menu-item mb-1">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">About</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Shop</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Blogs</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 pb-3">
-                        <div class="footer-menu text-capitalize">
-                            <h5 class="widget-title pb-2">Help & Info Help</h5>
-                            <ul class="menu-list list-unstyled">
-                                <li class="menu-item mb-1">
-                                    <a href="#">Track Your Order</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Returns Policies</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Shipping + Delivery</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Contact Us</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Faqs</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 pb-3">
-                        <div class="footer-menu contact-item">
-                            <h5 class="widget-title text-capitalize pb-2">Contact Us</h5>
-                            <p>
-                                Do you have any queries or suggestions?
-                                <a href="mailto:" class="text-decoration-underline"
-                                >yourinfo@gmail.com</a
-                                >
-                            </p>
-                            <p>
-                                If you need support? Just give us a call.
-                                <a href="#" class="text-decoration-underline"
-                                >+55 111 222 333 44</a
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+<!-- Include footer -->
+<div th:include="fragments/footer :: footer"></div>
 <hr />
 <div id="footer-bottom" class="mb-2">
     <div class="container">
@@ -2428,15 +1906,22 @@
     </div>
 </div>
 
-<script src="@{/user/homepage/js/jquery-1.11.0.min.js}"></script>
+
+
+<script th:src="@{/user/homepage/js/jquery-1.11.0.min.js}" defer></script>
+
+<!-- Bootstrap -->
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
+        defer
 ></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script type="text/javascript" src="@{/user/homepage/js/script.js}"></script>
 
+<!-- Swiper -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js" defer></script>
 
+<!-- Custom scripts -->
+<script type="text/javascript" th:src="@{/user/homepage/js/script.js}" defer></script>
 </body>
 </html>
