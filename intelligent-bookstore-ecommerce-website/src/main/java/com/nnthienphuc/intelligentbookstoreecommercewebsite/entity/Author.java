@@ -1,30 +1,34 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Nationalized;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
+import lombok.Data;
 
 @Entity
+@Table(name = "Author")
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class Author {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id", nullable = false)
-    private Short id;
-
-    @Nationalized
-    @Column(name = "author_name", nullable = false, length = 50)
+    @Column(name = "Author_ID")
+    private Short authorId;
+    
+    @Column(name = "Author_Name", nullable = false, length = 50)
     private String authorName;
 
-    @OneToMany(mappedBy = "author_id")
-    private Set<Book> books = new LinkedHashSet<>();
+    public Author() {}
+    public Short getAuthorId() {
+        return authorId;
+    }
 
+    public void setAuthorId(Short authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 }
