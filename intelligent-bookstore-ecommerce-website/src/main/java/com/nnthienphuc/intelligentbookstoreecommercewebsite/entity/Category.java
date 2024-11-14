@@ -1,29 +1,38 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Nationalized;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "Category")
 public class Category {
     @Id
-    @Column(name = "category_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Short id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "Category_Id", nullable = false)
+    private Long categoryId;
 
-    @Nationalized
-    @Column(name = "category_name", nullable = false, length = 50)
+    @Column(name = "Category_Name", nullable = false)
     private String categoryName;
 
-    @OneToMany(mappedBy = "category_id")
-    private Set<Book> books = new LinkedHashSet<>();
+    public Category() {}
+    // Getters và Setters
+    public Long getCategoryId() {
+        return categoryId;
+    }
 
+    public void setCategoryId(Long id) {
+        this.categoryId = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String name) {
+        this.categoryName = name;
+    }
 }
