@@ -5,8 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Nationalized;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -15,7 +14,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @Id
     @Column(name = "user_id", nullable = false, length = 50)
@@ -32,7 +30,7 @@ public class User {
     private Boolean gender = false;
 
     @Column(name = "birthday", nullable = false)
-    private Instant birthday;
+    private LocalDate birthday;
 
     @Column(name = "pwd", nullable = false, length = 60)
     private String pwd;

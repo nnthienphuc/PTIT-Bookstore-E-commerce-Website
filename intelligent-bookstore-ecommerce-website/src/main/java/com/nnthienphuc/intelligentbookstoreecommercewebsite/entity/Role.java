@@ -12,7 +12,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
     @Id
     @Column(name = "role_id", nullable = false, length = 5)

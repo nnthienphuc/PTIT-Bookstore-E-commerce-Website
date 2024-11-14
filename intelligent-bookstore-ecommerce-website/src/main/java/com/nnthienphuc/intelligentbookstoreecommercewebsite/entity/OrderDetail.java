@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @Table(name = "OrderDetail")
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderDetail {
 
     @Id

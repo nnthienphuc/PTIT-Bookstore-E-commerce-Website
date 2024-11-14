@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Nationalized;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -14,7 +15,6 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Staff {
 
     @Id
@@ -28,8 +28,8 @@ public class Staff {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @Column(name = "phome", nullable = false, length = 10)
-    private String phome;
+    @Column(name = "phone", nullable = false, length = 10)
+    private String phone;
 
     @Column(name = "id_card", nullable = false, length = 12)
     private String idCard;
@@ -44,7 +44,7 @@ public class Staff {
     private Boolean gender = false;
 
     @Column(name = "birthday", nullable = false)
-    private Instant birthday;
+    private LocalDate birthday;
 
     @Nationalized
     @Column(name = "address", nullable = false, length = 100)
@@ -59,5 +59,4 @@ public class Staff {
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = false;
-
 }

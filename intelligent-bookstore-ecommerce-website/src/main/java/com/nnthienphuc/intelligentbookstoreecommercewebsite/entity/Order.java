@@ -18,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Table(name = "Order")
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
 
     @Id

@@ -15,9 +15,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
-@Table(name = "Book")
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
