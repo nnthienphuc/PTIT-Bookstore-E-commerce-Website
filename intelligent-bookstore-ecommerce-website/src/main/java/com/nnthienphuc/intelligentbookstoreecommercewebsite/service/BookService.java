@@ -22,6 +22,11 @@ public class BookService {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sách với id: " + id));
     }
+    public List<Book> getBookByAuthorID(Integer id) {
+        return bookRepository.getBooksByAuthorID(id);
+
+
+    }
 
 
     public Book saveBook(Book book) {

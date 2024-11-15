@@ -11,4 +11,5 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, String> {
     // Tìm kiếm theo categoryName chứa keyword (không phân biệt hoa thường)
     List<Book> findByTitleContainingIgnoreCase(String keyword);
+    List<Book> getBooksByAuthorID(Integer keyword);
 }
