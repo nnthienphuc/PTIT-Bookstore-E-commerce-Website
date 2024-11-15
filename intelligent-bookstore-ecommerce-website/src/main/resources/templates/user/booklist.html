@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahasa Clone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+
+        }
+        body {
+            background: #f5f5f5;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #C92127;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #C92127;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-item {
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 15px 0;
+            background: #f5f5f5;
+            margin-bottom: -30px;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .breadcrumb-item {
+            color: #666;
+        }
+
+        .breadcrumb-item a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+
+
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            padding: 5px 0;
+        }
+
+        .sidebar-item a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Product Grid */
+        .product-section {
+            flex: 1;
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+
+        }
+
+        .product-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .sort-select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-price {
+            color: #C92127;
+            font-weight: bold;
+        }
+
+        .original-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 12px;
+        }
+
+        .rating {
+            color: #ffd700;
+            margin-top: 5px;
+        }
+        /* css footer */
+        .footer {
+            background: white;
+            padding: 40px 20px;
+            margin-top: 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        .company-info p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .company-policy {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .bct-logo {
+            max-width: 150px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/logo.png" alt="Fahasa">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Con đường chuyên hóa - Thích Pháp Hòa">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="header-icons">
+                <a href="#" class="icon-item">
+                    <i class="fas fa-bell"></i>
+                    <div>Thông Báo</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div>Giỏ Hàng</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-user"></i>
+                    <div>Tài khoản</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-item"><a href="#">TRANG CHỦ  > </a></li>
+            <li class="breadcrumb-item"><a href="#">TÊN THỂ LOẠI</a></li>
+            <!-- <li class="breadcrumb-item"><a href="#"></a></li>
+            <li class="breadcrumb-item">TIỂU THUYẾT</li> -->
+        </ul>
+    </div>
+</div>
+
+<!-- Main Content -->
+<main class="container main-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <h3 class="sidebar-title"></h3>
+            <ul class="sidebar-list">
+                <li class="sidebar-item"><a href="#">Xem tất cả</a></li>
+
+            </ul>
+
+        </div>
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Thể Loại</h3>
+            <ul class="sidebar-list">
+                <li class="sidebar-item"><a href="#">Thể loại 1</a></li>
+                <li class="sidebar-item"><a href="#">Thể loại 2</a></li>
+                <li class="sidebar-item"><a href="#">Thể loại 3</a></li>
+                <li class="sidebar-item"><a href="#">Thể loại 4</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Tác giả</h3>
+            <ul class="sidebar-list">
+                <li class="sidebar-item"><a href="#">Tác giả 1</a></li>
+                <li class="sidebar-item"><a href="#">Tác giả 2</a></li>
+                <li class="sidebar-item"><a href="#">Tác giả 3</a></li>
+                <li class="sidebar-item"><a href="#">Tác giả 4</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Nhà xuất bản</h3>
+            <ul class="sidebar-list">
+                <li class="sidebar-item"><a href="#">NXB 1</a></li>
+                <li class="sidebar-item"><a href="#">NXB 2</a></li>
+                <li class="sidebar-item"><a href="#">NXB 3</a></li>
+                <li class="sidebar-item"><a href="#">NXB 4</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">GIÁ</h3>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <input type="checkbox" id="price1">
+                    <label for="price1">0đ - 150,000đ</label>
+                </li>
+                <li class="sidebar-item">
+                    <input type="checkbox" id="price2">
+                    <label for="price2">150,000đ - 300,000đ</label>
+                </li>
+                <li class="sidebar-item">
+                    <input type="checkbox" id="price2">
+                    <label for="price2">> 300,000đ</label>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Product Section -->
+    <section class="product-section">
+        <div class="product-controls">
+            <select class="sort-select">
+
+                <option>Giá Thấp Đến Cao</option>
+                <option>Giá Cao Đến Thấp</option>
+            </select>
+            <!-- <select class="sort-select">
+                <option>24 sản phẩm</option>
+                <option>48 sản phẩm</option>
+            </select> -->
+        </div>
+
+        <div class="product-grid">
+            <!-- Product Card -->
+            <div class="product-card">
+                <span class="discount-badge">18%</span>
+                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
+                <h3 class="product-title">Trường Ca Achilles</h3>
+                <div class="product-price">
+                    127.920 đ
+                    <span class="original-price">156.000 đ</span>
+                </div>
+                <div class="rating">★★★★★</div>
+            </div>
+            <div class="product-card">
+                <span class="discount-badge">18%</span>
+                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
+                <h3 class="product-title">Trường Ca Achilles</h3>
+                <div class="product-price">
+                    127.920 đ
+                    <span class="original-price">156.000 đ</span>
+                </div>
+                <div class="rating">★★★★★</div>
+            </div>
+            <div class="product-card">
+                <span class="discount-badge">18%</span>
+                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
+                <h3 class="product-title">Trường Ca Achilles</h3>
+                <div class="product-price">
+                    127.920 đ
+                    <span class="original-price">156.000 đ</span>
+                </div>
+                <div class="rating">★★★★★</div>
+            </div>
+            <div class="product-card">
+                <span class="discount-badge">18%</span>
+                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
+                <h3 class="product-title">Trường Ca Achilles</h3>
+                <div class="product-price">
+                    127.920 đ
+                    <span class="original-price">156.000 đ</span>
+                </div>
+                <div class="rating">★★★★★</div>
+            </div>
+            <div class="product-card">
+                <span class="discount-badge">18%</span>
+                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
+                <h3 class="product-title">Trường Ca Achilles</h3>
+                <div class="product-price">
+                    127.920 đ
+                    <span class="original-price">156.000 đ</span>
+                </div>
+                <div class="rating">★★★★★</div>
+            </div>
+            <div class="product-card">
+                <span class="discount-badge">18%</span>
+                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
+                <h3 class="product-title">Trường Ca Achilles</h3>
+                <div class="product-price">
+                    127.920 đ
+                    <span class="original-price">156.000 đ</span>
+                </div>
+                <div class="rating">★★★★★</div>
+            </div>
+            <!-- Thêm các product card khác tương tự -->
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Column 1: Company Info -->
+        <div class="footer-column">
+            <div class="footer-logo">
+                <img th:src="@{/image/fahasa-logo.png.webp}" alt="Napuno.com">
+
+            </div>
+            <div class="company-info">
+                <p><strong>Địa chỉ văn phòng:</strong></p>
+                <p>📍97 Mạn Thiện, Phường Hiệp Phú, Quận 9, TP Thủ Đức</p>
+                <p>📍1 Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh</p>
+            </div>
+            <div class="company-policy">
+                <p>Napuno.com nhận đặt hàng trực tuyến và giao hàng tận nơi.</p>
+                <p>KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại tất cả Hệ Thống Napuno trên toàn quốc.</p>
+            </div>
+            <!-- <div class="social-icons">
+                <a href="#"><i>FB</i></a>
+                <a href="#"><i>YT</i></a>
+                <a href="#"><i>IG</i></a>
+                <a href="#"><i>Map</i></a>
+                <a href="#"><i>Twitter</i></a>
+            </div> -->
+            <img th:src="@{/image/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png}" alt="Bộ Công Thương" class="bct-logo">
+
+        </div>
+
+        <!-- Column 2: DỊCH VỤ -->
+        <div class="footer-column">
+            <h3>DỊCH VỤ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Điều khoản sử dụng</a></li>
+                <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                <li><a href="#">Giới thiệu về Napuno</a></li>
+                <li><a href="#">Hệ thống nhà sách</a></li>
+                <h3 style="margin-top: 30px;">Liên hệ</h3>
+                <div class="contact-info">
+                    <i>📍</i>
+                    <p>97 Mạn Thiện, Q. 9, TP. Thủ Đức</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- Column 3: HỖ TRỢ -->
+        <div class="footer-column">
+            <h3>HỖ TRỢ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Chính sách đổi-trả-hoàn tiền</a></li>
+                <li><a href="#">Chính sách bảo hành</a></li>
+                <li><a href="#">Chính sách vận chuyển</a></li>
+                <li><a href="#">Chính sách khách sỉ</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+            <div class="contact-info">
+                <i>✉️</i>
+                <p>cskh@napuno.com.vn</p>
+            </div>
+
+        </div>
+
+        <!-- Column 4: TÀI KHOẢN CỦA TÔI -->
+        <div class="footer-column">
+            <h3>TÀI KHOẢN CỦA TÔI</h3>
+            <ul class="footer-links">
+                <li><a href="#">Đăng nhập/Đăng ký</a></li>
+                <li><a href="#">Thay đổi địa chỉ khách hàng</a></li>
+                <li><a href="#">Chi tiết tài khoản</a></li>
+                <li><a href="#">Lịch sử mua hàng</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+
+
+            <div class="contact-info">
+                <i>📞</i>
+                <p>0907654321</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+</body>
+</html>

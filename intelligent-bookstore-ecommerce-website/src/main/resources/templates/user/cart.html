@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+        }
+
+
+
+        .logo {
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .header {
+            background: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #C92127;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #C92127;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-item {
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .cart-section {
+            flex: 2;
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .cart-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-header .back-arrow {
+            margin-right: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .select-all {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-checkbox {
+            margin-right: 15px;
+        }
+
+        .item-image {
+            width: 120px;
+            height: 120px;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .original-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 13px;
+            margin-left: 5px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .quantity-control button {
+            padding: 5px 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .quantity-control input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            padding: 5px;
+        }
+
+        .remove-item {
+            margin-left: 20px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .order-summary {
+            flex: 1;
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .delivery-info {
+            margin-bottom: 20px;
+        }
+
+        .delivery-info h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .delivery-address {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .edit-button {
+            float: right;
+            color: #0F7C3F;
+            cursor: pointer;
+        }
+
+        .coupon-section {
+            margin-bottom: 20px;
+        }
+
+        .coupon-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .payment-options {
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            gap: 10px;
+        }
+
+        .summary-details {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .total-row {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .total-row .amount {
+            color: #ff0000;
+        }
+
+        .checkout-button {
+            width: 100%;
+            padding: 12px;
+            background: #cc0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        /* css footer */
+        .footer {
+            background: white;
+            padding: 40px 20px;
+            margin-top: 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        .company-info p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .company-policy {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .bct-logo {
+            max-width: 200px;
+            margin-top: -10px;
+            margin-left: -8px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/logo.png" alt="Fahasa">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Con đường chuyên hóa - Thích Pháp Hòa">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="header-icons">
+                <a href="#" class="icon-item">
+                    <i class="fas fa-bell"></i>
+                    <div>Thông Báo</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div>Giỏ Hàng</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-user"></i>
+                    <div>Tài khoản</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="main-container">
+    <div class="cart-section">
+        <div class="cart-header">
+            <a href="#" class="back-arrow">←</a>
+            <h2>GIỎ HÀNG (3 sản phẩm)</h2>
+        </div>
+
+        <div class="select-all">
+            <input type="checkbox" id="select-all" checked>
+            <label for="select-all">Chọn tất cả (3 sản phẩm)</label>
+        </div>
+
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox" checked>
+            <img class="item-image" src="https://via.placeholder.com/120" alt="Mùa Hè Không Tên">
+            <div class="item-details">
+                <h3 class="item-title">Mùa Hè Không Tên - Tặng Kèm Bookmark 2 Mặt + Poster Tranh + Chữ Ký Tác Giả Ngẫu Nhiên</h3>
+                <div class="item-price">
+                    101.400 đ
+                    <span class="original-price">130.000 đ</span>
+                </div>
+            </div>
+            <div class="quantity-control">
+                <button>-</button>
+                <input type="text" value="1">
+                <button>+</button>
+            </div>
+            <div class="remove-item">🗑️</div>
+        </div>
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox" checked>
+            <img class="item-image" src="https://via.placeholder.com/120" alt="Mùa Hè Không Tên">
+            <div class="item-details">
+                <h3 class="item-title">Mùa Hè Không Tên - Tặng Kèm Bookmark 2 Mặt + Poster Tranh + Chữ Ký Tác Giả Ngẫu Nhiên</h3>
+                <div class="item-price">
+                    101.400 đ
+                    <span class="original-price">130.000 đ</span>
+                </div>
+            </div>
+            <div class="quantity-control">
+                <button>-</button>
+                <input type="text" value="1">
+                <button>+</button>
+            </div>
+            <div class="remove-item">🗑️</div>
+        </div>
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox" checked>
+            <img class="item-image" src="https://via.placeholder.com/120" alt="Mùa Hè Không Tên">
+            <div class="item-details">
+                <h3 class="item-title">Mùa Hè Không Tên - Tặng Kèm Bookmark 2 Mặt + Poster Tranh + Chữ Ký Tác Giả Ngẫu Nhiên</h3>
+                <div class="item-price">
+                    101.400 đ
+                    <span class="original-price">130.000 đ</span>
+                </div>
+            </div>
+            <div class="quantity-control">
+                <button>-</button>
+                <input type="text" value="1">
+                <button>+</button>
+            </div>
+            <div class="remove-item">🗑️</div>
+        </div>
+
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox" checked>
+            <img class="item-image" src="https://via.placeholder.com/120" alt="Tôi Thấy Hoa Vàng Trên Cỏ Xanh">
+            <div class="item-details">
+                <h3 class="item-title">Tôi Thấy Hoa Vàng Trên Cỏ Xanh (Tái Bản 2023)</h3>
+                <div class="item-price">
+                    126.000 đ
+                    <span class="original-price">150.000 đ</span>
+                </div>
+            </div>
+            <div class="quantity-control">
+                <button>-</button>
+                <input type="text" value="2">
+                <button>+</button>
+            </div>
+            <div class="remove-item">🗑️</div>
+        </div>
+
+        <div class="cart-item">
+            <input type="checkbox" class="item-checkbox" checked>
+            <img class="item-image" src="https://via.placeholder.com/120" alt="Sapiens">
+            <div class="item-details">
+                <h3 class="item-title">Sapiens Lược Sử Loài Người</h3>
+                <div class="item-price">
+                    194.000 đ
+                    <span class="original-price">299.000 đ</span>
+                </div>
+            </div>
+            <div class="quantity-control">
+                <button>-</button>
+                <input type="text" value="1">
+                <button>+</button>
+            </div>
+            <div class="remove-item">🗑️</div>
+        </div>
+    </div>
+
+    <div class="order-summary">
+        <div class="delivery-info">
+            <h3>Thông tin nhận hàng <span class="edit-button">✏️</span></h3>
+            <div class="delivery-address">
+                <p>Trần Song Nguyên | 0908172140</p>
+                <p>145 ấp Tây</p>
+                <p>xã Đông Thạnh, huyện Cần Giuộc, tỉnh Long An</p>
+            </div>
+        </div>
+
+        <div class="coupon-section">
+            <h3 class="section-title">Phiếu giảm giá</h3>
+            <input type="text" class="coupon-input" placeholder="BANMOI30%">
+        </div>
+
+        <div class="payment-options">
+            <h3 class="section-title">Phương thức thanh toán</h3>
+            <div class="payment-option">
+                <input type="radio" name="payment" id="cod" checked>
+                <label for="cod">Thanh toán khi nhận hàng</label>
+            </div>
+            <div class="payment-option">
+                <input type="radio" name="payment" id="vnpay">
+                <label for="vnpay">Thanh toán bằng VNPay</label>
+            </div>
+        </div>
+
+        <div class="summary-details">
+            <h3 class="section-title">Chi tiết thanh toán</h3>
+            <div class="summary-row">
+                <span>Tổng tiền hàng</span>
+                <span>547.400 đ</span>
+            </div>
+            <div class="summary-row">
+                <span>Phí vận chuyển</span>
+                <span>30.000 đ</span>
+            </div>
+            <div class="summary-row">
+                <span>Giảm giá</span>
+                <span>-164.220 đ</span>
+            </div>
+            <div class="summary-row total-row">
+                <span>Tổng thanh toán</span>
+                <span class="amount">413.180 đ</span>
+            </div>
+        </div>
+
+        <button class="checkout-button">Thanh toán</button>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Column 1: Company Info -->
+        <div class="footer-column">
+            <div class="footer-logo">
+                <img src="/fahasa-logo.png.webp" alt="Napuno.com">
+            </div>
+            <div class="company-info">
+                <p><strong>Địa chỉ văn phòng:</strong></p>
+                <p>📍97 Mạn Thiện, Phường Hiệp Phú, Quận 9, TP Thủ Đức</p>
+                <p>📍1 Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh</p>
+            </div>
+            <div class="company-policy">
+                <p>Napuno.com nhận đặt hàng trực tuyến và giao hàng tận nơi.</p>
+                <p>KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại tất cả Hệ Thống Napuno trên toàn quốc.</p>
+            </div>
+            <!-- <div class="social-icons">
+                <a href="#"><i>FB</i></a>
+                <a href="#"><i>YT</i></a>
+                <a href="#"><i>IG</i></a>
+                <a href="#"><i>Map</i></a>
+                <a href="#"><i>Twitter</i></a>
+            </div> -->
+            <img src="/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png" alt="Bộ Công Thương" class="bct-logo">
+        </div>
+
+        <!-- Column 2: DỊCH VỤ -->
+        <div class="footer-column">
+            <h3>DỊCH VỤ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Điều khoản sử dụng</a></li>
+                <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                <li><a href="#">Giới thiệu về Napuno</a></li>
+                <li><a href="#">Hệ thống nhà sách</a></li>
+                <h3 style="margin-top: 30px;">Liên hệ</h3>
+                <div class="contact-info">
+                    <i>📍</i>
+                    <p>97 Mạn Thiện, Q. 9, TP. Thủ Đức</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- Column 3: HỖ TRỢ -->
+        <div class="footer-column">
+            <h3>HỖ TRỢ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Chính sách đổi-trả-hoàn tiền</a></li>
+                <li><a href="#">Chính sách bảo hành</a></li>
+                <li><a href="#">Chính sách vận chuyển</a></li>
+                <li><a href="#">Chính sách khách sỉ</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+            <div class="contact-info">
+                <i>✉️</i>
+                <p>cskh@napuno.com.vn</p>
+            </div>
+
+        </div>
+
+        <!-- Column 4: TÀI KHOẢN CỦA TÔI -->
+        <div class="footer-column">
+            <h3>TÀI KHOẢN CỦA TÔI</h3>
+            <ul class="footer-links">
+                <li><a href="#">Đăng nhập/Đăng ký</a></li>
+                <li><a href="#">Thay đổi địa chỉ khách hàng</a></li>
+                <li><a href="#">Chi tiết tài khoản</a></li>
+                <li><a href="#">Lịch sử mua hàng</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+
+
+            <div class="contact-info">
+                <i>📞</i>
+                <p>0907654321</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
