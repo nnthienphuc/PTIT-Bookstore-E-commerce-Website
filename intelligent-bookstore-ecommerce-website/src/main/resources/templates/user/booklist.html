@@ -339,7 +339,7 @@
     <div class="container">
         <ul class="breadcrumb-list">
             <li class="breadcrumb-item"><a href="#">TRANG CHỦ  > </a></li>
-            <li class="breadcrumb-item"><a href="#">TÊN THỂ LOẠI</a></li>
+            <li class="breadcrumb-item"><a href="#">Tất cả sách</a></li>
             <!-- <li class="breadcrumb-item"><a href="#"></a></li>
             <li class="breadcrumb-item">TIỂU THUYẾT</li> -->
         </ul>
@@ -361,28 +361,26 @@
         <div class="sidebar-section">
             <h3 class="sidebar-title">Thể Loại</h3>
             <ul class="sidebar-list">
-                <li class="sidebar-item"><a href="#">Thể loại 1</a></li>
-                <li class="sidebar-item"><a href="#">Thể loại 2</a></li>
-                <li class="sidebar-item"><a href="#">Thể loại 3</a></li>
-                <li class="sidebar-item"><a href="#">Thể loại 4</a></li>
+                <li th:each="cate : ${cates}" class="sidebar-item">
+                    <a th:text="${cate.categoryName}" href="#"></a>
+                </li>
             </ul>
         </div>
         <div class="sidebar-section">
             <h3 class="sidebar-title">Tác giả</h3>
-            <ul class="sidebar-list">
-                <li class="sidebar-item"><a href="#">Tác giả 1</a></li>
-                <li class="sidebar-item"><a href="#">Tác giả 2</a></li>
-                <li class="sidebar-item"><a href="#">Tác giả 3</a></li>
-                <li class="sidebar-item"><a href="#">Tác giả 4</a></li>
-            </ul>
+
+                <ul class="sidebar-list">
+                    <li th:each="author : ${authors}" class="sidebar-item">
+                        <a th:text="${author.authorName}" href="#"></a>
+                    </li>
+                </ul>
         </div>
         <div class="sidebar-section">
             <h3 class="sidebar-title">Nhà xuất bản</h3>
             <ul class="sidebar-list">
-                <li class="sidebar-item"><a href="#">NXB 1</a></li>
-                <li class="sidebar-item"><a href="#">NXB 2</a></li>
-                <li class="sidebar-item"><a href="#">NXB 3</a></li>
-                <li class="sidebar-item"><a href="#">NXB 4</a></li>
+                <li th:each="publ : ${publishers}" class="sidebar-item">
+                    <a th:text="${publ.getPublisherName()}" href="#"></a>
+                </li>
             </ul>
         </div>
 
@@ -398,7 +396,7 @@
                     <label for="price2">150,000đ - 300,000đ</label>
                 </li>
                 <li class="sidebar-item">
-                    <input type="checkbox" id="price2">
+                    <input type="checkbox" id="price3">
                     <label for="price2">> 300,000đ</label>
                 </li>
             </ul>

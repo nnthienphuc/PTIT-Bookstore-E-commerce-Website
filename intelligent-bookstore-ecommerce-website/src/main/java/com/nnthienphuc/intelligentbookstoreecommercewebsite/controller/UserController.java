@@ -2,13 +2,10 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.BookService;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.UserService;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CookieService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +22,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthorService authorService;
+
+    @Autowired
+    private PublisherService publisherService;
 
     @Autowired
     private CategoryService categoryService;
@@ -161,11 +164,16 @@ public class UserController {
 
     @GetMapping("/cart")
     public String cart(Model model) {
+
         return "user/cart";
     }
 
     @GetMapping("/booklist")
     public String booklist(Model model) {
+
+        model.addAttribute("cates", categoryService.getAllCategories());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
         return "user/booklist";
     }
 }
