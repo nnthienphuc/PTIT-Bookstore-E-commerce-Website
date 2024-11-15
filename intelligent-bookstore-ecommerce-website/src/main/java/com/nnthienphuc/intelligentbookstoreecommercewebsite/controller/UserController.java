@@ -174,6 +174,7 @@ public class UserController {
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
+        model.addAttribute("books", bookService.getAllBooks());
         return "user/booklist";
     }
 }

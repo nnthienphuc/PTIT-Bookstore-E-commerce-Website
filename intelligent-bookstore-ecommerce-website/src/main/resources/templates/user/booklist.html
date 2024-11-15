@@ -419,66 +419,25 @@
 
         <div class="product-grid">
             <!-- Product Card -->
-            <div class="product-card">
-                <span class="discount-badge">18%</span>
-                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
-                <h3 class="product-title">Trường Ca Achilles</h3>
+
+            <div th:each="book : ${books}" class="product-card">
+                <span class="discount-badge" th:text="${book.getDiscount_percent()}"></span>
+
+                <!-- Xử lý đường dẫn ảnh đúng cách với Thymeleaf -->
+                <img th:src="@{'/bookImage/' + ${book.getUrl1()}}" alt="" th:text="${book.getTitle()}" class="product-image">
+
+                <h3 class="product-title" th:text="${book.getTitle()}"></h3>
+
                 <div class="product-price">
-                    127.920 đ
-                    <span class="original-price">156.000 đ</span>
+                    <!-- Tính giá sau giảm giá -->
+                    <p th:text="${book.getPrice() - (book.getPrice() * book.getDiscount_percent())} + ' đ'"></p>
+                    <span class="original-price" th:text="${book.getPrice()} + ' đ'"></span>
                 </div>
+
                 <div class="rating">★★★★★</div>
             </div>
-            <div class="product-card">
-                <span class="discount-badge">18%</span>
-                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
-                <h3 class="product-title">Trường Ca Achilles</h3>
-                <div class="product-price">
-                    127.920 đ
-                    <span class="original-price">156.000 đ</span>
-                </div>
-                <div class="rating">★★★★★</div>
-            </div>
-            <div class="product-card">
-                <span class="discount-badge">18%</span>
-                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
-                <h3 class="product-title">Trường Ca Achilles</h3>
-                <div class="product-price">
-                    127.920 đ
-                    <span class="original-price">156.000 đ</span>
-                </div>
-                <div class="rating">★★★★★</div>
-            </div>
-            <div class="product-card">
-                <span class="discount-badge">18%</span>
-                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
-                <h3 class="product-title">Trường Ca Achilles</h3>
-                <div class="product-price">
-                    127.920 đ
-                    <span class="original-price">156.000 đ</span>
-                </div>
-                <div class="rating">★★★★★</div>
-            </div>
-            <div class="product-card">
-                <span class="discount-badge">18%</span>
-                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
-                <h3 class="product-title">Trường Ca Achilles</h3>
-                <div class="product-price">
-                    127.920 đ
-                    <span class="original-price">156.000 đ</span>
-                </div>
-                <div class="rating">★★★★★</div>
-            </div>
-            <div class="product-card">
-                <span class="discount-badge">18%</span>
-                <img src="https://cdn0.fahasa.com/media/catalog/product/t/r/truong_ca_achilles.jpg" alt="Trường Ca Achilles" class="product-image">
-                <h3 class="product-title">Trường Ca Achilles</h3>
-                <div class="product-price">
-                    127.920 đ
-                    <span class="original-price">156.000 đ</span>
-                </div>
-                <div class="rating">★★★★★</div>
-            </div>
+
+
             <!-- Thêm các product card khác tương tự -->
         </div>
     </section>
