@@ -27,6 +27,16 @@ public class BookService {
 
 
     }
+    public List<Book> getBookByCategoryID(Integer id) {
+        return bookRepository.getBooksByCategoryID(id);
+
+
+    }
+    public List<Book> getBookByPublisher(Integer id) {
+        return bookRepository.getBooksByAuthorID(id);
+
+
+    }
 
 
     public Book saveBook(Book book) {

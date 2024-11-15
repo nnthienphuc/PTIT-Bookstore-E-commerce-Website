@@ -362,7 +362,7 @@
             <h3 class="sidebar-title">Thể Loại</h3>
             <ul class="sidebar-list">
                 <li th:each="cate : ${cates}" class="sidebar-item">
-                    <a th:text="${cate.categoryName}" href="#"></a>
+                    <a th:href="@{'/booklist-by-category/' + ${cate.getCategoryId()}}" th:text="${cate.getCategoryName()}"></a>
                 </li>
             </ul>
         </div>
@@ -371,7 +371,8 @@
 
                 <ul class="sidebar-list">
                     <li th:each="author : ${authors}" class="sidebar-item">
-                        <a th:text="${author.authorName}" href="#"></a>
+                        <a th:href="@{'/booklist-by-author/' + ${author.getId()}}" th:text="${author.getAuthorName()}"></a>
+
                     </li>
                 </ul>
         </div>
@@ -379,7 +380,7 @@
             <h3 class="sidebar-title">Nhà xuất bản</h3>
             <ul class="sidebar-list">
                 <li th:each="publ : ${publishers}" class="sidebar-item">
-                    <a th:text="${publ.getPublisherName()}" href="#"></a>
+                    <a th:href="@{'/booklist-by-publisher/' + ${publ.getPublisherId()}}" th:text="${publ.getPublisherName()}"></a>
                 </li>
             </ul>
         </div>

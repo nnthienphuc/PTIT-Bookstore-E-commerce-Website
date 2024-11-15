@@ -177,13 +177,39 @@ public class UserController {
         model.addAttribute("books", bookService.getAllBooks());
         return "user/booklist";
     }
-    @GetMapping("/booklist/nguyennhatanh")
-    public String booklistnna(Model model) {
-
+//    @GetMapping("/booklist/nguyennhatanh")
+//    public String booklistnna(Model model) {
+//
+//        model.addAttribute("cates", categoryService.getAllCategories());
+//        model.addAttribute("authors",authorService.getAllAuthors());
+//        model.addAttribute("publishers",publisherService.getAllPublishers());
+//        model.addAttribute("books", bookService.getBookByAuthorID(1));
+//        return "user/booklistnna";
+//    }
+    @RequestMapping("/booklist-by-category/{cid}")
+    public String listByCategory(Model model, @PathVariable("cid") Integer categoryId) {
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
-        model.addAttribute("books", bookService.getBookByAuthorID(1));
-        return "user/booklistnna";
+        model.addAttribute("books", bookService.getBookByAuthorID(categoryId));
+        return "user/booklist";
     }
+    @RequestMapping("/booklist-by-author/{cid}")
+    public String listByAuthor(Model model, @PathVariable("cid") Integer categoryId) {
+        model.addAttribute("cates", categoryService.getAllCategories());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
+        model.addAttribute("books", bookService.getBookByAuthorID(categoryId));
+        return "user/booklist";
+    }
+    @RequestMapping("/booklist-by-publisher/{cid}")
+    public String listByPublisher(Model model, @PathVariable("cid") Integer categoryId) {
+        model.addAttribute("cates", categoryService.getAllCategories());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
+        model.addAttribute("books", bookService.getBookByPublisher(categoryId));
+        return "user/booklist";
+    }
+
+
 }
