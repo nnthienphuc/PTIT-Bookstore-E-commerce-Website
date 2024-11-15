@@ -3,6 +3,8 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
 
@@ -27,17 +30,32 @@ public class CategoryController {
     private CategoryService categoryService; // Giả sử bạn có CategoryService
 
     @GetMapping("")
-    public String showCategoryPage(Model model) {
-        // Lấy danh sách categories
-        List<Category> categories = categoryService.getAllCategories();
+    public String showCategories(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            Model model) {
         
-        // Thêm dữ liệu vào model để truyền xuống view
-        model.addAttribute("categories", categories);
-        
-        // Thêm một category mới trống để dùng cho form thêm mới
-        model.addAttribute("newCategory", new Category());
-
-        return "admin/Category"; // Trả về tên view
+        try {
+            Page<Category> categoryPage;
+            
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                // Tìm kiếm có phân trang
+            	categoryPage = categoryService.searchCategories(keyword.trim(), PageRequest.of(page, size));
+            } else {
+                // Lấy tất cả có phân trang
+            	categoryPage = categoryService.getAllCategories(PageRequest.of(page, size));
+            }
+            
+            model.addAttribute("categories", categoryPage);
+            model.addAttribute("keyword", keyword);
+            
+            return "admin/category";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
     @GetMapping("/{id}")
     @ResponseBody
@@ -75,14 +93,5 @@ public class CategoryController {
             return "redirect:/admin/category";
         }
     }
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<List<Category>> searchCategories(@RequestParam(required = false) String keyword) {
-        try {
-            List<Category> results = categoryService.searchByKeyword(keyword);
-            return ResponseEntity.ok(results);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    
 }

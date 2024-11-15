@@ -54,115 +54,18 @@ function formatCurrency(amount) {
         currency: 'VND'
     }).format(amount);
 }
+document.getElementById('button-search').addEventListener('click', function() {
+    var keyword = document.getElementById('searchInput').value;
+    window.location.href = '/admin/promotion?keyword=' + encodeURIComponent(keyword);
+});
 
-function searchPromotions() {
-    console.log('Search function called');
-    
-    const searchInput = document.getElementById('searchInput');
-    if (!searchInput) {
-        console.error('Không tìm thấy element searchInput');
-        return;
+// Enter key trong input search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        var keyword = this.value;
+        window.location.href = '/admin/promotion?keyword=' + encodeURIComponent(keyword);
     }
-    
-    const searchTerm = searchInput.value;
-    console.log('Search term:', searchTerm);
-    
-    if (searchTerm.trim() === '') {
-        window.location.reload();
-        return;
-    }
-
-    const searchUrl = `/admin/promotion/search?keyword=${encodeURIComponent(searchTerm)}`;
-    console.log('Calling API:', searchUrl);
-
-    fetch(searchUrl)
-        .then(response => {
-            console.log('Response status:', response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Search results:', data);
-            
-            const tableBody = document.querySelector('tbody');
-            if (!tableBody) {
-                console.error('Không tìm thấy tbody');
-                return;
-            }
-            
-            tableBody.innerHTML = '';
-            
-            if (data.length === 0) {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="8" class="text-center">Không tìm thấy kết quả phù hợp</td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            data.forEach((promotion, index) => {
-                // Format date và currency
-                const startDate = formatDateTime(promotion.startDate);
-                const endDate = formatDateTime(promotion.endDate);
-                const condition = formatCurrency(promotion.condition);
-                
-                // Kiểm tra trạng thái khuyến mãi
-                const now = new Date();
-                const promotionStart = new Date(promotion.startDate);
-                const promotionEnd = new Date(promotion.endDate);
-                
-                let status = '';
-                let statusClass = '';
-                
-                if (now < promotionStart) {
-                    status = 'Sắp diễn ra';
-                    statusClass = 'text-warning';
-                } else if (now > promotionEnd) {
-                    status = 'Đã kết thúc';
-                    statusClass = 'text-danger';
-                } else {
-                    status = 'Đang diễn ra';
-                    statusClass = 'text-success';
-                }
-
-                tableBody.innerHTML += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${promotion.promotionId}</td>
-                        <td>${promotion.promotionName}</td>
-                        <td>${startDate}</td>
-                        <td>${endDate}</td>
-                        <td>${condition}</td>
-                        <td>${promotion.discountPercent}%</td>
-                        <td><span class="${statusClass}">${status}</span></td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" 
-                                    onclick="editPromotion(${promotion.promotionId})"
-                                    ${now > promotionEnd ? 'disabled' : ''}>
-                                    Sửa
-                            </button>
-                            <button class="btn btn-danger btn-sm" 
-                                    onclick="deletePromotion(${promotion.promotionId})"
-                                    ${now > promotionEnd ? 'disabled' : ''}>
-                                    Xóa
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-        })
-        .catch(error => {
-            console.error('Search error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi!',
-                text: 'Không thể tìm kiếm khuyến mãi: ' + error.message
-            });
-        });
-}
+});
 function deletePromotion(id) {
     // Kiểm tra trạng thái khuyến mãi trước khi xóa
     fetch(`/admin/promotion/${id}`)

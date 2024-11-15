@@ -76,96 +76,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function searchAuthors() {
-    console.log('Search function called');
-    
-    const searchInput = document.getElementById('searchInput');
-    if (!searchInput) {
-        console.error('Không tìm thấy element searchInput');
-        return;
-    }
-    
-    const searchTerm = searchInput.value;
-    console.log('Search term:', searchTerm);
-    
-    if (searchTerm.trim() === '') {
-        window.location.reload();
-        return;
-    }
+document.getElementById('button-search').addEventListener('click', function() {
+    var keyword = document.getElementById('searchInput').value;
+    window.location.href = '/admin/author?keyword=' + encodeURIComponent(keyword);
+});
 
-    const searchUrl = `/admin/author/search?keyword=${encodeURIComponent(searchTerm)}`;
-    console.log('Calling API:', searchUrl);
-
-    fetch(searchUrl)
-        .then(response => {
-            console.log('Response status:', response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Search results:', data);
-            
-            const tableBody = document.querySelector('tbody');
-            if (!tableBody) {
-                console.error('Không tìm thấy tbody');
-                return;
-            }
-            
-            tableBody.innerHTML = '';
-            
-            if (data.length === 0) {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="4" class="text-center">Không tìm thấy kết quả phù hợp</td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            data.forEach((author, index) => {
-                tableBody.innerHTML += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${author.authorId}</td>
-                        <td>${author.authorName}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" 
-                                    onclick="editAuthor(${author.authorId})">Sửa</button>
-                            <button class="btn btn-danger btn-sm" 
-                                    onclick="deleteAuthor(${author.authorId})">Xóa</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        })
-        .catch(error => {
-            console.error('Search error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi!',
-                text: 'Không thể tìm kiếm tác giả: ' + error.message
-            });
-        });
-}
-
-// Đảm bảo event listeners được thêm sau khi DOM đã load
-document.addEventListener('DOMContentLoaded', function() {
-    const searchButton = document.getElementById('button-search');
-    const searchInput = document.getElementById('searchInput');
-    
-    if (searchButton) {
-        searchButton.addEventListener('click', function() {
-            searchAuthors();
-        });
-    }
-    
-    if (searchInput) {
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchAuthors();
-            }
-        });
+// Enter key trong input search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        var keyword = this.value;
+        window.location.href = '/admin/author?keyword=' + encodeURIComponent(keyword);
     }
 });
+

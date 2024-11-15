@@ -1,11 +1,14 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Table(name = "Publisher")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Publisher {
     
     @Id

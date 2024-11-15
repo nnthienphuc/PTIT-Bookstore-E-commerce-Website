@@ -3,6 +3,8 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,17 +29,32 @@ public class PromotionController {
     private PromotionService PromotionService; // Giả sử bạn có PromotionService
 
     @GetMapping("")
-    public String showPromotionPage(Model model) {
-        // Lấy danh sách categories
-        List<Promotion> promotions = PromotionService.getAllPromotions();
+    public String showPromotions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            Model model) {
         
-        // Thêm dữ liệu vào model để truyền xuống view
-        model.addAttribute("promotions", promotions);
-        
-        // Thêm một Promotion mới trống để dùng cho form thêm mới
-        model.addAttribute("newPromotion", new Promotion());
-
-        return "admin/promotion"; // Trả về tên view
+        try {
+            Page<Promotion> promotionPage;
+            
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                // Tìm kiếm có phân trang
+                promotionPage = PromotionService.searchPromotions(keyword.trim(), PageRequest.of(page, size));
+            } else {
+                // Lấy tất cả có phân trang
+            	promotionPage = PromotionService.getAllPromotions(PageRequest.of(page, size));
+            }
+            
+            model.addAttribute("promotions", promotionPage);
+            model.addAttribute("keyword", keyword);
+            
+            return "admin/promotion";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
     @GetMapping("/{id}")
     @ResponseBody
@@ -75,14 +92,5 @@ public class PromotionController {
             return "redirect:/admin/promotion";
         }
     }
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<List<Promotion>> searchCategories(@RequestParam(required = false) String keyword) {
-        try {
-            List<Promotion> results = PromotionService.searchByKeyword(keyword);
-            return ResponseEntity.ok(results);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    
 }

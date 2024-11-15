@@ -3,6 +3,8 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,17 +29,32 @@ public class AuthorController {
     private AuthorService AuthorService; // Giả sử bạn có AuthorService
 
     @GetMapping("")
-    public String showAuthorPage(Model model) {
-        // Lấy danh sách categories
-        List<Author> authors = AuthorService.getAllAuthors();
+    public String showAuthors(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            Model model) {
         
-        // Thêm dữ liệu vào model để truyền xuống view
-        model.addAttribute("authors", authors);
-        
-        // Thêm một Author mới trống để dùng cho form thêm mới
-        model.addAttribute("newAuthor", new Author());
-
-        return "admin/Author"; // Trả về tên view
+        try {
+            Page<Author> authorPage;
+            
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                // Tìm kiếm có phân trang
+                authorPage = AuthorService.searchAuthors(keyword.trim(), PageRequest.of(page, size));
+            } else {
+                // Lấy tất cả có phân trang
+                authorPage = AuthorService.getAllAuthors(PageRequest.of(page, size));
+            }
+            
+            model.addAttribute("authors", authorPage);
+            model.addAttribute("keyword", keyword);
+            
+            return "admin/author";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
     @GetMapping("/{id}")
     @ResponseBody
@@ -75,14 +92,5 @@ public class AuthorController {
             return "redirect:/admin/author";
         }
     }
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<List<Author>> searchCategories(@RequestParam(required = false) String keyword) {
-        try {
-            List<Author> results = AuthorService.searchByKeyword(keyword);
-            return ResponseEntity.ok(results);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    
 }
