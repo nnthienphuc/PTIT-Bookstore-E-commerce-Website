@@ -158,4 +158,14 @@ public class UserController {
         model.addAttribute("users", users);
         return "user/searchResults";
     }
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        return "user/cart";
+    }
+
+    @GetMapping("/booklist")
+    public String booklist(Model model) {
+        return "user/booklist";
+    }
 }
