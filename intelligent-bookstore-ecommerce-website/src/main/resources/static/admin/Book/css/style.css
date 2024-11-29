@@ -25,6 +25,46 @@
 
 }
 
+.img-thumbnail {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.quantity-input {
+    width: 80px !important;
+}
+
+.form-switch {
+    padding-left: 2.5em;
+}
+
+.status-badge {
+    font-size: 0.8em;
+    padding: 0.3em 0.6em;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.price-new {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.3em 0.6em;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 0 4px 0 4px;
+}
+
 *{
     margin: 0;
     padding: 0;

@@ -6,16 +6,23 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Nationalized;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+//@ToString
 @Table(name = "Book")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
@@ -34,6 +41,8 @@ public class Book {
     private Author author_id;
 
     @Column(name = "year_of_publication", nullable = false)
+    @Min(value = 1900, message = "Năm xuất bản không được nhỏ hơn 1900")
+    @Max(value = 2024, message = "Năm xuất bản không được lớn hơn năm hiện tại")
     private Short year_of_publication;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

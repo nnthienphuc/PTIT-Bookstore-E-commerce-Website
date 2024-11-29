@@ -3,7 +3,11 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 import java.util.List;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.AuthorRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
@@ -16,10 +20,20 @@ public class AuthorService {
     private AuthorRepository AuthorRepository;
 
 
-    public List<Author> getAllAuthors() {
+  
+        
+    public Page<Author> getAllAuthors(Pageable pageable) {
+        return AuthorRepository.findAll(pageable);
+    }
+    
+    public List<Author> getAllAuthorsNoPaging() {
         return AuthorRepository.findAll();
     }
-
+    
+    public Page<Author> searchAuthors(String keyword, Pageable pageable) {
+        return AuthorRepository.findByAuthorNameContainingIgnoreCase(keyword, pageable);
+    }
+ 
 
     public Author getAuthorById(Long id) {
         return AuthorRepository.findById(id)
@@ -35,10 +49,5 @@ public class AuthorService {
     public void deleteAuthor(Long id) {
         AuthorRepository.deleteById(id);
     }
-    public List<Author> searchByKeyword(String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return AuthorRepository.findAll(); // Trả về tất cả nếu keyword trống
-        }
-        return AuthorRepository.findByAuthorNameContainingIgnoreCase(keyword.trim());
-    }
+    
 }

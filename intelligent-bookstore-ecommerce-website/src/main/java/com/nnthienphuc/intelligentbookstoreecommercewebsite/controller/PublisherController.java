@@ -3,6 +3,8 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Publisher;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.PublisherService;
 
@@ -27,17 +30,32 @@ public class PublisherController {
     private PublisherService PublisherService; // Giả sử bạn có PublisherService
 
     @GetMapping("")
-    public String showPublisherPage(Model model) {
-        // Lấy danh sách categories
-        List<Publisher> publishers = PublisherService.getAllPublishers();
+    public String showPublishers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            Model model) {
         
-        // Thêm dữ liệu vào model để truyền xuống view
-        model.addAttribute("publishers", publishers);
-        
-        // Thêm một Publisher mới trống để dùng cho form thêm mới
-        model.addAttribute("newPublisher", new Publisher());
-
-        return "admin/Publisher"; // Trả về tên view
+        try {
+            Page<Publisher> publisherPage;
+            
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                // Tìm kiếm có phân trang
+                publisherPage = PublisherService.searchPublishers(keyword.trim(), PageRequest.of(page, size));
+            } else {
+                // Lấy tất cả có phân trang
+            	publisherPage = PublisherService.getAllPublishers(PageRequest.of(page, size));
+            }
+            
+            model.addAttribute("publishers", publisherPage);
+            model.addAttribute("keyword", keyword);
+            
+            return "admin/publisher";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
     @GetMapping("/{id}")
     @ResponseBody
@@ -75,14 +93,5 @@ public class PublisherController {
             return "redirect:/admin/publisher";
         }
     }
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<List<Publisher>> searchCategories(@RequestParam(required = false) String keyword) {
-        try {
-            List<Publisher> results = PublisherService.searchByKeyword(keyword);
-            return ResponseEntity.ok(results);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    
 }

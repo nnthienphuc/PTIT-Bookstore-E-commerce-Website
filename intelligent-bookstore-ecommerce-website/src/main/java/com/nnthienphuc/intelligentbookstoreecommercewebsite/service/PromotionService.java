@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.PromotionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Promotion;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.PromotionRepository;
 
@@ -16,8 +19,12 @@ public class PromotionService {
     private PromotionRepository PromotionRepository;
 
 
-    public List<Promotion> getAllPromotions() {
-        return PromotionRepository.findAll();
+    public Page<Promotion> getAllPromotions(Pageable pageable) {
+        return PromotionRepository.findAll(pageable);
+    }
+    
+    public Page<Promotion> searchPromotions(String keyword, Pageable pageable) {
+        return PromotionRepository.findByPromotionNameContainingIgnoreCase(keyword, pageable);
     }
 
 
@@ -35,10 +42,5 @@ public class PromotionService {
     public void deletePromotion(Long id) {
         PromotionRepository.deleteById(id);
     }
-    public List<Promotion> searchByKeyword(String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return PromotionRepository.findAll(); // Trả về tất cả nếu keyword trống
-        }
-        return PromotionRepository.findByPromotionNameContainingIgnoreCase(keyword.trim());
-    }
+    
 }

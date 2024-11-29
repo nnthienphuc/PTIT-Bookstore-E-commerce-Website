@@ -1,14 +1,13 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.entity;
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Nationalized;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Table(name = "Author")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,4 +26,11 @@ public class Author {
     @OneToMany(mappedBy = "author_id")
     private Set<Book> books = new LinkedHashSet<>();
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 }
