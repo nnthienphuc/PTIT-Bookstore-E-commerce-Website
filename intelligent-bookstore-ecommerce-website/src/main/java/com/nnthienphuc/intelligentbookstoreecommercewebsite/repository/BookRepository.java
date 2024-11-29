@@ -40,4 +40,13 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     Page<Book> findByTitleContainingIgnoreCaseAndCategoryIdAndAuthorId(
         String title, Category category, Author author, Pageable pageable);
+
+    @Query("SELECT b FROM Book b WHERE b.author_id.id = :authorId")
+    List<Book> getBooksByAuthorID(@Param("authorId") Integer authorId);
+
+    @Query("SELECT b FROM Book b WHERE b.category_id.categoryId = :categoryId")
+    List<Book> getBooksByCategoryID(@Param("categoryId") Integer categoryId);
+
+    @Query("SELECT b FROM Book b WHERE b.publisher_id.publisherId = :publisherId")
+    List<Book> getBooksByPublisherID(@Param("publisherId") Integer publisherId);
 }

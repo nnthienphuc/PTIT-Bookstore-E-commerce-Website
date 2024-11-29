@@ -1,6 +1,5 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -190,15 +189,15 @@ public class UserController {
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
-        model.addAttribute("books", bookService.getBookByAuthorID(categoryId));
-        return "user/booklist";
-    }
+        model.addAttribute("books", bookService.getBookByCategoryID(categoryId);
+    return "user/booklist";
+}
     @RequestMapping("/booklist-by-author/{cid}")
     public String listByAuthor(Model model, @PathVariable("cid") Integer categoryId) {
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
-        model.addAttribute("books", bookService.getBookByAuthorID(categoryId));
+        model.addAttribute("books", bookService.getBookByAuthorID(authorId));
         return "user/booklist";
     }
     @RequestMapping("/booklist-by-publisher/{cid}")

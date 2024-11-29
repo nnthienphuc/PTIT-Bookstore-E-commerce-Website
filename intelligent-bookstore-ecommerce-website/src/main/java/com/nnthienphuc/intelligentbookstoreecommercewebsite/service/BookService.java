@@ -52,6 +52,8 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
     public Page<Book> searchBooks(String keyword, Long categoryId, Long authorId, Pageable pageable) {
         try {
             if (keyword != null && !keyword.trim().isEmpty()) {
@@ -209,4 +211,18 @@ public class BookService {
             e.printStackTrace();
         }
     }
+
+    public List<Book> getBookByAuthorID(Integer id) {
+        return bookRepository.getBooksByAuthorID(id);
+        }
+        public List<Book> getBookByCategoryID(Integer id) {
+            return bookRepository.getBooksByCategoryID(id);
+
+
+        }
+        public List<Book> getBookByPublisher(Integer id) {
+            return bookRepository.getBooksByAuthorID(id);
+
+
+        }
 }
