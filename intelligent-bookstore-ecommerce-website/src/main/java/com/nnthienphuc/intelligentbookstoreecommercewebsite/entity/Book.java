@@ -34,11 +34,11 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category_id;
+    private Category categoryId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
-    private Author author_id;
+    private Author authorId;
 
     @Column(name = "year_of_publication", nullable = false)
     @Min(value = 1900, message = "Năm xuất bản không được nhỏ hơn 1900")
@@ -47,7 +47,7 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "publisher_id", nullable = false)
-    private Publisher publisher_id;
+    private Publisher publisherId;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

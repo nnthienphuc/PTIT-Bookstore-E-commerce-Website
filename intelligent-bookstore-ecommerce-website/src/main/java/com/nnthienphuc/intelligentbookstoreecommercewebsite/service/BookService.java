@@ -166,8 +166,8 @@ public class BookService {
 
         // Cập nhật thông tin
         book.setTitle(bookDetails.getTitle());
-        book.setCategoryId(bookDetails.getCategoryId());
-        book.setAuthorId(bookDetails.getAuthorId());
+        book.setCategory_id(bookDetails.getCategory_id());
+        book.setAuthor_id(bookDetails.getAuthor_id());
         book.setYear_of_publication(bookDetails.getYear_of_publication());
         book.setPublisher_id(bookDetails.getPublisher_id());
         book.setQuantity(bookDetails.getQuantity());
@@ -211,18 +211,4 @@ public class BookService {
             e.printStackTrace();
         }
     }
-
-    public List<Book> getBookByAuthorID(Integer id) {
-        return bookRepository.getBooksByAuthorID(id);
-        }
-        public List<Book> getBookByCategoryID(Integer id) {
-            return bookRepository.getBooksByCategoryID(id);
-
-
-        }
-        public List<Book> getBookByPublisher(Integer id) {
-            return bookRepository.getBooksByAuthorID(id);
-
-
-        }
 }

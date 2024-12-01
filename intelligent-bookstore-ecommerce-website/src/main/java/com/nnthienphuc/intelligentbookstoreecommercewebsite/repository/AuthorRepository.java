@@ -15,5 +15,5 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 	 // Tìm kiếm theo categoryName chứa keyword (không phân biệt hoa thường)
 	 Page<Author> findByAuthorNameContainingIgnoreCase(String keyword, Pageable pageable);
     // Optional: Nên dùng Optional để xử lý null safety
-    Optional<Author> findByAuthorId(Long categoryId);
+    Optional<Author> findById(Long categoryId);
 }
