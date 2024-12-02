@@ -16,7 +16,7 @@ import org.hibernate.annotations.Nationalized;
 public class Cart {
     @Id
     @Column(name = "cart_id", nullable = false)
-    private Long id;
+    private Long cartId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "isbn")
