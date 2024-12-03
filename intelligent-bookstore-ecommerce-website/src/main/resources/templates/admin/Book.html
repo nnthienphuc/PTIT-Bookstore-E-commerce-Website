@@ -45,9 +45,9 @@
                             <select name="authorId" class="form-select">
                                 <option value="">Tất cả tác giả</option>
                                 <option th:each="author : ${authors}"
-                                        th:value="${author.Id}"
+                                        th:value="${author.authorId}"
                                         th:text="${author.authorName}"
-                                        th:selected="${param.authorId == author.Id}">
+                                        th:selected="${param.authorId == author.authorId}">
                                 </option>
                             </select>
                         </div>
@@ -237,7 +237,7 @@
                             <select name="authorId" class="form-select" required>
                                 <option value="">Chọn tác giả</option>
                                 <option th:each="author : ${authors}"
-                                        th:value="${author.Id}"
+                                        th:value="${author.authorId}"
                                         th:text="${author.authorName}">
                                 </option>
                             </select>
@@ -359,7 +359,7 @@
                             <select id="editAuthorId" name="authorId" class="form-select" required>
                                 <option value="">Chọn tác giả</option>
                                 <option th:each="author : ${authors}"
-                                        th:value="${author.Id}"
+                                        th:value="${author.authorId}"
                                         th:text="${author.authorName}">
                                 </option>
                             </select>
