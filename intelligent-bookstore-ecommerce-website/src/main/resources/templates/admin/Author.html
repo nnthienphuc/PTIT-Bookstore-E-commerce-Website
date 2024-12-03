@@ -61,13 +61,13 @@
                             <tbody>
                                 <tr th:each="author, iterStat : ${authors}">
                                     <td th:text="${iterStat.count}"></td>
-                                    <td th:text="${author.authorId}"></td>
+                                    <td th:text="${author.id}"></td>
                                     <td th:text="${author.authorName}"></td>
                                     <td>
                                         <button class="btn btn-warning btn-sm" 
-                                                th:onclick="'editAuthor(' + ${author.authorId} + ')'">Sửa</button>
+                                                th:onclick="'editAuthor(' + ${author.id} + ')'">Sửa</button>
                                         <button class="btn btn-danger btn-sm" 
-                                                th:onclick="'deleteAuthor(' + ${author.authorId} + ')'">Xóa</button>
+                                                th:onclick="'deleteAuthor(' + ${author.id} + ')'">Xóa</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -169,7 +169,7 @@
                     </div>
                     <div class="modal-body">
                         <form th:action="@{/admin/author/edit}" method="post">
-                            <input type="hidden" id="editAuthorId" name="authorId">
+                            <input type="hidden" id="editId" name="id">
                             <div class="mb-3">
                                 <label class="form-label">Tên Tác Giả</label>
                                 <input type="text" class="form-control" id="editAuthorName" name="authorName" required>
