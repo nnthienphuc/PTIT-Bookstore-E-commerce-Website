@@ -19,9 +19,6 @@ public class AuthorService {
     @Autowired
     private AuthorRepository AuthorRepository;
 
-
-  
-        
     public Page<Author> getAllAuthors(Pageable pageable) {
         return AuthorRepository.findAll(pageable);
     }

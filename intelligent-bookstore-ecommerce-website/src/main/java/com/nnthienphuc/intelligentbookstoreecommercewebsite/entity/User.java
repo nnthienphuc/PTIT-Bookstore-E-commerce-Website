@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "`User`")
 public class User {
     @Id
     @Column(name = "user_id", nullable = false, length = 50)

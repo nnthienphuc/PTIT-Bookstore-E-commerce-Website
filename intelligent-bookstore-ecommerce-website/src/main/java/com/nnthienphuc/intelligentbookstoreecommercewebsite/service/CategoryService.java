@@ -17,10 +17,14 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
 
     public Page<Category> getAllCategories(Pageable pageable) {
         return categoryRepository.findAll(pageable);
     }
+
     public List<Category> getAllCategoriesNoPaging() {
         return categoryRepository.findAll();
     }
@@ -33,7 +37,6 @@ public class CategoryService {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với id: " + id));
     }
-
 
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);

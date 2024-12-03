@@ -166,10 +166,10 @@ public class BookService {
 
         // Cập nhật thông tin
         book.setTitle(bookDetails.getTitle());
-        book.setCategory_id(bookDetails.getCategory_id());
-        book.setAuthor_id(bookDetails.getAuthor_id());
+        book.setCategoryId(bookDetails.getCategoryId());
+        book.setAuthorId(bookDetails.getAuthorId());
         book.setYear_of_publication(bookDetails.getYear_of_publication());
-        book.setPublisher_id(bookDetails.getPublisher_id());
+        book.setPublisherId(bookDetails.getPublisherId());
         book.setQuantity(bookDetails.getQuantity());
         book.setCover(bookDetails.getCover());
         book.setPrice(bookDetails.getPrice());
