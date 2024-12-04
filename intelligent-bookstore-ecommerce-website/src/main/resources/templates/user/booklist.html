@@ -432,10 +432,9 @@
                 <img th:src="@{'/bookImage/' + ${book.getUrl1()}}" alt="th:text=${book.getTitle()}"  class="product-image">
 
                 <h3 class="product-title">
-                    <a th:href="@{'/user/bookdetail/' + ${book.getIsbn()}}"
-                       th:text="${book.getTitle()}"></a>
-                </h3>
+                    <a th:href="@{'/user/bookdetail/' + ${book.getIsbn()}}" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
 
+                </h3>
                 <div class="product-price">
                     <!-- Tính giá sau giảm giá -->
                     <p th:text="${book.getPrice() - (book.getPrice() * book.getDiscount_percent())} + ' đ'"></p>
