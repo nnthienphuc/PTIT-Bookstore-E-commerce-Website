@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Giỏ hàng</title>
+    <title>Lịch sử mua hàng</title>
     <style>
         * {
             margin: 0;
@@ -14,8 +14,9 @@
         }
 
         body {
-            background: #f5f5f5;
+            background-color: #f5f5f5;
         }
+
         /* Header */
         .header {
             background: #fff;
@@ -71,208 +72,131 @@
             text-decoration: none;
             font-size: 14px;
         }
-        .logo {
-            font-size: 20px;
-            color: white;
-            text-decoration: none;
-        }
 
-
-
-
-
-
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .main-container {
+        .main-content {
             max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-            display: flex;
-            gap: 20px;
+            margin: 0 auto;
+            padding: 1rem;
         }
 
-        .cart-section {
-            flex: 2;
-            background: white;
-            border-radius: 4px;
-            padding: 20px;
-        }
-
-        .cart-header {
+        .back-button {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .cart-header .back-arrow {
-            margin-right: 10px;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
             text-decoration: none;
-            color: black;
+            color: #333;
+            font-size: 0.9rem;
         }
 
-        .select-all {
-            margin-bottom: 20px;
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .cart-item {
+        .order-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+
+        .order-date {
+            font-weight: 500;
+        }
+
+        .order-status {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
             border-bottom: 1px solid #eee;
         }
 
-        .item-checkbox {
-            margin-right: 15px;
-        }
-
         .item-image {
-            width: 120px;
-            height: 120px;
-            margin-right: 20px;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
         }
 
         .item-details {
-            flex: 1;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .item-title {
-            font-size: 14px;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: normal;
         }
 
-        .item-price {
-            color: #ff0000;
-            font-weight: bold;
+        .item-quantity {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .price-column {
+            text-align: right;
+            min-width: 120px;
         }
 
         .original-price {
             color: #999;
             text-decoration: line-through;
-            font-size: 13px;
-            margin-left: 5px;
+            font-size: 0.85rem;
         }
 
-        .quantity-control {
+        .current-price {
+            color: #333;
+            font-weight: 500;
+            margin: 0.2rem 0;
+        }
+
+        .total-price {
+            color: #f00;
+            font-weight: 500;
+        }
+
+        .order-footer {
             display: flex;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: fit-content;
-        }
-
-        .quantity-control button {
-            padding: 5px 10px;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-
-        .quantity-control input {
-            width: 50px;
-            text-align: center;
-            border: none;
-            padding: 5px;
-        }
-
-        .remove-item {
-            margin-left: 20px;
-            color: #999;
-            cursor: pointer;
-        }
-
-        .order-summary {
-            flex: 1;
-            background: white;
-            border-radius: 4px;
-            padding: 20px;
-            height: fit-content;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 1rem;
+            padding-top: 1rem;
         }
 
         .delivery-info {
-            margin-bottom: 20px;
-        }
-
-        .delivery-info h3 {
-            margin-bottom: 10px;
-            font-size: 16px;
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #333;
         }
 
         .delivery-address {
-            font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        .edit-button {
-            float: right;
-            color: #0F7C3F;
-            cursor: pointer;
+        .order-total {
+            text-align: right;
+            font-size: 1.1rem;
         }
 
-        .coupon-section {
-            margin-bottom: 20px;
-        }
-
-        .coupon-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-
-        .payment-options {
-            margin-bottom: 20px;
-        }
-
-        .payment-option {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            gap: 10px;
-        }
-
-        .summary-details {
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
-        .total-row {
+        .total-amount {
+            color: #f00;
             font-weight: bold;
-            font-size: 16px;
-            margin-top: 15px;
-        }
-
-        .total-row .amount {
-            color: #ff0000;
-        }
-
-        .checkout-button {
-            width: 100%;
-            padding: 12px;
-            background: #cc0000;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .section-title {
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 1.2rem;
         }
         /* css footer */
         .footer {
@@ -363,13 +287,9 @@
                 grid-template-columns: 1fr;
             }
         }
-
-
     </style>
 </head>
 <body>
-
-<!-- Header -->
 <header class="header">
     <div class="container">
         <div class="header-content">
@@ -399,88 +319,51 @@
         </div>
     </div>
 </header>
-<div class="main-container">
-    <div class="cart-section">
-        <div class="cart-header">
-            <a href="#" class="back-arrow">←</a>
-            <h2>GIỎ HÀNG (1 sản phẩm)</h2>
+
+<main class="main-content">
+    <a href="#" class="back-button">
+        ← Lịch sử mua hàng
+    </a>
+
+    <div class="order-card">
+        <div class="order-header">
+            <div class="order-date">16-11-2024</div>
+            <div class="order-status">Đơn hàng đang chờ xác nhận</div>
         </div>
 
-        <div class="select-all">
-            <input type="checkbox" id="select-all" checked>
-            <label for="select-all">Chọn tất cả (1 sản phẩm)</label>
-        </div>
-
-        <div class="cart-item">
-            <input type="checkbox" class="item-checkbox" checked>
-            <img class="item-image" src="/bookImage/NNA2-1.jpg" alt="Mùa Hè Không Tên">
+        <div class="order-item">
+            <img src="/bookImage/NNA2-1.jpg" alt="Mùa Hè Không Tên" class="item-image">
             <div class="item-details">
                 <h3 class="item-title">Nguyễn Nhật Ánh Trong Mắt Đồng Nghiệp</h3>
-                <div class="item-price">
-                    101.250 đ
-                    <span class="original-price">135.000 đ</span>
+                <div class="item-quantity">x1</div>
+            </div>
+            <div class="price-column">
+                <div class="original-price">135.000 đ</div>
+                <div class="current-price">101.250 đ</div>
+                <div class="total-price">131.250 đ</div>
+            </div>
+        </div>
+
+
+
+        <div class="order-footer">
+            <div class="delivery-info">
+                <span>📍</span>
+                <div class="delivery-address">
+                    <div>Trần Song Nguyên | 0908172140</div>
+                    <div>145 ấp Tây</div>
+                    <div>xã Đông Thạnh, huyện Cần Giuộc, tỉnh Long An</div>
                 </div>
             </div>
-            <div class="quantity-control">
-                <button>-</button>
-                <input type="text" value="1">
-                <button>+</button>
+            <div class="order-total">
+                Thành tiền: <span class="total-amount">131.250 đ</span>
             </div>
-            <div class="remove-item">🗑️</div>
         </div>
-
     </div>
 
-    <div class="order-summary">
-        <div class="delivery-info">
-            <h3>Thông tin nhận hàng <span class="edit-button"></span></h3>
-            <div class="delivery-address">
-                <p>Trần Song Nguyên | 0908172140</p>
-                <p>145 ấp Tây</p>
-                <p>xã Đông Thạnh, huyện Cần Giuộc, tỉnh Long An</p>
-            </div>
-        </div>
 
-        <div class="coupon-section">
-            <h3 class="section-title">Phiếu giảm giá</h3>
-            <input type="text" class="coupon-input" placeholder="Chưa chọn phiếu giảm giá">
-        </div>
-
-        <div class="payment-options">
-            <h3 class="section-title">Phương thức thanh toán</h3>
-            <div class="payment-option">
-                <input type="radio" name="payment" id="cod" checked>
-                <label for="cod">Thanh toán khi nhận hàng</label>
-            </div>
-            <div class="payment-option">
-                <input type="radio" name="payment" id="vnpay">
-                <label for="vnpay">Thanh toán bằng VNPay</label>
-            </div>
-        </div>
-
-        <div class="summary-details">
-            <h3 class="section-title">Chi tiết thanh toán</h3>
-            <div class="summary-row">
-                <span>Tổng tiền hàng</span>
-                <span>101.250 đ</span>
-            </div>
-            <div class="summary-row">
-                <span>Phí vận chuyển</span>
-                <span>30.000 đ</span>
-            </div>
-            <div class="summary-row">
-                <span>Giảm giá</span>
-                <span>-0 đ</span>
-            </div>
-            <div class="summary-row total-row">
-                <span>Tổng thanh toán</span>
-                <span class="amount">131.250 đ</span>
-            </div>
-        </div>
-
-        <button class="checkout-button">Thanh toán</button>
-    </div>
-</div>
+</main>
+</body>
 <footer class="footer">
     <div class="footer-container">
         <!-- Column 1: Company Info -->
@@ -568,6 +451,4 @@
 </footer>
 <!-- Font Awesome for icons -->
 <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
-
-</body>
 </html>

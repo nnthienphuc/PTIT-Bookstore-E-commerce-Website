@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -48,13 +48,13 @@
         .search-bar input {
             flex: 1;
             padding: 10px;
-            border: 2px solid #C92127;
+            border: 2px solid #039F54;
             border-radius: 4px 0 0 4px;
         }
 
         .search-bar button {
             padding: 10px 20px;
-            background: #C92127;
+            background: #039F54;
             color: white;
             border: none;
             border-radius: 0 4px 4px 0;
@@ -308,10 +308,10 @@
     <div class="container">
         <div class="header-content">
             <a href="#" class="logo">
-                <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/logo.png" alt="Fahasa">
+                <img th:src="@{/image/logocty.png}" alt="Napuno.com">
             </a>
             <div class="search-bar">
-                <input type="text" placeholder="Con đường chuyên hóa - Thích Pháp Hòa">
+                <input type="text" placeholder="Tìm kiếm sản phẩm ở đây!">
                 <button>
                     <i class="fas fa-search"></i>
                 </button>
@@ -362,25 +362,29 @@
             <h3 class="sidebar-title">Thể Loại</h3>
             <ul class="sidebar-list">
                 <li th:each="cate : ${cates}" class="sidebar-item">
-                    <a th:href="@{'/booklist-by-category/' + ${cate.getCategoryId()}}" th:text="${cate.getCategoryName()}"></a>
+
+                    <a th:href="@{'/user/booklist-by-category/' + ${cate.getCategoryId()}}" th:text="${cate.getCategoryName()}"></a>
+
                 </li>
             </ul>
         </div>
         <div class="sidebar-section">
             <h3 class="sidebar-title">Tác giả</h3>
 
-                <ul class="sidebar-list">
-                    <li th:each="author : ${authors}" class="sidebar-item">
-                        <a th:href="@{'/booklist-by-author/' + ${author.getId()}}" th:text="${author.getAuthorName()}"></a>
+            <ul class="sidebar-list">
+                <li th:each="author : ${authors}" class="sidebar-item">
 
-                    </li>
-                </ul>
+                    <a th:href="@{'/user/booklist-by-author/' + ${author.getAuthorId()}}" th:text="${author.getAuthorName()}"></a>
+
+                </li>
+            </ul>
         </div>
         <div class="sidebar-section">
             <h3 class="sidebar-title">Nhà xuất bản</h3>
             <ul class="sidebar-list">
                 <li th:each="publ : ${publishers}" class="sidebar-item">
-                    <a th:href="@{'/booklist-by-publisher/' + ${publ.getPublisherId()}}" th:text="${publ.getPublisherName()}"></a>
+
+                    <a th:href="@{'/user/booklist-by-publisher/' + ${publ.getPublisherId()}}" th:text="${publ.getPublisherName()}"></a>
                 </li>
             </ul>
         </div>
@@ -407,11 +411,11 @@
     <!-- Product Section -->
     <section class="product-section">
         <div class="product-controls">
-            <select class="sort-select">
+            <!--            <select class="sort-select">-->
 
-                <option>Giá Thấp Đến Cao</option>
-                <option>Giá Cao Đến Thấp</option>
-            </select>
+            <!--                <option>Giá Thấp Đến Cao</option>-->
+            <!--                <option>Giá Cao Đến Thấp</option>-->
+            <!--            </select>-->
             <!-- <select class="sort-select">
                 <option>24 sản phẩm</option>
                 <option>48 sản phẩm</option>
@@ -422,12 +426,15 @@
             <!-- Product Card -->
 
             <div th:each="book : ${books}" class="product-card">
-                <span class="discount-badge" th:text="${book.getDiscount_percent()}"></span>
+                <span class="discount-badge" th:text="${book.getDiscount_percent()*100}+ '%'"></span>
 
                 <!-- Xử lý đường dẫn ảnh đúng cách với Thymeleaf -->
-                <img th:src="@{'/bookImage/' + ${book.getUrl1()}}" alt="" th:text="${book.getTitle()}" class="product-image">
+                <img th:src="@{'/bookImage/' + ${book.getUrl1()}}" alt="th:text=${book.getTitle()}"  class="product-image">
 
-                <h3 class="product-title" th:text="${book.getTitle()}"></h3>
+                <h3 class="product-title">
+                    <a th:href="@{'/user/bookdetail/' + ${book.getIsbn()}}"
+                       th:text="${book.getTitle()}"></a>
+                </h3>
 
                 <div class="product-price">
                     <!-- Tính giá sau giảm giá -->
@@ -448,7 +455,7 @@
         <!-- Column 1: Company Info -->
         <div class="footer-column">
             <div class="footer-logo">
-                <img th:src="@{/image/fahasa-logo.png.webp}" alt="Napuno.com">
+                <img th:src="@{/image/logocty.png}" alt="Napuno.com">
 
             </div>
             <div class="company-info">

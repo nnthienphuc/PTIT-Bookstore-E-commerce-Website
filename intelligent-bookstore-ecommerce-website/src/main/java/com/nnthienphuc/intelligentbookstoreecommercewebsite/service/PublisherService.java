@@ -18,6 +18,9 @@ public class PublisherService {
     @Autowired
     private PublisherRepository PublisherRepository;
 
+    public List<Publisher> getAllPublishers() {
+        return PublisherRepository.findAll();
+    }
 
     public Page<Publisher> getAllPublishers(Pageable pageable) {
         return PublisherRepository.findAll(pageable);

@@ -3,23 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Book Details</title>
     <link rel="stylesheet" type="text/css" th:href="@{/user/bookdetail/css/style.css}" />
+    <style>
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #039F54;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #039F54;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-item {
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+
+        /* css footer */
+        .footer {
+            background: white;
+            padding: 40px 20px;
+            margin-top: 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        .company-info p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .company-policy {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .bct-logo {
+            max-width: 150px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav class="navbar">
-    <button>☰</button>
-    <div>Napuno.com</div>
-    <input type="search" placeholder="Hinted search text">
-    <div>🛒</div>
-    <div>👤</div>
-</nav>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img th:src="@{/image/logocty.png}" alt="Napuno.com">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm sản phẩm ở đây!">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="header-icons">
+                <a href="#" class="icon-item">
+                    <i class="fas fa-bell"></i>
+                    <div>Thông Báo</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div>Giỏ Hàng</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-user"></i>
+                    <div>Tài khoản</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
 
 <!-- Breadcrumb -->
 <div class="breadcrumb">
-    <a href="#" th:text="${book.getCategory_id().getCategoryName()}"></a> >
+    <a href="#" th:text="${book.getCategoryId().getCategoryName()}"></a> >
     <a href="#" th:text="${book.getTitle()}"></a>
 </div>
 
@@ -27,10 +198,10 @@
     <div class="product-gallery">
         <img th:src="@{'/bookImage/' + ${book.getUrl1()}}" alt="Book Image" class="main-image">
         <div class="thumbnail-container">
-            <img src="/api/placeholder/80/80" alt="Thumbnail 1" class="thumbnail active">
-            <img src="/api/placeholder/80/80" alt="Thumbnail 2" class="thumbnail">
-            <img src="/api/placeholder/80/80" alt="Thumbnail 3" class="thumbnail">
-            <img src="/api/placeholder/80/80" alt="Thumbnail 4" class="thumbnail">
+            <img th:src="@{'/bookImage/' + ${book.getUrl2()}}" alt="Thumbnail 2" class="thumbnail active">
+            <img th:src="@{'/bookImage/' + ${book.getUrl3()}}" alt="Thumbnail 3" class="thumbnail">
+            <img th:src="@{'/bookImage/' + ${book.getUrl4()}}" alt="Thumbnail 4" class="thumbnail">
+            <img th:src="@{'/bookImage/' + ${book.getUrl5()}}" alt="Thumbnail 5" class="thumbnail">
         </div>
     </div>
 
@@ -39,9 +210,9 @@
 
         <div class="product-meta">
             <div>Tác giả:</div>
-            <div th:text="${book.getAuthor_id().getAuthorName()}"></div>
+            <div th:text="${book.getAuthorId().getAuthorName()}"></div>
             <div>Nhà xuất bản:</div>
-            <div th:text="${book.getPublisher_id().getPublisherName()}"></div>
+            <div th:text="${book.getPublisherId().getPublisherName()}"></div>
             <div>Hình thức bìa:</div>
             <div th:if="${book.getCover()}">Bìa Cứng</div>
             <div th:if="${not book.getCover()}">Bìa Mềm</div>
@@ -53,10 +224,16 @@
         </div>
 
         <div class="price">
-            <span th:text="${book.getPrice() * book.getDiscount_percent() + ' đ'}"></span>
-            <span class="original-price" th:text="${book.getPrice() + ' đ'}"></span>
-            <span class="discount" th:text="${book.getDiscount_percent() + '%'}"></span>
+            <span>79.800 đ</span>
+            <span class="original-price">95.000 đ</span>
+            <span class="discount" th:text="${book.getDiscount_percent() *100 + '%'}"></span>
         </div>
+
+        <!--        <div class="price">-->
+        <!--            <span 79.800 Đ></span>-->
+        <!--            <span class="original-price" 95.000 Đ></span>-->
+        <!--            <span class="discount" th:text="${book.getDiscount_percent() *100 + '%'}"></span>-->
+        <!--        </div>-->
 
         <div class="quantity">
             <span>Số lượng:</span>
@@ -86,15 +263,19 @@
             </tr>
             <tr>
                 <td>Nhà xuất bản</td>
-                <td th:text="${book.getPublisher_id().getPublisherName()}"></td>
+                <td th:text="${book.getPublisherId().getPublisherName()}"></td>
             </tr>
             <tr>
                 <td>Tác giả</td>
-                <td th:text="${book.getAuthor_id().getAuthorName()}"></td>
+                <td th:text="${book.getAuthorId().getAuthorName()}"></td>
             </tr>
             <tr>
                 <td>Năm XB</td>
                 <td th:text="${book.getYear_of_publication()}"></td>
+            </tr>
+            <tr>
+                <td>Thể loại</td>
+                <td th:text="${book.getCategoryId().getCategoryName()}"></td>
             </tr>
             <tr>
                 <td>Ngôn ngữ</td>
@@ -126,26 +307,38 @@
             <button class="slider-btn prev">‹</button>
             <div class="product-cards">
                 <div class="product-card">
-                    <img src="/api/placeholder/200/300" alt="Book 1">
+                    <img src="/bookImage/NNA1-1.jpg" alt="Book 1">
+                    <h3>Lá Nằm trong lá - Nguyễn Nhật Ánh</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/bookImage/NNA8-1.jpg" alt="Book 2">
+                    <h3>Thương Nhớ Trà Long</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/bookImage/NNA3.jpg" alt="Book 3">
+                    <h3>Kính Vạn Hoa - Trọn Bộ</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/bookImage/NNA4-1.jpg" alt="Book 4">
+                    <h3>Con Chó Nhỏ Mang Giỏ Hoa Hồng</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/bookImage/NNA6-1.jpg" alt="Book 1">
+                    <h3>Người Quảng Đi Ăn Mì Quảng</h3>
+                    <div class="card-price">134.500 đ</div>
+                    <div class="card-discount">-50%</div>
+                </div>
+                <div class="product-card">
+                    <img src="/bookImage/NNA7-1.jpg" alt="Book 1">
                     <h3>Unstoppable Us - Tập 1</h3>
-                    <div class="card-price">134.500 đ</div>
-                    <div class="card-discount">-50%</div>
-                </div>
-                <div class="product-card">
-                    <img src="/api/placeholder/200/300" alt="Book 2">
-                    <h3>Unstoppable Us - Tập 2</h3>
-                    <div class="card-price">134.500 đ</div>
-                    <div class="card-discount">-50%</div>
-                </div>
-                <div class="product-card">
-                    <img src="/api/placeholder/200/300" alt="Book 3">
-                    <h3>Unstoppable Us - Tập 3</h3>
-                    <div class="card-price">134.500 đ</div>
-                    <div class="card-discount">-50%</div>
-                </div>
-                <div class="product-card">
-                    <img src="/api/placeholder/200/300" alt="Book 4">
-                    <h3>Unstoppable Us - Tập 4</h3>
                     <div class="card-price">134.500 đ</div>
                     <div class="card-discount">-50%</div>
                 </div>
@@ -154,8 +347,93 @@
         </div>
     </div>
 </main>
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Column 1: Company Info -->
+        <div class="footer-column">
+            <div class="footer-logo">
+                <img th:src="@{/image/logocty.png}" alt="Napuno.com">
 
+            </div>
+            <div class="company-info">
+                <p><strong>Địa chỉ văn phòng:</strong></p>
+                <p>📍97 Mạn Thiện, Phường Hiệp Phú, Quận 9, TP Thủ Đức</p>
+                <p>📍1 Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh</p>
+            </div>
+            <div class="company-policy">
+                <p>Napuno.com nhận đặt hàng trực tuyến và giao hàng tận nơi.</p>
+                <p>KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại tất cả Hệ Thống Napuno trên toàn quốc.</p>
+            </div>
+            <!-- <div class="social-icons">
+                <a href="#"><i>FB</i></a>
+                <a href="#"><i>YT</i></a>
+                <a href="#"><i>IG</i></a>
+                <a href="#"><i>Map</i></a>
+                <a href="#"><i>Twitter</i></a>
+            </div> -->
+            <img th:src="@{/image/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png}" alt="Bộ Công Thương" class="bct-logo">
+
+        </div>
+
+        <!-- Column 2: DỊCH VỤ -->
+        <div class="footer-column">
+            <h3>DỊCH VỤ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Điều khoản sử dụng</a></li>
+                <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                <li><a href="#">Giới thiệu về Napuno</a></li>
+                <li><a href="#">Hệ thống nhà sách</a></li>
+                <h3 style="margin-top: 30px;">Liên hệ</h3>
+                <div class="contact-info">
+                    <i>📍</i>
+                    <p>97 Mạn Thiện, Q. 9, TP. Thủ Đức</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- Column 3: HỖ TRỢ -->
+        <div class="footer-column">
+            <h3>HỖ TRỢ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Chính sách đổi-trả-hoàn tiền</a></li>
+                <li><a href="#">Chính sách bảo hành</a></li>
+                <li><a href="#">Chính sách vận chuyển</a></li>
+                <li><a href="#">Chính sách khách sỉ</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+            <div class="contact-info">
+                <i>✉️</i>
+                <p>cskh@napuno.com.vn</p>
+            </div>
+
+        </div>
+
+        <!-- Column 4: TÀI KHOẢN CỦA TÔI -->
+        <div class="footer-column">
+            <h3>TÀI KHOẢN CỦA TÔI</h3>
+            <ul class="footer-links">
+                <li><a href="#">Đăng nhập/Đăng ký</a></li>
+                <li><a href="#">Thay đổi địa chỉ khách hàng</a></li>
+                <li><a href="#">Chi tiết tài khoản</a></li>
+                <li><a href="#">Lịch sử mua hàng</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+
+
+            <div class="contact-info">
+                <i>📞</i>
+                <p>0907654321</p>
+            </div>
+        </div>
+    </div>
+</footer>
 <script type="text/javascript" src="/user/bookdetail/js/script.js"></script>
+<script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

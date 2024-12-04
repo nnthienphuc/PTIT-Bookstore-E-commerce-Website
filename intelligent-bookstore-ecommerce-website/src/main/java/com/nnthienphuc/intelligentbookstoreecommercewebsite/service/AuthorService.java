@@ -18,11 +18,14 @@ public class AuthorService {
 
     @Autowired
     private AuthorRepository AuthorRepository;
+    public List<Author> getAllAuthors() {
+        return AuthorRepository.findAll();
+    }
 
     public Page<Author> getAllAuthors(Pageable pageable) {
         return AuthorRepository.findAll(pageable);
     }
-    
+
     public List<Author> getAllAuthorsNoPaging() {
         return AuthorRepository.findAll();
     }

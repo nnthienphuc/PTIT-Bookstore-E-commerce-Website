@@ -22,6 +22,7 @@
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
@@ -51,7 +52,156 @@
     <!--    <meta property="og:title" content="Your Website Title">-->
     <!--    <meta property="og:description" content="Your website description">-->
     <!--    <meta property="og:image" th:content="@{/images/og-image.jpg}">-->
+    <style>
 
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #039F54;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #039F54;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-item {
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+
+        /* css footer */
+        .footer {
+            background: white;
+            padding: 40px 20px;
+            margin-top: 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        .company-info p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .company-policy {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .bct-logo {
+            max-width: 150px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -288,55 +438,37 @@
 <!--    </div>-->
 <!--</div>-->
 
-<div class="search-popup">
-    <div class="search-popup-container">
-        <form role="search" method="get" class="search-form" action="">
-            <input
-                    type="search"
-                    id="search-form"
-                    class="search-field"
-                    placeholder="Type and press enter"
-                    value=""
-                    name="s"
-            />
-            <button type="submit" class="search-submit">
-                <svg class="search">
-                    <use xlink:href="#search"></use>
-                </svg>
-            </button>
-        </form>
 
-        <h5 class="cat-list-title">Browse Categories</h5>
 
-        <ul class="cat-list">
-            <li class="cat-list-item">
-                <a href="#" title="Romance">Romance</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Thriller">Thriller</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Sci-fi">Sci-fi</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Cooking">Cooking</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Health">Health</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Lifestyle">Lifestyle</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Fiction">Fiction</a>
-            </li>
-        </ul>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img th:src="@{/image/logocty.png}" alt="Napuno.com">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm sản phẩm ở đây!">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="header-icons">
+                <a href="#" class="icon-item">
+                    <i class="fas fa-bell"></i>
+                    <div>Thông Báo</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div>Giỏ Hàng</div>
+                </a>
+                <a href="#" class="icon-item">
+                    <i class="fas fa-user"></i>
+                    <div>Tài khoản</div>
+                </a>
+            </div>
+        </div>
     </div>
-</div>
-
-<!-- Include header -->
-<div th:include="fragments/header :: header"></div>
-
+</header>
 <section
         id="billboard"
         class="position-relative d-flex align-items-center py-5 bg-light-gray"
@@ -383,7 +515,7 @@
                             <div class="banner-content">
                                 <h2>The Fine Print Book Collection</h2>
                                 <p>Best Offer Save 30%. Grab it now!</p>
-                                <a href="index.jsp" class="btn mt-3">Shop Collection</a>
+                                <a href="index.jsp" class="btn mt-3">View Detail</a>
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
@@ -435,7 +567,7 @@
                             <div class="banner-content">
                                 <h2>Your Heart is the Sea</h2>
                                 <p>Limited stocks available. Grab it now!</p>
-                                <a href="index.jsp" class="btn mt-3">Shop Collection</a>
+                                <a href="index.jsp" class="btn mt-3">View Detail</a>
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
@@ -554,78 +686,185 @@
         <div class="swiper product-swiper">
             <div class="swiper-wrapper">
                 <tr th:each="book, iterStat : ${books}">
-                <div class="swiper-slide">
-                    <div class="card position-relative p-4 border rounded-3">
-                        <div class="position-absolute">
-                            <!-- Kiểm tra nếu là sách có giảm giá -->
-                            <span th:if="${book.getIs_discount()}">
+                    <div class="swiper-slide">
+                        <div class="card position-relative p-4 border rounded-3">
+                            <div class="position-absolute">
+                                <!-- Kiểm tra nếu là sách có giảm giá -->
+                                <span th:if="${book.getIs_discount()}">
                                 <!-- Hiển thị tỷ lệ giảm giá -->
                                 <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"
-                                   th:text="${book.getDiscount_percent() + ' % off'}"></p>
+                                   th:text="${book.getDiscount_percent() * 100 + '% off'}"></p>
                             </span>
-                        </div>
-
-                        <img
-                                th:src="'/bookImage/' + ${book.getUrl1()}"
-                                class="img-fluid shadow-sm"
-                                alt="product item"
-                        />
-                        <h6 class="mt-4 mb-0 fw-bold">
-                            <a href="index.html" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
-                        </h6>
-
-                        <div class="review-content d-flex">
-                            <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthorId().getAuthorName()}"></p>
-
-
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
                             </div>
-                        </div>
-                        <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>
 
-                        <div
-                                class="card-concern position-absolute start-0 end-0 d-flex gap-2"
-                        >
-                            <button
-                                    type="button"
-                                    href="#"
-                                    class="btn btn-dark"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Tooltip on top"
+                            <img
+                                    th:src="'/bookImage/' + ${book.getUrl1()}"
+                                    class="img-fluid shadow-sm"
+                                    alt="product item"
+                            />
+                            <h6 class="mt-4 mb-0 fw-bold">
+                                <a href="index.html" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
+                            </h6>
+
+                            <div class="review-content d-flex">
+                                <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthor_id().getAuthorName()}"></p>
+
+
+                                <div class="rating text-warning d-flex align-items-center">
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>
+
+                            <div
+                                    class="card-concern position-absolute start-0 end-0 d-flex gap-2"
                             >
-                                <svg class="cart">
-                                    <use xlink:href="#cart"></use>
-                                </svg>
-                            </button>
-                            <a href="#" class="btn btn-dark">
+                                <button
+                                        type="button"
+                                        href="#"
+                                        class="btn btn-dark"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Tooltip on top"
+                                >
+                                    <svg class="cart">
+                                        <use xlink:href="#cart"></use>
+                                    </svg>
+                                </button>
+                                <a href="#" class="btn btn-dark">
                     <span>
                       <svg class="wishlist">
                         <use xlink:href="#heart"></use>
                       </svg>
                     </span>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+            </div>
+        </div>
     </div>
-    </div>
+</section>
+<section id="best-selling-items-2" class="position-relative padding-large">
+    <div class="container">
+        <div
+                class="section-title d-md-flex justify-content-between align-items-center mb-4"
+        >
+            <h3 class="d-flex align-items-center">Sách nổi bật</h3>
+            <a href="index.html" class="btn">View All</a>
+        </div>
+        <div
+                class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next"
+        >
+            <svg
+                    class="chevron-forward-circle d-flex justify-content-center align-items-center p-2"
+                    width="80"
+                    height="80"
+            >
+                <use xlink:href="#alt-arrow-right-outline"></use>
+            </svg>
+        </div>
+        <div
+                class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev"
+        >
+            <svg
+                    class="chevron-back-circle d-flex justify-content-center align-items-center p-2"
+                    width="80"
+                    height="80"
+            >
+                <use xlink:href="#alt-arrow-left-outline"></use>
+            </svg>
+        </div>
+        <div class="swiper product-swiper">
+            <div class="swiper-wrapper">
+                <tr th:each="book, iterStat : ${bookct}">
+                    <div class="swiper-slide">
+                        <div class="card position-relative p-4 border rounded-3">
+                            <div class="position-absolute">
+                                <!-- Kiểm tra nếu là sách có giảm giá -->
+                                <span th:if="${book.getIs_discount()}">
+                                <!-- Hiển thị tỷ lệ giảm giá -->
+                                <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"
+                                   th:text="${book.getDiscount_percent() + ' % off'}"></p>
+                            </span>
+                            </div>
+
+                            <img
+                                    th:src="'/bookImage/' + ${book.getUrl1()}"
+                                    class="img-fluid shadow-sm"
+                                    alt="product item"
+                            />
+                            <h6 class="mt-4 mb-0 fw-bold">
+                                <a href="index.html" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
+                            </h6>
+
+                            <div class="review-content d-flex">
+                                <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthor_id().getAuthorName()}"></p>
+
+
+                                <div class="rating text-warning d-flex align-items-center">
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>
+
+                            <div
+                                    class="card-concern position-absolute start-0 end-0 d-flex gap-2"
+                            >
+                                <button
+                                        type="button"
+                                        href="#"
+                                        class="btn btn-dark"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Tooltip on top"
+                                >
+                                    <svg class="cart">
+                                        <use xlink:href="#cart"></use>
+                                    </svg>
+                                </button>
+                                <a href="#" class="btn btn-dark">
+                    <span>
+                      <svg class="wishlist">
+                        <use xlink:href="#heart"></use>
+                      </svg>
+                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
     </div>
 </section>
 <!--<section id="best-selling-items-2" class="position-relative padding-large">-->
@@ -1072,12 +1311,13 @@
 </section> -->
 
 <section id="items-listing" class="padding-large">
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="featured border rounded-3 p-4">
                     <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Featured</h3>
+                        <h3 class="d-flex flex-column mb-0">Foreign Book</h3>
                     </div>
                     <div class="items-lists">
                         <div class="item d-flex">
@@ -1114,7 +1354,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >99.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1152,7 +1392,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >80.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1191,7 +1431,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >90.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1201,7 +1441,7 @@
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="latest-items border rounded-3 p-4">
                     <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Latest items</h3>
+                        <h3 class="d-flex flex-column mb-0">Xem nhiều</h3>
                     </div>
                     <div class="items-lists">
                         <div class="item d-flex">
@@ -1237,7 +1477,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >90.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1275,7 +1515,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >70.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1313,7 +1553,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >89.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1323,7 +1563,7 @@
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="best-reviewed border rounded-3 p-4">
                     <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Best reviewed</h3>
+                        <h3 class="d-flex flex-column mb-0">Mua nhiều</h3>
                     </div>
                     <div class="items-lists">
                         <div class="item d-flex">
@@ -1359,7 +1599,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >55.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1397,7 +1637,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >50.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1435,7 +1675,7 @@
                                     </div>
                                 </div>
                                 <span class="price text-primary fw-bold mb-2 fs-5"
-                                >$870</span
+                                >85.000 đ</span
                                 >
                             </div>
                         </div>
@@ -1445,7 +1685,7 @@
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="on-sale border rounded-3 p-4">
                     <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">On sale</h3>
+                        <h3 class="d-flex flex-column mb-0">Khuyến mãi HOT</h3>
                     </div>
                     <div class="items-lists">
                         <div class="item d-flex">
@@ -1872,39 +2112,93 @@
 </section> -->
 
 <!-- Include footer -->
-<div th:include="fragments/footer :: footer"></div>
-<hr />
-<div id="footer-bottom" class="mb-2">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-between">
-            <div class="ship-and-payment d-flex gap-md-5 flex-wrap">
-                <div class="shipping d-flex">
-                    <p>We ship with:</p>
-                    <div class="card-wrap ps-2">
-                        <img src="/user/homepage/images/dhl.png" alt="visa" />
-                        <img src="/user/homepage/images/shippingcard.png" alt="mastercard" />
-                    </div>
-                </div>
-                <div class="payment-method d-flex">
-                    <p>Payment options:</p>
-                    <div class="card-wrap ps-2">
-                        <img src="/user/homepage/images/visa.jpg" alt="visa" />
-                        <img src="/user/homepage/images/mastercard.jpg" alt="mastercard" />
-                        <img src="/user/homepage/images/paypal.jpg" alt="paypal" />
-                    </div>
-                </div>
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Column 1: Company Info -->
+        <div class="footer-column">
+            <div class="footer-logo">
+                <img th:src="@{/image/logocty.png}" alt="Napuno.com">
+
             </div>
-            <div class="copyright">
-                <p>
-                    © Copyright 2024 Bookly. HTML Template by
-                    <a href="https://templatesjungle.com/" target="_blank"
-                    >TemplatesJungle</a
-                    >
-                </p>
+            <div class="company-info">
+                <p><strong>Địa chỉ văn phòng:</strong></p>
+                <p>📍97 Mạn Thiện, Phường Hiệp Phú, Quận 9, TP Thủ Đức</p>
+                <p>📍1 Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, Hồ Chí Minh</p>
+            </div>
+            <div class="company-policy">
+                <p>Napuno.com nhận đặt hàng trực tuyến và giao hàng tận nơi.</p>
+                <p>KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại tất cả Hệ Thống Napuno trên toàn quốc.</p>
+            </div>
+            <!-- <div class="social-icons">
+                <a href="#"><i>FB</i></a>
+                <a href="#"><i>YT</i></a>
+                <a href="#"><i>IG</i></a>
+                <a href="#"><i>Map</i></a>
+                <a href="#"><i>Twitter</i></a>
+            </div> -->
+            <img th:src="@{/image/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png}" alt="Bộ Công Thương" class="bct-logo">
+
+        </div>
+
+        <!-- Column 2: DỊCH VỤ -->
+        <div class="footer-column">
+            <h3>DỊCH VỤ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Điều khoản sử dụng</a></li>
+                <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                <li><a href="#">Giới thiệu về Napuno</a></li>
+                <li><a href="#">Hệ thống nhà sách</a></li>
+                <h3 style="margin-top: 30px;">Liên hệ</h3>
+                <div class="contact-info">
+                    <i>📍</i>
+                    <p>97 Mạn Thiện, Q. 9, TP. Thủ Đức</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- Column 3: HỖ TRỢ -->
+        <div class="footer-column">
+            <h3>HỖ TRỢ</h3>
+            <ul class="footer-links">
+                <li><a href="#">Chính sách đổi-trả-hoàn tiền</a></li>
+                <li><a href="#">Chính sách bảo hành</a></li>
+                <li><a href="#">Chính sách vận chuyển</a></li>
+                <li><a href="#">Chính sách khách sỉ</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+            <div class="contact-info">
+                <i>✉️</i>
+                <p>cskh@napuno.com.vn</p>
+            </div>
+
+        </div>
+
+        <!-- Column 4: TÀI KHOẢN CỦA TÔI -->
+        <div class="footer-column">
+            <h3>TÀI KHOẢN CỦA TÔI</h3>
+            <ul class="footer-links">
+                <li><a href="#">Đăng nhập/Đăng ký</a></li>
+                <li><a href="#">Thay đổi địa chỉ khách hàng</a></li>
+                <li><a href="#">Chi tiết tài khoản</a></li>
+                <li><a href="#">Lịch sử mua hàng</a></li>
+                <li><a href="#" style="color: white;">Hệ thống nhà sách</a></li>
+
+            </ul>
+            <h3 style="margin-top: 30px;color: white;">Liên hệ</h3>
+
+
+            <div class="contact-info">
+                <i>📞</i>
+                <p>0907654321</p>
             </div>
         </div>
     </div>
-</div>
+</footer>
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
 
 
 

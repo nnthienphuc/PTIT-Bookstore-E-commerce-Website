@@ -1,5 +1,6 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -146,7 +147,7 @@ public class UserController {
 
     @GetMapping("/bookdetail/{id}")
     public String bookDetail(Model model, @PathVariable("id") String id) {
-        model.addAttribute("book", bookService.getBookById(id));
+        model.addAttribute("book", bookService.getBookByIsbn(id));
         return "user/bookDetail";
     }
 
@@ -170,9 +171,10 @@ public class UserController {
     public String booklist(Model model) {
 
         model.addAttribute("cates", categoryService.getAllCategories());
-        model.addAttribute("authors",authorService.getAllAuthorsNoPaging());
-        model.addAttribute("publishers",publisherService.getAllPublishersNoPaging());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
         model.addAttribute("books", bookService.getAllBooks());
+
         return "user/booklist";
     }
 //    @GetMapping("/booklist/nguyennhatanh")
@@ -187,16 +189,16 @@ public class UserController {
     @RequestMapping("/booklist-by-category/{cid}")
     public String listByCategory(Model model, @PathVariable("cid") Integer categoryId) {
         model.addAttribute("cates", categoryService.getAllCategories());
-        model.addAttribute("authors",authorService.getAllAuthorsNoPaging());
-        model.addAttribute("publishers",publisherService.getAllPublishersNoPaging());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
         model.addAttribute("books", bookService.getBookByCategoryID(categoryId));
     return "user/booklist";
 }
     @RequestMapping("/booklist-by-author/{cid}")
     public String listByAuthor(Model model, @PathVariable("cid") Integer authorId) {
         model.addAttribute("cates", categoryService.getAllCategories());
-        model.addAttribute("authors",authorService.getAllAuthorsNoPaging());
-        model.addAttribute("publishers",publisherService.getAllPublishersNoPaging());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
         model.addAttribute("books", bookService.getBookByAuthorID(authorId));
         return "user/booklist";
     }
@@ -204,8 +206,8 @@ public class UserController {
     @RequestMapping("/booklist-by-publisher/{cid}")
     public String listByPublisher(Model model, @PathVariable("cid") Integer categoryId) {
         model.addAttribute("cates", categoryService.getAllCategories());
-        model.addAttribute("authors",authorService.getAllAuthorsNoPaging());
-        model.addAttribute("publishers",publisherService.getAllPublishersNoPaging());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
         model.addAttribute("books", bookService.getBookByPublisher(categoryId));
         return "user/booklist";
     }
