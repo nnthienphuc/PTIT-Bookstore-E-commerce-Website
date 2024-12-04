@@ -224,8 +224,8 @@
         </div>
 
         <div class="price">
-            <span>79.800 đ</span>
-            <span class="original-price">95.000 đ</span>
+            <span th:text="${#numbers.formatDecimal(book.getPrice()*(1 - book.getDiscount_percent()), 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+            <span class="original-price" th:text="${#numbers.formatDecimal(book.getPrice(), 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
             <span class="discount" th:text="${book.getDiscount_percent() *100 + '%'}"></span>
         </div>
 

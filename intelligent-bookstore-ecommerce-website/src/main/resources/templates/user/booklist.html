@@ -437,8 +437,9 @@
                 </h3>
                 <div class="product-price">
                     <!-- Tính giá sau giảm giá -->
-                    <p th:text="${book.getPrice() - (book.getPrice() * book.getDiscount_percent())} + ' đ'"></p>
-                    <span class="original-price" th:text="${book.getPrice()} + ' đ'"></span>
+
+                    <p th:text="${#numbers.formatDecimal(book.getPrice() - (book.getPrice() * book.getDiscount_percent()), 0, 'COMMA', 0, 'POINT')} + ' đ'"></p>
+                    <span class="original-price" th:text="${#numbers.formatDecimal(book.getPrice(), 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
                 </div>
 
                 <div class="rating">★★★★★</div>
