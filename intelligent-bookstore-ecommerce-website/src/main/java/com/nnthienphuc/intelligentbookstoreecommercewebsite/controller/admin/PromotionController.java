@@ -1,12 +1,8 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
-
-import java.util.List;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,39 +14,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Promotion;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.PromotionService;
 
 @Controller
-@RequestMapping("/admin/category")
-public class CategoryController {
+@RequestMapping("/admin/promotion")
+public class PromotionController {
 
     @Autowired
-    private CategoryService categoryService; // Giả sử bạn có CategoryService
+    private PromotionService PromotionService; // Giả sử bạn có PromotionService
 
     @GetMapping("")
-    public String showCategories(
+    public String showPromotions(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             Model model) {
         
         try {
-            Page<Category> categoryPage;
+            Page<Promotion> promotionPage;
             
             if (keyword != null && !keyword.trim().isEmpty()) {
                 // Tìm kiếm có phân trang
-            	categoryPage = categoryService.searchCategories(keyword.trim(), PageRequest.of(page, size));
+                promotionPage = PromotionService.searchPromotions(keyword.trim(), PageRequest.of(page, size));
             } else {
                 // Lấy tất cả có phân trang
-            	categoryPage = categoryService.getAllCategories(PageRequest.of(page, size));
+            	promotionPage = PromotionService.getAllPromotions(PageRequest.of(page, size));
             }
             
-            model.addAttribute("categories", categoryPage);
+            model.addAttribute("promotions", promotionPage);
             model.addAttribute("keyword", keyword);
             
-            return "admin/category";
+            return "admin/promotion";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,38 +54,38 @@ public class CategoryController {
     }
     @GetMapping("/{id}")
     @ResponseBody
-    public Category getCategoryById(@PathVariable Long id) {
-        return categoryService.getCategoryById(id);
+    public Promotion getPromotionById(@PathVariable Long id) {
+        return PromotionService.getPromotionById(id);
     }
     @PostMapping("/add")
-    public String addCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
+    public String addPromotion(@ModelAttribute Promotion Promotion, RedirectAttributes redirectAttributes) {
         try {
-            categoryService.saveCategory(category);
+            PromotionService.savePromotion(Promotion);
             // Thêm thông báo thành công
             redirectAttributes.addAttribute("success", "add");
-            return "redirect:/admin/category";
+            return "redirect:/admin/promotion";
         } catch (Exception e) {
             // Thêm thông báo thất bại
             redirectAttributes.addAttribute("error", "add");
-            return "redirect:/admin/category";
+            return "redirect:/admin/promotion";
         }
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
-        return "redirect:/admin/category";
+    public String deletePromotion(@PathVariable Long id) {
+        PromotionService.deletePromotion(id);
+        return "redirect:/admin/promotion";
     }
 
     @PostMapping("/edit")
-    public String editCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
+    public String editPromotion(@ModelAttribute Promotion Promotion, RedirectAttributes redirectAttributes) {
         try {
-            categoryService.saveCategory(category);
+            PromotionService.savePromotion(Promotion);
             redirectAttributes.addAttribute("success", "edit");
-            return "redirect:/admin/category";
+            return "redirect:/admin/promotion";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", "edit");
-            return "redirect:/admin/category";
+            return "redirect:/admin/promotion";
         }
     }
     

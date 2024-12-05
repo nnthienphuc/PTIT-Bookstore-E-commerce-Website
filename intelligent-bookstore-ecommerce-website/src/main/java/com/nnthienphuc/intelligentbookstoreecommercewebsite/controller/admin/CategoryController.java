@@ -1,12 +1,8 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
-
-import java.util.List;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,39 +14,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Publisher;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.PublisherService;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
 
 @Controller
-@RequestMapping("/admin/publisher")
-public class PublisherController {
+@RequestMapping("/admin/category")
+public class CategoryController {
 
     @Autowired
-    private PublisherService PublisherService; // Giả sử bạn có PublisherService
+    private CategoryService categoryService; // Giả sử bạn có CategoryService
 
     @GetMapping("")
-    public String showPublishers(
+    public String showCategories(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             Model model) {
         
         try {
-            Page<Publisher> publisherPage;
+            Page<Category> categoryPage;
             
             if (keyword != null && !keyword.trim().isEmpty()) {
                 // Tìm kiếm có phân trang
-                publisherPage = PublisherService.searchPublishers(keyword.trim(), PageRequest.of(page, size));
+            	categoryPage = categoryService.searchCategories(keyword.trim(), PageRequest.of(page, size));
             } else {
                 // Lấy tất cả có phân trang
-            	publisherPage = PublisherService.getAllPublishers(PageRequest.of(page, size));
+            	categoryPage = categoryService.getAllCategories(PageRequest.of(page, size));
             }
             
-            model.addAttribute("publishers", publisherPage);
+            model.addAttribute("categories", categoryPage);
             model.addAttribute("keyword", keyword);
             
-            return "admin/publisher";
+            return "admin/category";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,38 +54,38 @@ public class PublisherController {
     }
     @GetMapping("/{id}")
     @ResponseBody
-    public Publisher getPublisherById(@PathVariable Long id) {
-        return PublisherService.getPublisherById(id);
+    public Category getCategoryById(@PathVariable Long id) {
+        return categoryService.getCategoryById(id);
     }
     @PostMapping("/add")
-    public String addPublisher(@ModelAttribute Publisher Publisher, RedirectAttributes redirectAttributes) {
+    public String addCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         try {
-            PublisherService.savePublisher(Publisher);
+            categoryService.saveCategory(category);
             // Thêm thông báo thành công
             redirectAttributes.addAttribute("success", "add");
-            return "redirect:/admin/publisher";
+            return "redirect:/admin/category";
         } catch (Exception e) {
             // Thêm thông báo thất bại
             redirectAttributes.addAttribute("error", "add");
-            return "redirect:/admin/publisher";
+            return "redirect:/admin/category";
         }
     }
 
     @PostMapping("/delete/{id}")
-    public String deletePublisher(@PathVariable Long id) {
-        PublisherService.deletePublisher(id);
-        return "redirect:/admin/publisher";
+    public String deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return "redirect:/admin/category";
     }
 
     @PostMapping("/edit")
-    public String editPublisher(@ModelAttribute Publisher Publisher, RedirectAttributes redirectAttributes) {
+    public String editCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         try {
-            PublisherService.savePublisher(Publisher);
+            categoryService.saveCategory(category);
             redirectAttributes.addAttribute("success", "edit");
-            return "redirect:/admin/publisher";
+            return "redirect:/admin/category";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", "edit");
-            return "redirect:/admin/publisher";
+            return "redirect:/admin/category";
         }
     }
     

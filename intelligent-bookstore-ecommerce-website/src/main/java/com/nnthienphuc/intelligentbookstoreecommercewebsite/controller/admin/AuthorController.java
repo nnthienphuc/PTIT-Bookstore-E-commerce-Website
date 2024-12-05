@@ -1,12 +1,8 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
-
-import java.util.List;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +24,7 @@ public class AuthorController {
     @Autowired
     private AuthorService AuthorService; // Giả sử bạn có AuthorService
 
-    @GetMapping("")
+    @GetMapping
     public String showAuthors(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

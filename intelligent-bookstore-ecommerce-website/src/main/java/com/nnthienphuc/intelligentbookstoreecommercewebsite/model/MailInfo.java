@@ -20,4 +20,11 @@ public class MailInfo {
     String subject;
     String body;
     String files;
+
+    public MailInfo(String from, String to, String subject, String body) {
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.body = body;
+    }
 }

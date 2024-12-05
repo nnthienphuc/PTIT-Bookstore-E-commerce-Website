@@ -1,7 +1,7 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,9 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MailService mailService;
+
     @GetMapping("/account/login")
     public String loginForm(Model model) {
         String userId = String.valueOf(cookie.read("userid"));
@@ -59,7 +63,7 @@ public class UserController {
             Model model,
             @RequestParam("userId") @NotEmpty(message = "Username is required!") String userId,
             @RequestParam("pwd") @NotEmpty(message = "Password is required!") String pwd,
-            @RequestParam(value = "rm", defaultValue = "false") boolean rememberMe) {
+            @RequestParam(value = "rm", defaultValue = "true") boolean rememberMe) {
 
         if (userId.isEmpty() || pwd.isEmpty()) {
             model.addAttribute("message", "Password, Username is not null!");
@@ -85,7 +89,7 @@ public class UserController {
         }
 
         model.addAttribute("message", "Login successfully!");
-        session.setAttribute("userId", user);
+        session.setAttribute("user", user);
 
         if (rememberMe) {
             cookie.create("userid", user.getUserId(), 30);
@@ -111,23 +115,46 @@ public class UserController {
             @ModelAttribute("user") User user,
             BindingResult error) throws Exception {
 
-        System.out.println("1");
         if (error.hasErrors()) {
-            System.out.println("2");
             model.addAttribute("message", "Please fill all the required fields!");
             return "redirect:/user/account/register";
         }
 
-//        Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-//        String encodedPassword = passwordEncoder.encode(user.getPwd());
-//        user.setPwd(encodedPassword);
-
-        user.setIsActive(false);
-        userService.create(user);
-
-        System.out.println("3");
+        user.setIsActive(false);  // Đặt mặc định là chưa kích hoạt
+        userService.create(user);  // Lưu thông tin nhân viên vào cơ sở dữ liệu
 
         model.addAttribute("message", "Registration successful. Please check your email for activation.");
+
+        String from = "phucnaoto.buildweb@gmail.com";
+        String to = user.getEmail();
+        String subject = "Activate Your Account!";
+        String url = "http://localhost:8080/user/account/active/" + user.getUserId(); // Địa chỉ URL đầy đủ
+        // Đường dẫn kích hoạt
+        String body = "Click <a href='" + url + "'>here</a> to active your account.";
+
+        MailInfo mail = new MailInfo(from, to, subject, body);
+        mailService.send(mail);  // Gửi email
+
+        return "redirect:/user/account/login";
+    }
+
+    @GetMapping("account/active/{id}")
+    public String active(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        Optional<User> user = userService.findById(id);
+
+        if (user.isPresent()) {
+            User currentUser = user.get();
+            if (!currentUser.getIsActive()) {
+                currentUser.setIsActive(true);
+                userService.update(currentUser);
+                redirectAttributes.addFlashAttribute("success", "Account activated successfully!");
+            } else {
+                redirectAttributes.addFlashAttribute("info", "Account is already active!");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Account not found!");
+        }
+
         return "redirect:/user/account/login";
     }
 
