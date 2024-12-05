@@ -1,12 +1,8 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
-
-import java.util.List;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,38 +14,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Promotion;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.PromotionService;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.AuthorService;
 
 @Controller
-@RequestMapping("/admin/promotion")
-public class PromotionController {
+@RequestMapping("/admin/author")
+public class AuthorController {
 
     @Autowired
-    private PromotionService PromotionService; // Giả sử bạn có PromotionService
+    private AuthorService AuthorService; // Giả sử bạn có AuthorService
 
-    @GetMapping("")
-    public String showPromotions(
+    @GetMapping
+    public String showAuthors(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             Model model) {
         
         try {
-            Page<Promotion> promotionPage;
+            Page<Author> authorPage;
             
             if (keyword != null && !keyword.trim().isEmpty()) {
                 // Tìm kiếm có phân trang
-                promotionPage = PromotionService.searchPromotions(keyword.trim(), PageRequest.of(page, size));
+                authorPage = AuthorService.searchAuthors(keyword.trim(), PageRequest.of(page, size));
             } else {
                 // Lấy tất cả có phân trang
-            	promotionPage = PromotionService.getAllPromotions(PageRequest.of(page, size));
+                authorPage = AuthorService.getAllAuthors(PageRequest.of(page, size));
             }
             
-            model.addAttribute("promotions", promotionPage);
+            model.addAttribute("authors", authorPage);
             model.addAttribute("keyword", keyword);
             
-            return "admin/promotion";
+            return "admin/author";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,38 +54,38 @@ public class PromotionController {
     }
     @GetMapping("/{id}")
     @ResponseBody
-    public Promotion getPromotionById(@PathVariable Long id) {
-        return PromotionService.getPromotionById(id);
+    public Author getAuthorById(@PathVariable Long id) {
+        return AuthorService.getAuthorById(id);
     }
     @PostMapping("/add")
-    public String addPromotion(@ModelAttribute Promotion Promotion, RedirectAttributes redirectAttributes) {
+    public String addAuthor(@ModelAttribute Author Author, RedirectAttributes redirectAttributes) {
         try {
-            PromotionService.savePromotion(Promotion);
+            AuthorService.saveAuthor(Author);
             // Thêm thông báo thành công
             redirectAttributes.addAttribute("success", "add");
-            return "redirect:/admin/promotion";
+            return "redirect:/admin/author";
         } catch (Exception e) {
             // Thêm thông báo thất bại
             redirectAttributes.addAttribute("error", "add");
-            return "redirect:/admin/promotion";
+            return "redirect:/admin/author";
         }
     }
 
     @PostMapping("/delete/{id}")
-    public String deletePromotion(@PathVariable Long id) {
-        PromotionService.deletePromotion(id);
-        return "redirect:/admin/promotion";
+    public String deleteAuthor(@PathVariable Long id) {
+        AuthorService.deleteAuthor(id);
+        return "redirect:/admin/author";
     }
 
     @PostMapping("/edit")
-    public String editPromotion(@ModelAttribute Promotion Promotion, RedirectAttributes redirectAttributes) {
+    public String editAuthor(@ModelAttribute Author Author, RedirectAttributes redirectAttributes) {
         try {
-            PromotionService.savePromotion(Promotion);
+            AuthorService.saveAuthor(Author);
             redirectAttributes.addAttribute("success", "edit");
-            return "redirect:/admin/promotion";
+            return "redirect:/admin/author";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", "edit");
-            return "redirect:/admin/promotion";
+            return "redirect:/admin/author";
         }
     }
     

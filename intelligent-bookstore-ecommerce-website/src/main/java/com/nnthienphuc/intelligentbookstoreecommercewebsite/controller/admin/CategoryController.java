@@ -1,12 +1,8 @@
-package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
-
-import java.util.List;
+package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,38 +14,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.AuthorService;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CategoryService;
 
 @Controller
-@RequestMapping("/admin/author")
-public class AuthorController {
+@RequestMapping("/admin/category")
+public class CategoryController {
 
     @Autowired
-    private AuthorService AuthorService; // Giả sử bạn có AuthorService
+    private CategoryService categoryService; // Giả sử bạn có CategoryService
 
     @GetMapping("")
-    public String showAuthors(
+    public String showCategories(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             Model model) {
         
         try {
-            Page<Author> authorPage;
+            Page<Category> categoryPage;
             
             if (keyword != null && !keyword.trim().isEmpty()) {
                 // Tìm kiếm có phân trang
-                authorPage = AuthorService.searchAuthors(keyword.trim(), PageRequest.of(page, size));
+            	categoryPage = categoryService.searchCategories(keyword.trim(), PageRequest.of(page, size));
             } else {
                 // Lấy tất cả có phân trang
-                authorPage = AuthorService.getAllAuthors(PageRequest.of(page, size));
+            	categoryPage = categoryService.getAllCategories(PageRequest.of(page, size));
             }
             
-            model.addAttribute("authors", authorPage);
+            model.addAttribute("categories", categoryPage);
             model.addAttribute("keyword", keyword);
             
-            return "admin/author";
+            return "admin/category";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,38 +54,38 @@ public class AuthorController {
     }
     @GetMapping("/{id}")
     @ResponseBody
-    public Author getAuthorById(@PathVariable Long id) {
-        return AuthorService.getAuthorById(id);
+    public Category getCategoryById(@PathVariable Long id) {
+        return categoryService.getCategoryById(id);
     }
     @PostMapping("/add")
-    public String addAuthor(@ModelAttribute Author Author, RedirectAttributes redirectAttributes) {
+    public String addCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         try {
-            AuthorService.saveAuthor(Author);
+            categoryService.saveCategory(category);
             // Thêm thông báo thành công
             redirectAttributes.addAttribute("success", "add");
-            return "redirect:/admin/author";
+            return "redirect:/admin/category";
         } catch (Exception e) {
             // Thêm thông báo thất bại
             redirectAttributes.addAttribute("error", "add");
-            return "redirect:/admin/author";
+            return "redirect:/admin/category";
         }
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteAuthor(@PathVariable Long id) {
-        AuthorService.deleteAuthor(id);
-        return "redirect:/admin/author";
+    public String deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return "redirect:/admin/category";
     }
 
     @PostMapping("/edit")
-    public String editAuthor(@ModelAttribute Author Author, RedirectAttributes redirectAttributes) {
+    public String editCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         try {
-            AuthorService.saveAuthor(Author);
+            categoryService.saveCategory(category);
             redirectAttributes.addAttribute("success", "edit");
-            return "redirect:/admin/author";
+            return "redirect:/admin/category";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", "edit");
-            return "redirect:/admin/author";
+            return "redirect:/admin/category";
         }
     }
     

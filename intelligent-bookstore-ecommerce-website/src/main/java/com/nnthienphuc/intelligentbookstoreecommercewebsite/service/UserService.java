@@ -42,11 +42,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User update(User user) throws Exception {
-        if(userRepository.existsById(user.getUserId())) {
-            throw new Exception("Username has exist!");
-        }
-
+    public User update(User user) {
         return userRepository.save(user);
     }
 
