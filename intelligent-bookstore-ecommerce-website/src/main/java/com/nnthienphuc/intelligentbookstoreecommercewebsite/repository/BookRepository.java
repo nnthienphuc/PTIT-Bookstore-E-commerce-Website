@@ -18,7 +18,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
     // Tìm kiếm theo categoryName chứa keyword (không phân biệt hoa thường)
     List<Book> findByTitleContainingIgnoreCase(String keyword);
 
-    @Query("SELECT b FROM Book b WHERE b.authorId.id = :authorId")
+    @Query("SELECT b FROM Book b WHERE b.authorId.authorId = :authorId")
     List<Book> getBooksByAuthorID(@Param("authorId") Integer authorId);
 
     @Query("SELECT b FROM Book b WHERE b.categoryId.categoryId = :categoryId")

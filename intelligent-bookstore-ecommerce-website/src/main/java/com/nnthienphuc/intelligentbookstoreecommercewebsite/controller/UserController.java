@@ -1,5 +1,6 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Cart;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
@@ -19,6 +20,9 @@ import java.util.Optional;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+
+    @Autowired
+    private CartService cartService;
 
     @Autowired
     private UserService userService;
@@ -189,9 +193,18 @@ public class UserController {
     }
 
     @GetMapping("/cart")
-    public String cart(Model model) {
+    public String cart(HttpSession session,Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Cart> carts = cartService.getCartbyUserId(user.getUserId());
+            model.addAttribute("user", user);
+            model.addAttribute("cart", carts);
+            return "user/cart";
+        }
 
-        return "user/cart";
+        // Nếu không, chuyển hướng người dùng đến trang đăng nhập
+        return "redirect:/user/account/login";
+
     }
 
     @GetMapping("/booklist")

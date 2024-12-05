@@ -410,20 +410,23 @@
             <input type="checkbox" id="select-all" checked>
             <label for="select-all">Chọn tất cả (1 sản phẩm)</label>
         </div>
-
-        <div class="cart-item">
+        <tr th:each="car, iterStat : ${cart}">
+            <div class="cart-item">
             <input type="checkbox" class="item-checkbox" checked>
             <img class="item-image" src="/bookImage/NNA2-1.jpg" alt="Mùa Hè Không Tên">
             <div class="item-details">
-                <h3 class="item-title">Nguyễn Nhật Ánh Trong Mắt Đồng Nghiệp</h3>
+
+                <h3 class="item-title" th:text="${car.getIsbn().getTitle()}"></h3>
+
                 <div class="item-price">
                     101.250 đ
-                    <span class="original-price">135.000 đ</span>
+                    <span class="original-price" th:text="${car.getIsbn().getPrice()}"></span>
                 </div>
             </div>
             <div class="quantity-control">
                 <button>-</button>
-                <input type="text" value="1">
+                <input type="text" th:value="${car.getQuantity()}">
+
                 <button>+</button>
             </div>
             <div class="remove-item">🗑️</div>
@@ -435,9 +438,10 @@
         <div class="delivery-info">
             <h3>Thông tin nhận hàng <span class="edit-button"></span></h3>
             <div class="delivery-address">
-                <p>Trần Song Nguyên | 0908172140</p>
-                <p>145 ấp Tây</p>
-                <p>xã Đông Thạnh, huyện Cần Giuộc, tỉnh Long An</p>
+                <p th:text="${user.getFullName()}"></p>
+                <p th:text="${user.getBirthday()}" ></p>
+                <p th:text="${user.getEmail()}" ></p>
+
             </div>
         </div>
 
