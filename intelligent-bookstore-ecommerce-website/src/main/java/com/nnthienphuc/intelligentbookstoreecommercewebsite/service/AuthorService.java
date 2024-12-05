@@ -36,7 +36,7 @@ public class AuthorService {
  
 
     public Author getAuthorById(Long id) {
-        return AuthorRepository.findById(id)
+        return AuthorRepository.findByAuthorId(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với id: " + id));
     }
 

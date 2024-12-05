@@ -70,118 +70,118 @@ public class BookController {
         }
     }
 
-    @PostMapping("/add")
-    public String addBook(@ModelAttribute Book book,
-                         @RequestParam("images") MultipartFile[] images,
-                         RedirectAttributes redirectAttributes) {
-        try {
-            bookService.saveBook(book, images);
-            redirectAttributes.addAttribute("success", "add");
-            return "redirect:/admin/book";
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addAttribute("error", "add");
-            return "redirect:/admin/book";
-        }
-    }
+//    @PostMapping("/add")
+//    public String addBook(@ModelAttribute Book book,
+//                         @RequestParam("images") MultipartFile[] images,
+//                         RedirectAttributes redirectAttributes) {
+//        try {
+//            bookService.saveBook(book, images);
+//            redirectAttributes.addAttribute("success", "add");
+//            return "redirect:/admin/book";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            redirectAttributes.addAttribute("error", "add");
+//            return "redirect:/admin/book";
+//        }
+//    }
+//
+//    @GetMapping("/{isbn}")
+//    @ResponseBody
+//    public ResponseEntity<Book> getBook(@PathVariable String isbn) {
+//        try {
+//            Book book = bookService.getBookByIsbn(isbn);
+//            return ResponseEntity.ok(book);
+//        } catch (Exception e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+//
+//    @PostMapping("/edit")
+//    public String editBook(@RequestParam String isbn,
+//                          @ModelAttribute Book bookDetails,
+//                          @RequestParam(value = "images", required = false) MultipartFile[] images,
+//                          RedirectAttributes redirectAttributes) {
+//        try {
+//            bookService.updateBook(isbn, bookDetails, images);
+//            redirectAttributes.addAttribute("success", "edit");
+//            return "redirect:/admin/book";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            redirectAttributes.addAttribute("error", "edit");
+//            return "redirect:/admin/book";
+//        }
+//    }
+//
+//    @PostMapping("/delete/{isbn}")
+//    @ResponseBody
+//    public ResponseEntity<?> deleteBook(@PathVariable String isbn) {
+//        try {
+//            bookService.deleteBook(isbn);
+//            return ResponseEntity.ok().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error deleting book: " + e.getMessage());
+//        }
+//    }
 
-    @GetMapping("/{isbn}")
-    @ResponseBody
-    public ResponseEntity<Book> getBook(@PathVariable String isbn) {
-        try {
-            Book book = bookService.getBookByIsbn(isbn);
-            return ResponseEntity.ok(book);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @PostMapping("/toggle-status/{isbn}")
+//    @ResponseBody
+//    public ResponseEntity<?> toggleBookStatus(@PathVariable String isbn) {
+//        try {
+//            Book book = bookService.getBookByIsbn(isbn);
+//            book.setIs_discontinued(!book.getIs_discontinued());
+//            bookService.saveBook(book, null);
+//            return ResponseEntity.ok().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error toggling book status: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/toggle-discount/{isbn}")
+//    @ResponseBody
+//    public ResponseEntity<?> toggleDiscount(@PathVariable String isbn) {
+//        try {
+//            Book book = bookService.getBookByIsbn(isbn);
+//            book.setIs_discount(!book.getIs_discount());
+//            bookService.saveBook(book, null);
+//            return ResponseEntity.ok().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error toggling discount: " + e.getMessage());
+//        }
+//    }
 
-    @PostMapping("/edit")
-    public String editBook(@RequestParam String isbn,
-                          @ModelAttribute Book bookDetails,
-                          @RequestParam(value = "images", required = false) MultipartFile[] images,
-                          RedirectAttributes redirectAttributes) {
-        try {
-            bookService.updateBook(isbn, bookDetails, images);
-            redirectAttributes.addAttribute("success", "edit");
-            return "redirect:/admin/book";
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addAttribute("error", "edit");
-            return "redirect:/admin/book";
-        }
-    }
-
-    @PostMapping("/delete/{isbn}")
-    @ResponseBody
-    public ResponseEntity<?> deleteBook(@PathVariable String isbn) {
-        try {
-            bookService.deleteBook(isbn);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error deleting book: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/toggle-status/{isbn}")
-    @ResponseBody
-    public ResponseEntity<?> toggleBookStatus(@PathVariable String isbn) {
-        try {
-            Book book = bookService.getBookByIsbn(isbn);
-            book.setIs_discontinued(!book.getIs_discontinued());
-            bookService.saveBook(book, null);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error toggling book status: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/toggle-discount/{isbn}")
-    @ResponseBody
-    public ResponseEntity<?> toggleDiscount(@PathVariable String isbn) {
-        try {
-            Book book = bookService.getBookByIsbn(isbn);
-            book.setIs_discount(!book.getIs_discount());
-            bookService.saveBook(book, null);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error toggling discount: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/update-quantity/{isbn}")
-    @ResponseBody
-    public ResponseEntity<?> updateQuantity(
-            @PathVariable String isbn,
-            @RequestParam Integer quantity) {
-        try {
-            Book book = bookService.getBookByIsbn(isbn);
-            book.setQuantity(quantity);
-            bookService.saveBook(book, null);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error updating quantity: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/update-discount/{isbn}")
-    @ResponseBody
-    public ResponseEntity<?> updateDiscount(
-            @PathVariable String isbn,
-            @RequestParam Double discountPercent) {
-        try {
-            Book book = bookService.getBookByIsbn(isbn);
-            book.setDiscount_percent(discountPercent);
-            book.setIs_discount(discountPercent > 0);
-            bookService.saveBook(book, null);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error updating discount: " + e.getMessage());
-        }
-    }
+//    @PostMapping("/update-quantity/{isbn}")
+//    @ResponseBody
+//    public ResponseEntity<?> updateQuantity(
+//            @PathVariable String isbn,
+//            @RequestParam Integer quantity) {
+//        try {
+//            Book book = bookService.getBookByIsbn(isbn);
+//            book.setQuantity(quantity);
+//            bookService.saveBook(book, null);
+//            return ResponseEntity.ok().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error updating quantity: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/update-discount/{isbn}")
+//    @ResponseBody
+//    public ResponseEntity<?> updateDiscount(
+//            @PathVariable String isbn,
+//            @RequestParam Double discountPercent) {
+//        try {
+//            Book book = bookService.getBookByIsbn(isbn);
+//            book.setDiscount_percent(discountPercent);
+//            book.setIs_discount(discountPercent > 0);
+//            bookService.saveBook(book, null);
+//            return ResponseEntity.ok().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error updating discount: " + e.getMessage());
+//        }
+//    }
 }

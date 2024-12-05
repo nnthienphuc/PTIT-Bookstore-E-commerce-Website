@@ -62,15 +62,15 @@ public class AuthorController {
         return AuthorService.getAuthorById(id);
     }
     @PostMapping("/add")
-    public String addAuthor(@ModelAttribute Author Author, RedirectAttributes redirectAttributes) {
+    public String addAuthor(@ModelAttribute Author author, RedirectAttributes redirectAttributes) {
         try {
-            AuthorService.saveAuthor(Author);
+            AuthorService.saveAuthor(author);
             // Thêm thông báo thành công
-            redirectAttributes.addAttribute("success", "add");
+            redirectAttributes.addFlashAttribute("success", "add");
             return "redirect:/admin/author";
         } catch (Exception e) {
             // Thêm thông báo thất bại
-            redirectAttributes.addAttribute("error", "add");
+            redirectAttributes.addFlashAttribute("error", "add");
             return "redirect:/admin/author";
         }
     }
@@ -82,13 +82,13 @@ public class AuthorController {
     }
 
     @PostMapping("/edit")
-    public String editAuthor(@ModelAttribute Author Author, RedirectAttributes redirectAttributes) {
+    public String editAuthor(@ModelAttribute Author author, RedirectAttributes redirectAttributes) {
         try {
-            AuthorService.saveAuthor(Author);
-            redirectAttributes.addAttribute("success", "edit");
+            AuthorService.saveAuthor(author);
+            redirectAttributes.addFlashAttribute("success", "edit");
             return "redirect:/admin/author";
         } catch (Exception e) {
-            redirectAttributes.addAttribute("error", "edit");
+            redirectAttributes.addFlashAttribute("error", "edit");
             return "redirect:/admin/author";
         }
     }

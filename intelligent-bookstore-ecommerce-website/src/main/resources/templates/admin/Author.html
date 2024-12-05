@@ -24,16 +24,6 @@
             <div class="col-9">
                 <main>
                     <h1>Tác giả</h1>         
-
-                    <div class="insight">
-                        <div class="sales">
-                     
-                            <div class="middle">
-                                <div class="lef"></div>
-                            </div>
-                        </div>
-                    </div>
-
                     <form th:action="@{/admin/author}" method="get" class="mb-3">
 					    <div class="input-group" style="width: 80vw;">
 					        <input type="text" 
@@ -139,47 +129,48 @@
         </div>
 
         
-        <div class="modal fade" id="addModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Thêm Tác Giả Mới</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/admin/author/add}" method="post">
-                            <div class="mb-3">
-                                <label class="form-label">Tên Tác Giả</label>
-                                <input type="text" class="form-control" name="authorName" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Thêm mới</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
-        <div class="modal fade" id="editModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Sửa Tác Giả</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/admin/author/edit}" method="post">
-                            <input type="hidden" id="editId" name="id">
-                            <div class="mb-3">
-                                <label class="form-label">Tên Tác Giả</label>
-                                <input type="text" class="form-control" id="editAuthorName" name="authorName" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Cập nhật</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+       <div class="modal fade" id="addModal" tabindex="-1">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Thêm Tác Giả Mới</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		            </div>
+		            <div class="modal-body">
+		                <form th:action="@{/admin/author/add}" method="post">
+		                    <div class="mb-3">
+		                        <label class="form-label">Tên Tác Giả</label>
+		                        <input type="text" class="form-control" name="authorName" required>
+		                    </div>
+		                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<!-- Modal Sửa Tác Giả  đang lỗi-->
+		<div class="modal fade" id="editModal" tabindex="-1">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Sửa Tác Giả</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		            </div>
+		            <div class="modal-body">
+		                <form th:action="@{/admin/author/edit}" method="post">
+		                    <input type="hidden" id="editAuthorId" name="authorId"> <!-- Sử dụng authorId -->
+		                    <div class="mb-3">
+		                        <label class="form-label">Tên Tác Giả</label>
+		                        <input type="text" class="form-control" id="editAuthorName" name="authorName" required>
+		                    </div>
+		                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+		                </form>
+		            </div>
+		        </div>
+		    </div>	
+		</div>
+		
     </body>
 
     
@@ -196,4 +187,5 @@
         <span th:if="${param.error[0] == 'edit'}">Cập nhật tác giả thất bại!</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+
 </html>

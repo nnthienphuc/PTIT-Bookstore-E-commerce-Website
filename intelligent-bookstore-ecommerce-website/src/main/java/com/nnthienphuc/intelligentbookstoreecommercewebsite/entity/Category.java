@@ -8,12 +8,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Category")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Category {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Column(name = "Category_Id", nullable = false)
     private Long categoryId;
@@ -21,21 +26,5 @@ public class Category {
     @Column(name = "Category_Name", nullable = false)
     private String categoryName;
 
-    public Category() {}
-    // Getters và Setters
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long id) {
-        this.categoryId = id;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String name) {
-        this.categoryName = name;
-    }
+    
 }

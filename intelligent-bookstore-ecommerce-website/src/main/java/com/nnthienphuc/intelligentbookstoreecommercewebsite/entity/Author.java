@@ -17,30 +17,17 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "Author")
 @Data
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-
+@NoArgsConstructor
 public class Author {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id", nullable = false)
     private Short authorId;
 
-    @Nationalized
     @Column(name = "author_name", nullable = false, length = 50)
     private String authorName;
 
-    @OneToMany(mappedBy = "authorId")
+    @OneToMany(mappedBy = "authorId", fetch = FetchType.LAZY)
     private Set<Book> books = new LinkedHashSet<>();
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
 }
