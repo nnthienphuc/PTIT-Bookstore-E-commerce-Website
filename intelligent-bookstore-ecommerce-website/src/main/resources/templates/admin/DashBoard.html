@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống kê doanh thu</title>
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="row">
+        <!-- Navbar -->
+        <div class="col-2">
+            <div style="margin-left: 5px !important;">
+                <div th:replace="~{admin/Navbar :: navbar}"></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-10">
+            <main class="container-fluid mt-4">
+                <h1>Thống kê doanh thu</h1>
+
+                <!-- Tổng quan -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Doanh thu hôm nay</h5>
+                                <p class="card-text h3">2.500.000 ₫</p>
+                                <p class="card-text">
+                                    <small>
+                                        <i class="bi bi-arrow-up"></i> 15% so với hôm qua
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Doanh thu tháng này</h5>
+                                <p class="card-text h3">45.000.000 ₫</p>
+                                <p class="card-text">
+                                    <small>
+                                        <i class="bi bi-arrow-up"></i> 10% so với tháng trước
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Doanh thu năm nay</h5>
+                                <p class="card-text h3">520.000.000 ₫</p>
+                                <p class="card-text">
+                                    <small>
+                                        <i class="bi bi-arrow-up"></i> 25% so với năm trước
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Số đơn hàng</h5>
+                                <p class="card-text h3">150</p>
+                                <p class="card-text">
+                                    <small>
+                                        <i class="bi bi-arrow-up"></i> 5% so với tháng trước
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="row g-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Loại thống kê</label>
+                                        <select class="form-select" id="statisticType" onchange="changeStatisticType()">
+                                            <option value="day">Theo ngày</option>
+                                            <option value="month">Theo tháng</option>
+                                            <option value="year">Theo năm</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3" id="dayFilter">
+                                        <label class="form-label">Chọn ngày</label>
+                                        <input type="date" class="form-control" value="2024-01-15">
+                                    </div>
+                                    <div class="col-md-3" id="monthFilter" style="display:none;">
+                                        <label class="form-label">Chọn tháng</label>
+                                        <input type="month" class="form-control" value="2024-01">
+                                    </div>
+                                    <div class="col-md-3" id="yearFilter" style="display:none;">
+                                        <label class="form-label">Chọn năm</label>
+                                        <select class="form-select">
+                                            <option>2024</option>
+                                            <option>2023</option>
+                                            <option>2022</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="submit" class="btn btn-primary d-block">
+                                            <i class="bi bi-search"></i> Xem thống kê
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Biểu đồ doanh thu</h5>
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tỷ lệ đơn hàng</h5>
+                                <canvas id="orderPieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Chi tiết doanh thu</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Số đơn hàng</th>
+                                        <th>Doanh thu</th>
+                                        <th>Tăng trưởng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>15/01/2024</td>
+                                        <td>25</td>
+                                        <td>2.500.000 ₫</td>
+                                        <td class="text-success">+15%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>14/01/2024</td>
+                                        <td>22</td>
+                                        <td>2.100.000 ₫</td>
+                                        <td class="text-danger">-5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13/01/2024</td>
+                                        <td>28</td>
+                                        <td>2.800.000 ₫</td>
+                                        <td class="text-success">+20%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Hàm thay đổi loại thống kê
+        function changeStatisticType() {
+            const type = document.getElementById('statisticType').value;
+            document.getElementById('dayFilter').style.display = type === 'day' ? 'block' : 'none';
+            document.getElementById('monthFilter').style.display = type === 'month' ? 'block' : 'none';
+            document.getElementById('yearFilter').style.display = type === 'year' ? 'block' : 'none';
+        }
+
+        // Biểu đồ doanh thu
+        const revenueChart = new Chart(document.getElementById('revenueChart'), {
+            type: 'line',
+            data: {
+                labels: ['13/01', '14/01', '15/01', '16/01', '17/01', '18/01', '19/01'],
+                datasets: [{
+                    label: 'Doanh thu (triệu đồng)',
+                    data: [2.8, 2.1, 2.5, 3.0, 2.7, 3.2, 2.9],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ doanh thu 7 ngày gần nhất'
+                    }
+                }
+            }
+        });
+
+        // Biểu đồ tròn đơn hàng
+        const orderPieChart = new Chart(document.getElementById('orderPieChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Đã giao', 'Đang giao', 'Chờ xác nhận', 'Đã hủy'],
+                datasets: [{
+                    data: [65, 20, 10, 5],
+                    backgroundColor: [
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+                        'rgb(255, 99, 132)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Tỷ lệ trạng thái đơn hàng'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

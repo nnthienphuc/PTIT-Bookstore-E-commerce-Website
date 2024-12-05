@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý đơn hàng</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="row">
+        <!-- Navbar -->
+        <div class="col-2">
+            <div style="margin-left: 5px !important;">
+                <div th:replace="~{admin/Navbar :: navbar}" ></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-10">
+            <main class="container-fluid mt-4">
+                <h1>Quản lý đơn hàng</h1>
+
+                <!-- Thống kê -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Chờ xác nhận</h5>
+                                <p class="card-text h3">10</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Đã xác nhận</h5>
+                                <p class="card-text h3">5</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Đang giao</h5>
+                                <p class="card-text h3">3</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Đã giao</h5>
+                                <p class="card-text h3">20</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Đã hủy</h5>
+                                <p class="card-text h3">2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <form class="row g-3">
+                            <div class="col-md-4">
+                                <input type="text" 
+                                       class="form-control"
+                                       placeholder="Tìm theo mã đơn, người nhận hoặc người mua">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option>Chờ xác nhận</option>
+                                    <option>Đã xác nhận</option>
+                                    <option>Đang giao</option>
+                                    <option>Đã giao</option>
+                                    <option>Đã hủy</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search"></i> Tìm kiếm
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-counterclockwise"></i> Đặt lại
+                                </button>
+                            </div>
+                        </form>
+                    </div>                  
+                </div>
+
+                <!-- Orders Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Ngày đặt</th>
+                                <th>Người mua</th>
+                                <th>Người nhận</th>
+                                <th>Địa chỉ</th>
+                                <th>Phương thức</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    <tr>
+        <td>1</td>
+        <td>01/01/2024 10:00</td>
+        <td>Nguyễn Văn A</td>
+        <td>Nguyễn Văn A</td>
+        <td>123 Nguyễn Văn Linh, Q.7, TP.HCM</td>
+        <td>COD</td>
+        <td>100.000 ₫</td>
+        <td><span class="badge bg-warning">Chờ xác nhận</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(1)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(1)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>02/01/2024 11:30</td>
+        <td>Trần Thị B</td>
+        <td>Trần Thị B</td>
+        <td>456 Lê Văn Việt, Q.9, TP.HCM</td>
+        <td>Banking</td>
+        <td>250.000 ₫</td>
+        <td><span class="badge bg-info">Đã xác nhận</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(2)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(2)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>03/01/2024 09:15</td>
+        <td>Lê Văn C</td>
+        <td>Lê Văn C</td>
+        <td>789 Võ Văn Ngân, TP.Thủ Đức</td>
+        <td>Momo</td>
+        <td>175.000 ₫</td>
+        <td><span class="badge bg-primary">Đang giao</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(3)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(3)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>04/01/2024 14:20</td>
+        <td>Phạm Thị D</td>
+        <td>Phạm Thị D</td>
+        <td>321 Quang Trung, Q.Gò Vấp, TP.HCM</td>
+        <td>COD</td>
+        <td>300.000 ₫</td>
+        <td><span class="badge bg-success">Đã giao</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(4)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(4)" disabled>
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>05/01/2024 16:45</td>
+        <td>Hoàng Văn E</td>
+        <td>Hoàng Văn E</td>
+        <td>654 Lê Đức Thọ, Q.Gò Vấp, TP.HCM</td>
+        <td>Banking</td>
+        <td>450.000 ₫</td>
+        <td><span class="badge bg-danger">Đã hủy</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(5)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(5)" disabled>
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>06/01/2024 08:30</td>
+        <td>Ngô Thị F</td>
+        <td>Ngô Thị F</td>
+        <td>987 Phan Văn Trị, Q.Bình Thạnh, TP.HCM</td>
+        <td>Momo</td>
+        <td>200.000 ₫</td>
+        <td><span class="badge bg-warning">Chờ xác nhận</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(6)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(6)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>07/01/2024 13:15</td>
+        <td>Đỗ Văn G</td>
+        <td>Đỗ Văn G</td>
+        <td>147 Điện Biên Phủ, Q.Bình Thạnh, TP.HCM</td>
+        <td>COD</td>
+        <td>325.000 ₫</td>
+        <td><span class="badge bg-info">Đã xác nhận</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(7)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(7)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>08/01/2024 15:40</td>
+        <td>Bùi Thị H</td>
+        <td>Bùi Thị H</td>
+        <td>258 Xô Viết Nghệ Tĩnh, Q.Bình Thạnh, TP.HCM</td>
+        <td>Banking</td>
+        <td>275.000 ₫</td>
+        <td><span class="badge bg-primary">Đang giao</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(8)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(8)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>09/01/2024 17:20</td>
+        <td>Lý Văn I</td>
+        <td>Lý Văn I</td>
+        <td>369 Kha Vạn Cân, TP.Thủ Đức</td>
+        <td>Momo</td>
+        <td>150.000 ₫</td>
+        <td><span class="badge bg-success">Đã giao</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(9)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(9)" disabled>
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>10/01/2024 12:00</td>
+        <td>Trương Thị K</td>
+        <td>Trương Thị K</td>
+        <td>741 Lê Văn Việt, TP.Thủ Đức</td>
+        <td>COD</td>
+        <td>400.000 ₫</td>
+        <td><span class="badge bg-warning">Chờ xác nhận</span></td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info" onclick="viewOrder(10)">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="updateStatus(10)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+</tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="text-muted">
+                        Hiển thị 1-10 trong tổng số 40 đơn hàng
+                    </div>
+                    
+                    <nav>
+                        <ul class="pagination mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="bi bi-chevron-double-left"></i></a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="bi bi-chevron-double-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- View Order Modal -->
+    <div class="modal fade" id="viewOrderModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Mã đơn:</strong> <span>1</span></p>
+                            <p><strong>Ngày đặt:</strong> <span>01/01/2024 10:00</span></p>
+                            <p><strong>Người mua:</strong> <span>Nguyễn Văn A</span></p>
+                            <p><strong>Người nhận:</strong> <span>Nguyễn Văn A</span></p>
+                            <p><strong>Địa chỉ:</strong> <span>123 ABC Street</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Phương thức:</strong> <span>COD</span></p>
+                            <p><strong>Trạng thái:</strong> <span>Chờ xác nhận</span></p>
+                            <p><strong>Mã giảm giá:</strong> <span>Không có</span></p>
+                            <p><strong>Tổng tiền:</strong> <span>100.000 ₫</span></p>
+                        </div>
+                        
+                    </div>
+                    
+                    <h6>Chi tiết sản phẩm</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sách A</td>
+                                    <td>50.000 ₫</td>
+                                    <td>2</td>
+                                    <td>100.000 ₫</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div class="modal fade" id="updateStatusModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật trạng thái</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Trạng thái mới</label>
+                            <select class="form-select" required>
+                                <option>Chờ xác nhận</option>
+                                <option>Đã xác nhận</option>
+                                <option>Đang giao</option>
+                                <option>Đã giao</option>
+                                <option>Đã hủy</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        function viewOrder(id) {
+            $('#viewOrderModal').modal('show');
+        }
+
+        function updateStatus(id) {
+            $('#updateStatusModal').modal('show');
+        }
+    </script>
+</body>
+</html>

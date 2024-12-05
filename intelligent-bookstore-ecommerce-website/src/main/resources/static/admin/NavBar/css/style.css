@@ -197,4 +197,7 @@ aside .sidebar a:hover span{
     margin-left:1rem ;
 }
 
+title{
+	font-family: 'Times New Roman', Times, serif; /* Changed font family here */
+}
 /* ===================== end-sidebar ======================*/
