@@ -1,356 +1,263 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý khách hàng</title>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- CSS -->
+    <title>Khách Hàng</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/admin/css/style.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-</head>
-<body>
-    <div class="row">
-        <!-- Navbar -->
-        <div class="col-2">
-            <div style="margin-left: 5px !important;">
-                <div th:replace="~{admin/Navbar :: navbar}"></div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="col-10">
-            <main class="container-fluid mt-4">
-                <h1>Quản lý khách hàng</h1>
-
-                <!-- Search -->
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <form class="row g-3">
-                            <div class="col-md-4">
-                                <input type="text" 
-                                       class="form-control" 
-                                       placeholder="Tìm theo mã, tên hoặc email">
-                            </div>
-                            
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-search"></i> Tìm kiếm
-                                </button>
-                                <button type="reset" class="btn btn-secondary">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Đặt lại
-                                </button>
-                            </div>
-                        </form>
-                    </div>                  
-                </div>
-
-                <!-- Customers Table -->
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Mã KH</th>
-                                <th>Email</th>
-                                <th>Họ và tên</th>
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-    <td>KH001</td>
-    <td>nguyenvana@gmail.com</td>
-    <td>Nguyễn Văn A</td>
-    <td>Nam</td>
-    <td>01/01/1990</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH001')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH001')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH002</td>
-    <td>tranthib@gmail.com</td>
-    <td>Trần Thị B</td>
-    <td>Nữ</td>
-    <td>15/03/1995</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH002')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH002')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH003</td>
-    <td>levanc@gmail.com</td>
-    <td>Lê Văn C</td>
-    <td>Nam</td>
-    <td>22/07/1988</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH003')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH003')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH004</td>
-    <td>phamthid@gmail.com</td>
-    <td>Phạm Thị D</td>
-    <td>Nữ</td>
-    <td>30/11/1992</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH004')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH004')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH005</td>
-    <td>hoangvane@gmail.com</td>
-    <td>Hoàng Văn E</td>
-    <td>Nam</td>
-    <td>18/09/1994</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH005')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH005')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH006</td>
-    <td>ngothif@gmail.com</td>
-    <td>Ngô Thị F</td>
-    <td>Nữ</td>
-    <td>25/04/1991</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH006')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH006')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH007</td>
-    <td>dovang@gmail.com</td>
-    <td>Đỗ Văn G</td>
-    <td>Nam</td>
-    <td>12/12/1993</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH007')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH007')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH008</td>
-    <td>buithih@gmail.com</td>
-    <td>Bùi Thị H</td>
-    <td>Nữ</td>
-    <td>08/06/1996</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH008')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH008')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH009</td>
-    <td>lyvani@gmail.com</td>
-    <td>Lý Văn I</td>
-    <td>Nam</td>
-    <td>20/02/1989</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH009')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH009')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>KH010</td>
-    <td>truongthik@gmail.com</td>
-    <td>Trương Thị K</td>
-    <td>Nữ</td>
-    <td>05/08/1997</td>
-    <td>
-        <div class="btn-group">
-            
-            <button class="btn btn-sm btn-warning" onclick="editCustomer('KH010')">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('KH010')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-    </td>
-</tr>
-                            <!-- Thêm dữ liệu mẫu khác -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div class="text-muted">
-                        Hiển thị 1-10 trong tổng số 100 khách hàng
-                    </div>
-                    
-                    <nav>
-                        <ul class="pagination mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#"><i class="bi bi-chevron-double-left"></i></a>
-                            </li>
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="bi bi-chevron-double-right"></i></a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    
-    <!-- Edit Customer Modal -->
-    <div class="modal fade" id="editCustomerModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Chỉnh sửa khách hàng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editCustomerForm">
-                        <div class="mb-3">
-                            <label class="form-label">Mã KH</label>
-                            <input type="text" class="form-control" id="editUserId" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" id="editEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" id="editFullName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Giới tính</label>
-                            <select class="form-select" id="editGender" required>
-                                <option value="1">Nam</option>
-                                <option value="0">Nữ</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ngày sinh</label>
-                            <input type="date" class="form-control" id="editBirthday" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <script>
-        function viewCustomer(id) {
-            $('#viewCustomerModal').modal('show');
-        }
+    <script type="text/javascript" src="/admin/Customer/js/main.js"></script>
+</head>
+<body>
+<div class="row">
+    <div class="col-2">
+        <div style="margin-left: 20px !important;">
+            <div th:replace="~{admin/Navbar :: navbar}"></div>
+        </div>
+    </div>
+    <div class="col-9">
+        <main>
+            <h1>Khách Hàng</h1>
+            <form th:action="@{/admin/customer}" method="get" class="mb-3">
+                <div class="input-group" style="width: 80vw;">
+                    <input type="text"
+                           name="keyword"
+                           id="searchInput"
+                           class="form-control"
+                           placeholder="Nhập tên, email khách hàng"
+                           th:value="${keyword}"
+                           style="margin-right:10px;">
+                    <button type="submit" class="btn btn-primary" style="margin-right:10px;">Tìm kiếm</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">
+                        Thêm
+                    </button>
+                </div>
+            </form>
 
-        function editCustomer(id) {
-            $('#editCustomerModal').modal('show');
-        }
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Username</th>
+                        <th>Tên Khách Hàng</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Giới Tính</th>
+                        <th>Ngày Sinh</th>
+                        <th>Địa Chỉ</th>
+                        <th>Trạng Thái</th>
+                        <th>Thao Tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customer, iterStat : ${customers}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${customer.customerId}"></td>
+                        <td th:text="${customer.fullname}"></td>
+                        <td th:text="${customer.email}"></td>
+                        <td th:text="${customer.phone}"></td>
+                        <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
+                        <td th:text="${#dates.format(customer.birhtday, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${customer.address}"></td>
+                        <td th:text="${customer.isActive ? 'Kích hoạt' : 'Vô hiệu'}"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm"
+                                    th:onclick="'editCustomer(' + ${customer.customerId} + ')'">Sửa
+                            </button>
+                            <button class="btn btn-danger btn-sm"
+                                    th:onclick="'deleteCustomer(' + ${customer.customerId} + ')'">Xóa
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        function deleteCustomer(id) {
-            Swal.fire({
-                title: 'Xác nhận xóa?',
-                text: "Bạn không thể hoàn tác sau khi xóa!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Xóa',
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Xử lý xóa
-                    Swal.fire(
-                        'Đã xóa!',
-                        'Khách hàng đã được xóa.',
-                        'success'
-                    )
-                }
-            })
-        }
-    </script>
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="text-muted">
+                    Hiển thị
+                    <span th:text="${customers.numberOfElements}">0</span>
+                    trong tổng số
+                    <span th:text="${customers.totalElements}">0</span>
+                    khách hàng
+                </div>
+
+                <nav th:if="${customers.totalPages > 1}">
+                    <ul class="pagination mb-0">
+                        <li class="page-item" th:classappend="${customers.first ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/admin/customer(page=0, size=${customers.size}, keyword=${param.keyword})}"
+                               aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${customers.first ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/admin/customer(page=${customers.number - 1}, size=${customers.size}, keyword=${param.keyword})}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item"
+                            th:each="pageNumber : ${#numbers.sequence(0, customers.totalPages - 1)}"
+                            th:classappend="${pageNumber == customers.number ? 'active' : ''}"
+                            th:if="${pageNumber >= customers.number - 2 and pageNumber <= customers.number + 2}">
+                            <a class="page-link"
+                               th:href="@{/admin/customer(page=${pageNumber}, size=${customers.size}, keyword=${param.keyword})}"
+                               th:text="${pageNumber + 1}">1</a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${customers.last ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/admin/customer(page=${customers.number + 1}, size=${customers.size}, keyword=${param.keyword})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${customers.last ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/admin/customer(page=${customers.totalPages - 1}, size=${customers.size}, keyword=${param.keyword})}"
+                               aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal Thêm Khách Hàng -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm Khách Hàng Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/admin/customer/add}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-control" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tên Khách Hàng</label>
+                        <input type="text" class="form-control" name="fullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giới Tính</label>
+                        <select class="form-control" name="gender">
+                            <option value="false">Nữ</option>
+                            <option value="true">Nam</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày Sinh</label>
+                        <input type="date" class="form-control" name="birthday" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật Khẩu</label>
+                        <input type="password" class="form-control" name="pwd" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Địa Chỉ</label>
+                        <textarea class="form-control" name="address" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng Thái</label>
+                        <select class="form-control" name="isActive" required>
+                            <option value="false">Vô hiệu</option>
+                            <option value="true">Kích hoạt</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Sửa Khách Hàng -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sửa Thông Tin Khách Hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/admin/customer/edit}" method="post">
+                    <input type="hidden" id="editCustomerId" name="customerId">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="editPhone" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tên Khách Hàng</label>
+                        <input type="text" class="form-control" id="editFullName" name="fullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giới Tính</label>
+                        <select class="form-control" id="editGender" name="gender">
+                            <option value="false">Nữ</option>
+                            <option value="true">Nam</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày Sinh</label>
+                        <input type="date" class="form-control" id="editBirthday" name="birthday" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Địa Chỉ</label>
+                        <textarea class="form-control" id="editAddress" name="address" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng Thái</label>
+                        <select class="form-control" id="editIsActive" name="isActive">
+                            <option value="false">Vô hiệu</option>
+                            <option value="true">Kích hoạt</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
+<div th:if="${param.success}" class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert"
+     style="position: fixed; top: 20px; right: 20px; z-index: 1050; min-width: 300px;">
+    <span th:if="${param.success[0] == 'add'}">Thêm khách hàng thành công!</span>
+    <span th:if="${param.success[0] == 'edit'}">Cập nhật khách hàng thành công!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert"
+     style="position: fixed; top: 20px; right: 20px; z-index: 1050; min-width: 300px;">
+    <span th:if="${param.error[0] == 'add'}">Thêm khách hàng thất bại!</span>
+    <span th:if="${param.error[0] == 'edit'}">Cập nhật khách hàng thất bại!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 </html>

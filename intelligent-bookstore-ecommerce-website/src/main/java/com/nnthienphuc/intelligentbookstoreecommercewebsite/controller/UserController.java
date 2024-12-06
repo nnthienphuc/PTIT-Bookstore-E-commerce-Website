@@ -182,15 +182,15 @@ public class UserController {
         return "user/bookDetail";
     }
 
-    @GetMapping("/search")
-    public String searchUserByName(
-            @RequestParam("name") String name,
-            Model model) {
-
-        List<User> users = userService.findByFullNameContainingIgnoreCase(name);
-        model.addAttribute("users", users);
-        return "user/searchResults";
-    }
+//    @GetMapping("/search")
+//    public String searchUserByName(
+//            @RequestParam("name") String name,
+//            Model model) {
+//
+//        List<User> users = userService.findByFullNameContainingIgnoreCase(name);
+//        model.addAttribute("users", users);
+//        return "user/searchResults";
+//    }
 
     @GetMapping("/cart")
     public String cart(HttpSession session,Model model) {
