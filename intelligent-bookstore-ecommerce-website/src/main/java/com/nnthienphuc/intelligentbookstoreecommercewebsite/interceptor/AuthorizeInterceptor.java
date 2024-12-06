@@ -15,7 +15,7 @@ public class AuthorizeInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             session.setAttribute("back-url", request.getRequestURI());
-            response.sendRedirect("user/account/login");
+            response.sendRedirect("account/login");
             return false;
         }
         return true;
