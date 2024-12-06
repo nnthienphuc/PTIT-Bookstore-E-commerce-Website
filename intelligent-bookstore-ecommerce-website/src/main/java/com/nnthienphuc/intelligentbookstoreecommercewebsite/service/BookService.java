@@ -4,8 +4,10 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.BookDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Publisher;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.BookRepository;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.AuthorRepository;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.CategoryRepository;
@@ -102,7 +104,76 @@ public class BookService {
         return bookRepository.findById(isbn)
             .orElseThrow(() -> new RuntimeException("Book not found"));
     }
+    public BookDTO getBookDTOByIsbn(String isbn) {
+        Book b = bookRepository.findById(isbn)
+            .orElseThrow(() -> new RuntimeException("Book not found"));
+        BookDTO result = convertToDTO(b);
+        return result;
+    }
+    public BookDTO convertToDTO(Book book) {
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setIsbn(book.getIsbn());
+        bookDTO.setTitle(book.getTitle());
+        bookDTO.setCategoryId(book.getCategoryId().getCategoryId()); // Giả sử bạn có phương thức getId() trong Category
+        bookDTO.setAuthorId(book.getAuthorId().getAuthorId()); // Giả sử bạn có phương thức getId() trong Author
+        bookDTO.setYear_of_publication(book.getYear_of_publication());
+        bookDTO.setPublisherId(book.getPublisherId().getPublisherId()); // Giả sử bạn có phương thức getId() trong Publisher
+        bookDTO.setQuantity(book.getQuantity());
+        bookDTO.setCover(book.getCover());
+        bookDTO.setPrice(book.getPrice());
+        bookDTO.setDiscount_percent(book.getDiscount_percent());
+        bookDTO.setIs_discount(book.getIs_discount());
+        bookDTO.setDescription(book.getDescription());
+        bookDTO.setUrl1(book.getUrl1());
+        bookDTO.setUrl2(book.getUrl2());
+        bookDTO.setUrl3(book.getUrl3());
+        bookDTO.setUrl4(book.getUrl4());
+        bookDTO.setUrl5(book.getUrl5());
+        bookDTO.setIs_discontinued(book.getIs_discontinued());
+        bookDTO.setOrderDetails(book.getOrderDetails()); // Nếu bạn muốn giữ nguyên Set<OrderDetail>
+        bookDTO.setCarts(book.getCarts()); // Nếu bạn muốn giữ nguyên Set<Cart>
 
+        return bookDTO;
+    }
+    public Book convertToEntity(BookDTO bookDTO) {
+        Book book = new Book();
+        book.setIsbn(bookDTO.getIsbn());
+        book.setTitle(bookDTO.getTitle());
+        
+        // Giả sử bạn có các phương thức tìm kiếm Category, Author, và Publisher theo ID
+        Category category = categoryRepository.findById(bookDTO.getCategoryId())
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+        book.setCategoryId(category);
+        
+        Author author = authorRepository.findByAuthorId((long)bookDTO.getAuthorId())
+            .orElseThrow(() -> new RuntimeException("Author not found"));
+        book.setAuthorId(author);
+        
+        book.setYear_of_publication(bookDTO.getYear_of_publication());
+        
+        Publisher publisher = publisherRepository.findById((long)bookDTO.getPublisherId())
+            .orElseThrow(() -> new RuntimeException("Publisher not found"));
+        book.setPublisherId(publisher);
+        
+        book.setQuantity(bookDTO.getQuantity());
+        book.setCover(bookDTO.getCover());
+        book.setPrice(bookDTO.getPrice());
+        book.setDiscount_percent(bookDTO.getDiscount_percent());
+        book.setIs_discount(bookDTO.getIs_discount());
+        book.setDescription(bookDTO.getDescription());
+        book.setUrl1(bookDTO.getUrl1());
+        book.setUrl2(bookDTO.getUrl2());
+        book.setUrl3(bookDTO.getUrl3());
+        book.setUrl4(bookDTO.getUrl4());
+        book.setUrl5(bookDTO.getUrl5());
+        book.setIs_discontinued(bookDTO.getIs_discontinued());
+        
+        // Nếu bạn muốn giữ nguyên Set<OrderDetail> và Set<Cart>, bạn có thể thêm logic để chuyển đổi chúng
+        // book.setOrderDetails(bookDTO.getOrderDetails());
+        // book.setCarts(bookDTO.getCarts());
+
+        return book;
+    }
     public Book getBookById(String id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sách với id: " + id));
@@ -181,7 +252,16 @@ public class BookService {
         // Lưu ảnh mới nếu có
         return saveBook(book, images);
     }
+    public Book toggleBookStatus(String isbn) {
+        Book book = getBookByIsbn(isbn);
 
+        // Cập nhật thông tin
+        
+        book.setIs_discontinued(!book.getIs_discontinued());
+
+        // Lưu ảnh mới nếu có
+        return saveBook(book,null);
+    }
     public void deleteBook(String isbn) {
         try {
             Book book = getBookByIsbn(isbn);

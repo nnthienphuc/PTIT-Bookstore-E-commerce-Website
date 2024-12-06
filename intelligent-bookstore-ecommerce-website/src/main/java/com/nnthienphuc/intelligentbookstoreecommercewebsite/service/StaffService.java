@@ -1,9 +1,13 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Role;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,5 +72,29 @@ public class StaffService {
     // Thêm phương thức tìm kiếm người dùng theo fullName hoặc một phần tên
     public List<Staff> findByFullNameContainingIgnoreCase(String fullName) {
         return staffRepository.findByFullNameContainingIgnoreCase(fullName);
+    }
+    
+    public Page<Staff> searchStaffs(String keyword, Pageable pageable) {
+        try {
+        	return staffRepository.findByFullNameContainingIgnoreCaseOrStaffIdContainingIgnoreCase(keyword, keyword,pageable);
+        } catch (Exception e) {
+            throw new RuntimeException("Error searching staff", e);
+        }
+    }
+ 
+
+    public Staff getStaffById(String id) {
+        return staffRepository.findByStaffId(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên với id: " + id));
+    }
+
+
+    public Staff saveStaff(Staff staff) {
+        return staffRepository.save(staff);
+    }
+
+
+    public void deleteStaff(String id) {
+        staffRepository.deleteById(id);
     }
 }

@@ -37,7 +37,7 @@ function editBook(isbn) {
         $('#editTitle').val(book.title);
         $('#editAuthorId').val(book.authorId);
         $('#editCategoryId').val(book.categoryId);
-        $('#editPublisherId').val(book.publisher_id);
+        $('#editPublisherId').val(book.publisherId);
         $('#editYear').val(book.year_of_publication);
         $('#editQuantity').val(book.quantity);
         $('#editPrice').val(book.price);
@@ -45,7 +45,7 @@ function editBook(isbn) {
         $('#editDescription').val(book.description);
         
         // Checkbox
-        $('#editCover').prop('checked', book.cover);
+        $('#editIsDiscontinued').prop('checked', book.is_discontinued);
         $('#editIsDiscount').prop('checked', book.is_discount);
         
         // Reset file input
@@ -57,11 +57,11 @@ function editBook(isbn) {
             <div class="mb-2">
                 <label class="form-label">Ảnh hiện tại:</label>
                 <div class="d-flex gap-2">
-                    <img src="${book.url1}" class="img-thumbnail" style="width: 100px">
-                    <img src="${book.url2}" class="img-thumbnail" style="width: 100px">
-                    <img src="${book.url3}" class="img-thumbnail" style="width: 100px">
-                    <img src="${book.url4}" class="img-thumbnail" style="width: 100px">
-                    <img src="${book.url5}" class="img-thumbnail" style="width: 100px">
+                    <img src="/bookImage/${book.url1}" class="img-thumbnail" style="width: 100px">
+                    <img src="/bookImage/${book.url2}" class="img-thumbnail" style="width: 100px">
+                    <img src="/bookImage/${book.url3}" class="img-thumbnail" style="width: 100px">
+                    <img src="/bookImage/${book.url4}" class="img-thumbnail" style="width: 100px">
+                    <img src="/bookImage/${book.url5}" class="img-thumbnail" style="width: 100px">
                 </div>
             </div>
         `;
@@ -148,38 +148,33 @@ $('#editBookForm').on('submit', function(e) {
         }
     });
 });
-// Xóa sách
+
 function deleteBook(isbn) {
     Swal.fire({
         title: 'Xác nhận xóa?',
-        text: "Bạn không thể hoàn tác sau khi xóa!",
+        text: 'Bạn có chắc chắn muốn xóa tác giả này?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
         confirmButtonText: 'Xóa',
         cancelButtonText: 'Hủy'
     }).then((result) => {
         if (result.isConfirmed) {
-            $.ajax({
-                url: `/admin/book/delete/${isbn}`,
-                type: 'POST',
-                success: function() {
-                    Swal.fire(
-                        'Đã xóa!',
-                        'Sách đã được xóa thành công.',
-                        'success'
-                    ).then(() => {
-                        location.reload();
-                    });
-                },
-                error: function() {
-                    Swal.fire(
-                        'Lỗi!',
-                        'Có lỗi xảy ra khi xóa sách.',
-                        'error'
-                    );
+            fetch(`/admin/book/delete/${isbn}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
+            })
+            .then(response => {
+                if(response.ok) {
+                    Swal.fire('Thành công!', 'Xóa tác giả thành công!', 'success')
+                    .then(() => window.location.reload());
+                } else {
+                    Swal.fire('Lỗi!', 'Xóa tác giả thất bại!', 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Lỗi!', 'Có lỗi xảy ra khi xóa tác giả!', 'error');
             });
         }
     });
@@ -217,9 +212,10 @@ $('.status-toggle').on('change', function() {
     let isbn = $(this).data('isbn');
     
     $.ajax({
-        url: `/admin/book/toggle-status/${isbn}`,
+        url: `/admin/book/toggles-status/${isbn}`,
         type: 'POST',
-        success: function() {
+        success: function(response) {
+            console.log('Cập nhật thành công:', response); // In ra thông tin sách đã cập nhật
             Swal.fire({
                 icon: 'success',
                 title: 'Thành công',
@@ -227,7 +223,8 @@ $('.status-toggle').on('change', function() {
                 timer: 1500
             });
         },
-        error: function() {
+        error: function(xhr, status, error) {
+            console.error('Có lỗi xảy ra:', error); // In ra thông điệp lỗi
             Swal.fire({
                 icon: 'error',
                 title: 'Lỗi',
@@ -368,3 +365,5 @@ document.getElementById('editBookForm').addEventListener('submit', function(e) {
         e.preventDefault();
     }
 });
+
+

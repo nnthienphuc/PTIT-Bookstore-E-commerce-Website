@@ -1,8 +1,12 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -63,5 +67,32 @@ public class UserService {
     // Thêm phương thức tìm kiếm người dùng theo fullName hoặc một phần tên
     public List<User> findByFullNameContainingIgnoreCase(String fullName) {
         return userRepository.findByFullNameContainingIgnoreCase(fullName);
+    }
+    
+    public Page<User> searchUsers(String keyword, Pageable pageable) {
+        try {
+        	return userRepository.findByFullNameContainingIgnoreCase(keyword,pageable);
+        } catch (Exception e) {
+            throw new RuntimeException("Error searching staff", e);
+        }
+    }
+    public Page<User> getAllUsersPagging(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+
+    public User getUserById(String id) {
+        return userRepository.findByUserId(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên với id: " + id));
+    }
+
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+
+    public void deleteUser(String id) {
+    	userRepository.deleteById(id);
     }
 }

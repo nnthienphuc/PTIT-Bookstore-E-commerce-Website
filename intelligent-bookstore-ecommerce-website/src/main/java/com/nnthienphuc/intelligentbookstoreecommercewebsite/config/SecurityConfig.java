@@ -8,6 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -19,7 +23,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
+        http.csrf().disable()
+        .authorizeHttpRequests(
                 authorizeRequests ->   authorizeRequests.anyRequest().permitAll()
         );
         return http.build();
