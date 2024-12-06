@@ -1,6 +1,7 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,51 +23,6 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User getUserById(String id) {
-        return userRepository.findByUserId(id)
-                .orElseThrow(() -> new RuntimeException("User not found" + id));
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    // Phương thức để lấy danh sách user có phân trang
-    public Page<User> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
-
-    // Phương thức tìm kiếm user có phân trang
-    public Page<User> searchUsers(String keyword, Pageable pageable) {
-        return userRepository.findByFullNameContainingIgnoreCase(keyword, pageable);
-    }
-
-    // Lấy user theo ID
-//    public User getUserById(String id) {
-//        return userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + id));
-//    }
-
-    // Lưu hoặc cập nhật user
-    public User saveUser(User user) {
-        // Nếu là user mới hoặc đang thay đổi mật khẩu
-        if (user.getPwd() != null && !user.getPwd().isEmpty()) {
-            user.setPwd(passwordEncoder.encode(user.getPwd()));
-        } else {
-            // Nếu không thay đổi mật khẩu, lấy mật khẩu cũ
-            Optional<User> existingUser = userRepository.findById(user.getUserId());
-            existingUser.ifPresent(u -> user.setPwd(u.getPwd()));
-        }
-
-        return userRepository.save(user);
-    }
-
-    // Xóa user
-    public void deleteUser(String userId) {
-        userRepository.deleteById(userId);
-    }
-
-    // Các phương thức còn lại từ service cũ
     public Optional<User> findById(String userId) {
         return userRepository.findById(userId);
     }
@@ -84,7 +40,9 @@ public class UserService {
             throw new Exception("Username has exist!");
         }
 
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPwd(passwordEncoder.encode(user.getPwd()));
+
         return userRepository.save(user);
     }
 
@@ -97,6 +55,7 @@ public class UserService {
     }
 
     public User registerUser(User user) {
+        // Mã hóa mật khẩu trước khi lưu vào database
         user.setPwd(passwordEncoder.encode(user.getPwd()));
         return userRepository.save(user);
     }
@@ -105,7 +64,35 @@ public class UserService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
-//    public List<User> findByFullNameContainingIgnoreCase(String fullName) {
-//        return userRepository.findByFullNameContainingIgnoreCase(fullName);
-//    }
+    // Thêm phương thức tìm kiếm người dùng theo fullName hoặc một phần tên
+    public List<User> findByFullNameContainingIgnoreCase(String fullName) {
+        return userRepository.findByFullNameContainingIgnoreCase(fullName);
+    }
+    
+    public Page<User> searchUsers(String keyword, Pageable pageable) {
+        try {
+        	return userRepository.findByFullNameContainingIgnoreCase(keyword,pageable);
+        } catch (Exception e) {
+            throw new RuntimeException("Error searching staff", e);
+        }
+    }
+    public Page<User> getAllUsersPagging(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+
+    public User getUserById(String id) {
+        return userRepository.findByUserId(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên với id: " + id));
+    }
+
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+
+    public void deleteUser(String id) {
+    	userRepository.deleteById(id);
+    }
 }

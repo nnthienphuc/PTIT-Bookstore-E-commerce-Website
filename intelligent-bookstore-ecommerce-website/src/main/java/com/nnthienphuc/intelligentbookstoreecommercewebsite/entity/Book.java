@@ -12,8 +12,6 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 @Entity
 @Data
@@ -41,8 +39,6 @@ public class Book {
     private Author authorId;
 
     @Column(name = "year_of_publication", nullable = false)
-    @Min(value = 1900, message = "Năm xuất bản không được nhỏ hơn 1900")
-    @Max(value = 2024, message = "Năm xuất bản không được lớn hơn năm hiện tại")
     private Short year_of_publication;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -63,7 +59,6 @@ public class Book {
     @Column(name = "discount_percent", nullable = false)
     private Double discount_percent;
 
-    @ColumnDefault("0")
     @Column(name = "is_discount", nullable = false)
     private Boolean is_discount = false;
 
