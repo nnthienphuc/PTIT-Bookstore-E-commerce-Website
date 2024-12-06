@@ -23,8 +23,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User getUserById(String id) {
-        return userRepository.findById(id)
-                .orElseThrow()) -> new RuntimeException("User not found" + id);
+        return userRepository.findByUserId(id)
+                .orElseThrow(() -> new RuntimeException("User not found" + id));
     }
 
     public List<User> getAllUsers() {
@@ -42,10 +42,10 @@ public class UserService {
     }
 
     // Lấy user theo ID
-    public User getUserById(String id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + id));
-    }
+//    public User getUserById(String id) {
+//        return userRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + id));
+//    }
 
     // Lưu hoặc cập nhật user
     public User saveUser(User user) {

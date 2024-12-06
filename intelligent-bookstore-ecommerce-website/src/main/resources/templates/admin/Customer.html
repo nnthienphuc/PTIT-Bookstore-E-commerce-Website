@@ -59,20 +59,27 @@
                     <tbody>
                     <tr th:each="customer, iterStat : ${customers}">
                         <td th:text="${iterStat.count}"></td>
-                        <td th:text="${customer.customerId}"></td>
-                        <td th:text="${customer.fullname}"></td>
+                        <td th:text="${customer.userId}"></td>
+                        <td th:text="${customer.fullName}"></td>
                         <td th:text="${customer.email}"></td>
                         <td th:text="${customer.phone}"></td>
                         <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
-                        <td th:text="${#dates.format(customer.birthday, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#temporals.format(customer.birthday, 'dd/MM/yyyy')}"></td>
                         <td th:text="${customer.address}"></td>
                         <td th:text="${customer.isActive ? 'Kích hoạt' : 'Vô hiệu'}"></td>
-                        <td>D
+                        <td>
+<!--                            <button class="btn btn-warning btn-sm"-->
+<!--                                    th:onclick="'editCustomer(' + ${customer.userId} + ')'">Sửa-->
+<!--                            </button>-->
+<!--                            <button class="btn btn-danger btn-sm"-->
+<!--                                    th:onclick="'deleteCustomer(' + ${customer.userId} + ')'">Xóa-->
+<!--                            </button>-->
+
                             <button class="btn btn-warning btn-sm"
-                                    th:onclick="'editCustomer(' + ${customer.customerId} + ')'">Sửa
+                                    th:attr="onclick='editCustomer(' + ${customer.userId} + ')'" >Sửa
                             </button>
                             <button class="btn btn-danger btn-sm"
-                                    th:onclick="'deleteCustomer(' + ${customer.customerId} + ')'">Xóa
+                                    th:attr="onclick='deleteCustomer(' + ${customer.userId} + ')'" >Xóa
                             </button>
                         </td>
                     </tr>
