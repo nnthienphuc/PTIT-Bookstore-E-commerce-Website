@@ -86,11 +86,11 @@ public class AdminController {
             cookie.delete("pass");
         }
 
-        String backUrl = (String) session.getAttribute("back-url");
+//        String backUrl = (String) session.getAttribute("back-url");
 
-        if (backUrl != null) {
-            return "redirect:" + backUrl;
-        }
+//        if (backUrl != null) {
+//            return "redirect:" + backUrl;
+//        }
         return "redirect:/admin/book";
 
 //        return (backUrl != null) ? "redirect:" + backUrl : "admin/Author";
@@ -180,10 +180,15 @@ public class AdminController {
         return "redirect:/admin/account/login";
     }
 
-    @RequestMapping("/account/logoff")
-    public String logoff() {
-        session.removeAttribute("user");
+    @RequestMapping("/account/logout")
+    public String logout() {
+        session.removeAttribute("staff");
         session.removeAttribute("back-url");
         return "redirect:/admin/account/login";
+    }
+
+    @RequestMapping("/account/unauthorized")
+    public String unauthorized() {
+        return "admin/account/unauthorized";
     }
 }

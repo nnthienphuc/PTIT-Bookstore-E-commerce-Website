@@ -28,6 +28,6 @@ public class Cart {
 
     @Nationalized
     @Column(name = "quantity", nullable = false, length = 10)
-    private String quantity;
+    private Short quantity;
 
 }

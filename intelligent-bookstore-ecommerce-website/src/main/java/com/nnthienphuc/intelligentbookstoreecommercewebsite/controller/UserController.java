@@ -1,5 +1,6 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Cart;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
@@ -13,12 +14,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/user")
 @Controller
 public class UserController {
+
+    @Autowired
+    private CartService cartService;
 
     @Autowired
     private UserService userService;
@@ -178,20 +183,40 @@ public class UserController {
         return "user/bookDetail";
     }
 
-    @GetMapping("/search")
-    public String searchUserByName(
-            @RequestParam("name") String name,
-            Model model) {
-
-        List<User> users = userService.findByFullNameContainingIgnoreCase(name);
-        model.addAttribute("users", users);
-        return "user/searchResults";
-    }
+//    @GetMapping("/search")
+//    public String searchUserByName(
+//            @RequestParam("name") String name,
+//            Model model) {
+//
+//        List<User> users = userService.findByFullNameContainingIgnoreCase(name);
+//        model.addAttribute("users", users);
+//        return "user/searchResults";
+//    }
 
     @GetMapping("/cart")
-    public String cart(Model model) {
+    public String cart(HttpSession session,Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Cart> carts = cartService.getCartbyUserId(user.getUserId());
+            model.addAttribute("user", user);
+            model.addAttribute("cart", carts);
+            Double bfkm = 0.0;
+            for (Cart item : carts) {
+                BigDecimal quantityBigDecimal = new BigDecimal(item.getQuantity());
+                BigDecimal discountFactor = BigDecimal.valueOf(1 - item.getIsbn().getDiscount_percent());
+                BigDecimal result = quantityBigDecimal.multiply( discountFactor.multiply(item.getIsbn().getPrice()));
+                bfkm += result.doubleValue();
 
-        return "user/cart";
+
+
+            }
+            model.addAttribute("bfkm", bfkm);
+            return "user/cart";
+        }
+
+        // Nếu không, chuyển hướng người dùng đến trang đăng nhập
+        return "redirect:/user/account/login";
+
     }
 
     @GetMapping("/booklist")

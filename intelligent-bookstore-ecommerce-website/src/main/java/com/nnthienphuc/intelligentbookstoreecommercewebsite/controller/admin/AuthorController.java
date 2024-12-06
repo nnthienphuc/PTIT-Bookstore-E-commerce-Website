@@ -57,6 +57,7 @@ public class AuthorController {
     public Author getAuthorById(@PathVariable Long id) {
         return AuthorService.getAuthorById(id);
     }
+
     @PostMapping("/add")
     public String addAuthor(@ModelAttribute Author author, RedirectAttributes redirectAttributes) {
         try {
