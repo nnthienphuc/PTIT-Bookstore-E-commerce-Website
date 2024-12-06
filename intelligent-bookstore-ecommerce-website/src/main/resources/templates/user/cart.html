@@ -403,25 +403,28 @@
     <div class="cart-section">
         <div class="cart-header">
             <a href="#" class="back-arrow">←</a>
-            <h2>GIỎ HÀNG (1 sản phẩm)</h2>
+            <h2>GIỎ HÀNG (<span th:text="${cart.size()}"></span> sản phẩm)</h2>
         </div>
 
-        <div class="select-all">
-            <input type="checkbox" id="select-all" checked>
-            <label for="select-all">Chọn tất cả (1 sản phẩm)</label>
-        </div>
+<!--        <div class="select-all">-->
+<!--            <input type="checkbox" id="select-all" checked>-->
+<!--            <label for="select-all">Chọn tất cả (1 sản phẩm)</label>-->
+<!--        </div>-->
         <tr th:each="car, iterStat : ${cart}">
             <div class="cart-item">
-            <input type="checkbox" class="item-checkbox" checked>
-            <img class="item-image" src="/bookImage/NNA2-1.jpg" alt="Mùa Hè Không Tên">
+<!--            <input type="checkbox" class="item-checkbox" checked>-->
+            <img class="item-image"
+                 th:src="@{'/bookImage/' + ${car.getIsbn().getUrl1()}}"
+                 th:alt="${car.getIsbn().getTitle()}">
             <div class="item-details">
 
                 <h3 class="item-title" th:text="${car.getIsbn().getTitle()}"></h3>
 
                 <div class="item-price">
-                    101.250 đ
-                    <span class="original-price" th:text="${car.getIsbn().getPrice()}"></span>
+                    <span th:text="${#numbers.formatDecimal(car.getIsbn().getPrice() * (1 - car.getIsbn().getDiscount_percent()), 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                    <span class="original-price" th:text="${#numbers.formatDecimal(car.getIsbn().getPrice(), 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
                 </div>
+
             </div>
             <div class="quantity-control">
                 <button>-</button>
@@ -441,6 +444,7 @@
                 <p th:text="${user.getFullName()}"></p>
                 <p th:text="${user.getBirthday()}" ></p>
                 <p th:text="${user.getEmail()}" ></p>
+                <p th:text="${user.getAddress()}" ></p>
 
             </div>
         </div>
@@ -458,7 +462,7 @@
             </div>
             <div class="payment-option">
                 <input type="radio" name="payment" id="vnpay">
-                <label for="vnpay">Thanh toán bằng VNPay</label>
+                <label for="vnpay">Thanh toán bằng Paypal</label>
             </div>
         </div>
 
@@ -466,7 +470,8 @@
             <h3 class="section-title">Chi tiết thanh toán</h3>
             <div class="summary-row">
                 <span>Tổng tiền hàng</span>
-                <span>101.250 đ</span>
+                <span th:text="${#numbers.formatDecimal(bfkm, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
+
             </div>
             <div class="summary-row">
                 <span>Phí vận chuyển</span>
@@ -478,7 +483,8 @@
             </div>
             <div class="summary-row total-row">
                 <span>Tổng thanh toán</span>
-                <span class="amount">131.250 đ</span>
+                <span class="amount" th:text="${#numbers.formatDecimal(bfkm + 30000, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
+
             </div>
         </div>
 

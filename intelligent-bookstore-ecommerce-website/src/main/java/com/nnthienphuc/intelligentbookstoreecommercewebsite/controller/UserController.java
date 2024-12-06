@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -199,6 +200,17 @@ public class UserController {
             List<Cart> carts = cartService.getCartbyUserId(user.getUserId());
             model.addAttribute("user", user);
             model.addAttribute("cart", carts);
+            Double bfkm = 0.0;
+            for (Cart item : carts) {
+                BigDecimal quantityBigDecimal = new BigDecimal(item.getQuantity());
+                BigDecimal discountFactor = BigDecimal.valueOf(1 - item.getIsbn().getDiscount_percent());
+                BigDecimal result = quantityBigDecimal.multiply( discountFactor.multiply(item.getIsbn().getPrice()));
+                bfkm += result.doubleValue();
+
+
+
+            }
+            model.addAttribute("bfkm", bfkm);
             return "user/cart";
         }
 
