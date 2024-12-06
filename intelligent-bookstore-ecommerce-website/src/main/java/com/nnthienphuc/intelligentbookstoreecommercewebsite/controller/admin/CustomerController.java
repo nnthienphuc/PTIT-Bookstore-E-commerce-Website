@@ -46,6 +46,7 @@ public class CustomerController {
             return "error";
         }
     }
+
     @GetMapping("/{id}")
     @ResponseBody
     public User getUserById(@PathVariable String id) {
@@ -53,7 +54,7 @@ public class CustomerController {
     }
 
     @PostMapping("/add")
-    public String addAuthor(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String addCustomer(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         try {
             userService.saveUser(user);
             // Thêm thông báo thành công
@@ -67,13 +68,13 @@ public class CustomerController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteAuthor(@PathVariable String id) {
+    public String deleteCustomer(@PathVariable String id) {
         userService.deleteUser(id);
         return "redirect:/admin/customer";
     }
 
     @PostMapping("/edit")
-    public String editAuthor(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String editCustomer(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         try {
             userService.saveUser(user);
             redirectAttributes.addFlashAttribute("success", "edit");

@@ -1,3 +1,35 @@
+// function editCustomer(id) {
+//     fetch(`/admin/customer/${id}`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             document.getElementById('editCustomerId').value = data.customerId;
+//             document.getElementById('editEmail').value = data.email;
+//             document.getElementById('editPhone').value = data.phone;
+//             document.getElementById('editFullName').value = data.fullName;
+//             document.getElementById('editGender').value = data.gender ? 'true' : 'false';
+//             document.getElementById('editBirthday').value = data.birthday;
+//             document.getElementById('editAddress').value = data.address;
+//             document.getElementById('editIsActive').value = data.isActive ? 'true' : 'false';
+//
+//             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+//             editModal.show();
+//         })
+//         .catch(error => {
+//             console.error('Chi tiết lỗi:', error);
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Lỗi!',
+//                 text: `Có lỗi xảy ra khi lấy thông tin khách hàng!\nChi tiết lỗi: ${error}`,
+//                 confirmButtonText: 'Đóng'
+//             });
+//         });
+// }
+
 function editCustomer(id) {
     fetch(`admin/customer/${id}`)
         .then(response => response.json())
@@ -5,7 +37,7 @@ function editCustomer(id) {
             document.getElementById('editCustomerId').value = data.customerId;
             document.getElementById('editEmail').value = data.email;
             document.getElementById('editPhone').value = data.phone;
-            document.getElementById('editFullName').value = data.fullname;
+            document.getElementById('editFullName').value = data.fullName;
             document.getElementById('editGender').value = data.gender ? 'true' : 'false';
             document.getElementById('editBirthday').value = data.birthday;
             document.getElementById('editAddress').value = data.address;
@@ -41,7 +73,7 @@ function deleteCustomer(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(`/customer/delete/${id}`, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 }
