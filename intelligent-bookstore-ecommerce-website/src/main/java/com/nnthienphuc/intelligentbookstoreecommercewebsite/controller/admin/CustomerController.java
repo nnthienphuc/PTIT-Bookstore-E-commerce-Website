@@ -39,7 +39,7 @@ public class CustomerController {
             model.addAttribute("customers", userPage);
             model.addAttribute("keyword", keyword);
 
-            return "redirect:/admin/customer";
+            return "admin/customer";
 
         } catch (Exception e) {
             e.printStackTrace();

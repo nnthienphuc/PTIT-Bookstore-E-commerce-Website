@@ -22,6 +22,15 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public User getUserById(String id) {
+        return userRepository.findById(id)
+                .orElseThrow()) -> new RuntimeException("User not found" + id);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     // Phương thức để lấy danh sách user có phân trang
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);

@@ -64,10 +64,10 @@
                         <td th:text="${customer.email}"></td>
                         <td th:text="${customer.phone}"></td>
                         <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
-                        <td th:text="${#dates.format(customer.birhtday, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#dates.format(customer.birthday, 'dd/MM/yyyy')}"></td>
                         <td th:text="${customer.address}"></td>
                         <td th:text="${customer.isActive ? 'Kích hoạt' : 'Vô hiệu'}"></td>
-                        <td>
+                        <td>D
                             <button class="btn btn-warning btn-sm"
                                     th:onclick="'editCustomer(' + ${customer.customerId} + ')'">Sửa
                             </button>
@@ -92,14 +92,15 @@
 
                 <nav th:if="${customers.totalPages > 1}">
                     <ul class="pagination mb-0">
+                        <!-- First Page -->
                         <li class="page-item" th:classappend="${customers.first ? 'disabled' : ''}">
-                            <a class="page-link"
-                               th:href="@{/admin/customer(page=0, size=${customers.size}, keyword=${param.keyword})}"
+                            <a class="page-link" th:href="@{/admin/customer(page=0, size=${customers.size}, keyword=${param.keyword})}"
                                aria-label="First">
                                 <span aria-hidden="true">&laquo;&laquo;</span>
                             </a>
                         </li>
 
+                        <!-- Previous Page -->
                         <li class="page-item" th:classappend="${customers.first ? 'disabled' : ''}">
                             <a class="page-link"
                                th:href="@{/admin/customer(page=${customers.number - 1}, size=${customers.size}, keyword=${param.keyword})}"
@@ -108,6 +109,7 @@
                             </a>
                         </li>
 
+                        <!-- Page Numbers -->
                         <li class="page-item"
                             th:each="pageNumber : ${#numbers.sequence(0, customers.totalPages - 1)}"
                             th:classappend="${pageNumber == customers.number ? 'active' : ''}"
