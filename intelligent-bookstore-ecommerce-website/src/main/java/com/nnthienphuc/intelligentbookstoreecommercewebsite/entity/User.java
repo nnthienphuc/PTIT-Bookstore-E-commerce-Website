@@ -49,4 +49,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Cart> carts = new LinkedHashSet<>();
 
+    @Nationalized
+    @Lob
+    @Column(name = "address", nullable = false)
+    private String address;
+
 }
