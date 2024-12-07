@@ -167,6 +167,7 @@ public class UserController {
     public String logoff() {
         session.removeAttribute("user");
         session.removeAttribute("back-url");
+        session.invalidate();
         return "redirect:/user/home";
     }
 
