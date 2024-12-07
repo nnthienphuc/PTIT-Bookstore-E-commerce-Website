@@ -19,9 +19,12 @@
 
         /* Header */
         .header {
+
             background: #fff;
             padding: 10px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Quan trọng để submenu tham chiếu */
+            z-index: 1000; /* Đảm bảo header đè lên nội dung bên dưới */
         }
 
         .container {
@@ -67,10 +70,40 @@
         }
 
         .icon-item {
-            text-align: center;
+            position: relative; /* Đảm bảo submenu được định vị đúng */
+            cursor: pointer;
+
+        }
+
+        .sub-menu {
+            display: none;
+            position: absolute;
+            top: 100%; /* Đặt submenu ngay bên dưới header */
+            right: 0;
+
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            /* Đảm bảo submenu nằm trên nội dung */
+        }
+
+        .icon-item:hover .sub-menu {
+            display: block;
+        }
+
+        .sub-menu a {
+            display: block;
+            padding: 10px;
             color: #333;
             text-decoration: none;
-            font-size: 14px;
+            white-space: nowrap;
+
+        }
+
+        .sub-menu a:hover {
+            background-color: #f0f0f0;
         }
 
         /* Breadcrumb */
@@ -304,6 +337,35 @@
 </head>
 <body>
 <!-- Header -->
+<!--<header class="header">-->
+<!--    <div class="container">-->
+<!--        <div class="header-content">-->
+<!--            <a href="#" class="logo">-->
+<!--                <img th:src="@{/image/logocty.png}" alt="Napuno.com">-->
+<!--            </a>-->
+<!--            <div class="search-bar">-->
+<!--                <input type="text" placeholder="Tìm kiếm sản phẩm ở đây!">-->
+<!--                <button>-->
+<!--                    <i class="fas fa-search"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="header-icons">-->
+<!--                <a href="#" class="icon-item">-->
+<!--                    <i class="fas fa-bell"></i>-->
+<!--                    <div>Thông Báo</div>-->
+<!--                </a>-->
+<!--                <a href="#" class="icon-item">-->
+<!--                    <i class="fas fa-shopping-cart"></i>-->
+<!--                    <div>Giỏ Hàng</div>-->
+<!--                </a>-->
+<!--                <a href="#" class="icon-item">-->
+<!--                    <i class="fas fa-user"></i>-->
+<!--                    <div>Tài khoản</div>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
 <header class="header">
     <div class="container">
         <div class="header-content">
@@ -321,19 +383,34 @@
                     <i class="fas fa-bell"></i>
                     <div>Thông Báo</div>
                 </a>
-                <a href="#" class="icon-item">
+                <a th:href="@{'/user/cart'}" class="icon-item">
                     <i class="fas fa-shopping-cart"></i>
                     <div>Giỏ Hàng</div>
                 </a>
-                <a href="#" class="icon-item">
+                <div class="icon-item">
                     <i class="fas fa-user"></i>
                     <div>Tài khoản</div>
-                </a>
+
+                    <div class="sub-menu">
+                        <!-- Khi chưa đăng nhập -->
+                        <div th:if="${user == null}">
+                            <a th:href="@{'/user/account/login'}">Đăng nhập</a>
+                            <a th:href="@{'/user/account/register'}">Đăng ký</a>
+                        </div>
+
+                        <!-- Khi đã đăng nhập -->
+                        <div th:if="${user != null}">
+                            <a th:href="@{'/user/infor'}">Thông tin tài khoản</a>
+                            <a th:href="@{'/user/historyOrder'}">Lịch sử mua hàng</a>
+                            <a th:href="@{'/user/account/logout'}">Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </header>
-
 <!-- Breadcrumb -->
 <div class="breadcrumb">
     <div class="container">
