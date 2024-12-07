@@ -51,6 +51,14 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<Cart> carts = new LinkedHashSet<>();
 
+    @Nationalized
+    @Lob
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @Column(name = "phone", nullable = false, length = 10)
+    private String phone;
+
 //    @Nationalized
 //    @Lob
 //    @Column(name = "address", nullable = false)
