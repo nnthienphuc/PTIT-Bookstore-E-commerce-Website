@@ -104,8 +104,8 @@ public class UserController {
             cookie.delete("pass");
         }
 
-        String backUrl = (String) session.getAttribute("back-url");
-        return (backUrl != null) ? "redirect:" + backUrl : "user/home";
+//        return (backUrl != null) ? "redirect:" + backUrl : "user/home";
+        return "redirect:/user/home";
     }
 
     @GetMapping("/account/register")
@@ -163,7 +163,7 @@ public class UserController {
         return "redirect:/user/account/login";
     }
 
-    @RequestMapping("/account/logoff")
+    @RequestMapping("/account/logout")
     public String logoff() {
         session.removeAttribute("user");
         session.removeAttribute("back-url");
