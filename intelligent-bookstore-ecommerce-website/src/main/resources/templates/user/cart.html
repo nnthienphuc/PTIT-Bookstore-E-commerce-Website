@@ -373,7 +373,7 @@
 <header class="header">
     <div class="container">
         <div class="header-content">
-            <a href="#" class="logo">
+            <a th:href="@{'/user/home'}" class="logo">
                 <img th:src="@{/image/logocty.png}" alt="Napuno.com">
             </a>
             <div class="search-bar">
@@ -387,13 +387,17 @@
                     <i class="fas fa-bell"></i>
                     <div>Thông Báo</div>
                 </a>
-                <a href="#" class="icon-item">
+                <a th:href="@{'/user/cart'}" class="icon-item">
                     <i class="fas fa-shopping-cart"></i>
                     <div>Giỏ Hàng</div>
                 </a>
                 <a href="#" class="icon-item">
                     <i class="fas fa-user"></i>
                     <div>Tài khoản</div>
+                    <div class="sub-menu">
+                        <a th:href="@{'/user/account/login'}">Đăng nhập</a>
+                        <a th:href="@{'/user/account/register'}">Đăng ký</a>
+                    </div>
                 </a>
             </div>
         </div>

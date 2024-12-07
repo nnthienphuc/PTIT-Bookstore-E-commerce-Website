@@ -184,6 +184,8 @@ public class AdminController {
     public String logout() {
         session.removeAttribute("staff");
         session.removeAttribute("back-url");
+        // Hủy session hoàn toàn
+        session.invalidate();
         return "redirect:/admin/account/login";
     }
 
