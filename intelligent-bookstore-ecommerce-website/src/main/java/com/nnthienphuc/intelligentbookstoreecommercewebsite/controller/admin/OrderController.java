@@ -44,21 +44,14 @@ public class OrderController {
                 @RequestParam(defaultValue = "0") int page,
                 @RequestParam(defaultValue = "10") int size,
                 @RequestParam(required = false) String keyword,
-                @RequestParam(required = false) Long orderId,
                 @RequestParam(required = false) String status,
                 Model model) {
             
             try {
-                Page<OrderDTO> orderPage;
+                Page<OrderDTO> orderPage = orderService.searchOrders(keyword, status,
+                		PageRequest.of(page, size));
                 Map<String, Long> orderStatus = orderService.getOrderCountByStatus();
-//                if (keyword != null && !keyword.trim().isEmpty()) {
-//                    // Tìm kiếm có phân trang
-//                	orderPage = orderService.searchOrders(orderId,keyword.trim(), status, PageRequest.of(page, size));
-//                } else {
-                    // Lấy tất cả có phân trang
-                	orderPage = orderService.getAllOrders(PageRequest.of(page, size));
-//                }
-                
+           
                 model.addAttribute("orders", orderPage);
                 model.addAttribute("orderStatus", orderStatus);
                 model.addAttribute("keyword", keyword);
@@ -68,6 +61,32 @@ public class OrderController {
             } catch (Exception e) {
                 e.printStackTrace();
                 return "error";
+            }
+        }
+//        @PostMapping("/edit")
+//        public String editOrder(@ModelAttribute Order order, RedirectAttributes redirectAttributes) {
+//            try {
+//                orderService.saveOrder(order);
+//                redirectAttributes.addFlashAttribute("success", "edit");
+//                return "redirect:/admin/author";
+//            } catch (Exception e) {
+//                redirectAttributes.addFlashAttribute("error", "edit");
+//                return "redirect:/admin/author";
+//            }
+//        }
+//        @GetMapping("/{id}")
+//        @ResponseBody
+//        public Order getOrderById(@PathVariable Long id) {
+//            return orderService.getOrderById(id);
+//        }
+        @PostMapping("/edit")
+        public String changeStatus(@RequestParam Long orderId, @RequestParam String orderStatus) {
+            try {
+                orderService.changeStatus(orderId, orderStatus);
+                return "redirect:/admin/order"; // Sử dụng redirect để tránh lỗi khi làm mới trang
+            } catch (Exception e) {
+                // Xử lý lỗi nếu cần
+                return "redirect:/admin/order"; // Cũng sử dụng redirect trong trường hợp lỗi
             }
         }
 }

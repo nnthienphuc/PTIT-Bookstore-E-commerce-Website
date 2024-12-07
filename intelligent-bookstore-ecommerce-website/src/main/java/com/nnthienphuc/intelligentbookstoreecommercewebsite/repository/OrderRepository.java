@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
 
 @Repository
@@ -20,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.user.fullName LIKE %:buyerName%")
     Page<Order> findByBuyerName(@Param("buyerName") String buyerName, Pageable pageable);
       
-    
+    Page<Order> findByReceiverContainingIgnoreCaseAndOrderStatusContainingIgnoreCase(String receiver,String orderStatus, Pageable pageable);
     // Lọc theo trạng thái
     Page<Order> findByOrderStatus(String status, Pageable pageable);
 

@@ -20,6 +20,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDTO;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.OrderDetail;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.OrderStatus;
@@ -92,5 +95,41 @@ public class OrderService {
         }
 
         return orderCountMap;
+    }
+    public Page<OrderDTO> searchOrders(String keyword, String orderStatus, Pageable pageable) {
+        try {
+          
+            // Tìm kiếm với các điều kiện khác nhau
+            if (keyword == null && orderStatus == null) {
+                return  convertToOrderDTOPage(orderRepository.findAll(pageable));
+            }else
+            {
+            	return convertToOrderDTOPage(orderRepository.findByReceiverContainingIgnoreCaseAndOrderStatusContainingIgnoreCase(keyword,orderStatus,  pageable));
+            }	
+        } catch (Exception e) {
+            throw new RuntimeException("Error searching books", e);
+        }
+    }
+
+    public void changeStatus(Long orderId,String orderStatus) {
+    	try {
+    		if(orderId != null) {
+    			Order order = orderRepository.getById(orderId);
+    			order.setOrderStatus(orderStatus);
+    			orderRepository.save(order);
+    		}
+    		
+    	}  catch (Exception e) {
+            throw new RuntimeException("Could not delete book", e);
+        }
+    }
+    public Order getOrderById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng với id: " + id));
+    }
+
+
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
     }
 }

@@ -137,19 +137,6 @@ public class BookController {
         }
     }
 
-    @PostMapping("/toggle-discount/{isbn}")
-    @ResponseBody
-    public ResponseEntity<?> toggleDiscount(@PathVariable String isbn) {
-        try {
-            Book book = bookService.getBookByIsbn(isbn);
-            book.setIs_discount(!book.getIs_discount());
-            bookService.saveBook(book, null);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error toggling discount: " + e.getMessage());
-        }
-    }
 
     @PostMapping("/update-quantity/{isbn}")
     @ResponseBody
