@@ -184,7 +184,12 @@ public class UserController {
     }
 
     @GetMapping("/bookdetail/{id}")
-    public String bookDetail(Model model, @PathVariable("id") String id) {
+    public String bookDetail(Model model, @PathVariable("id") String id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
+
+        }
         model.addAttribute("book", bookService.getBookByIsbn(id));
         return "user/bookDetail";
     }
@@ -226,8 +231,12 @@ public class UserController {
     }
 
     @GetMapping("/booklist")
-    public String booklist(Model model) {
+    public String booklist(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
 
+        }
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
@@ -236,19 +245,32 @@ public class UserController {
         return "user/booklist";
     }
     @GetMapping("/infor")
-    public String infor(Model model) {
+    public String infor(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
 
+        }
 
         return "user/infor";
     }
     @GetMapping("/historyOrder")
-    public String history(Model model) {
+    public String history(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
 
+        }
 
         return "user/historyOrder";
     }
     @RequestMapping("/booklist-by-category/{cid}")
-    public String listByCategory(Model model, @PathVariable("cid") Integer categoryId) {
+    public String listByCategory(Model model, @PathVariable("cid") Integer categoryId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
+
+        }
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
@@ -256,7 +278,12 @@ public class UserController {
     return "user/booklist";
 }
     @RequestMapping("/booklist-by-author/{cid}")
-    public String listByAuthor(Model model, @PathVariable("cid") Integer authorId) {
+    public String listByAuthor(Model model, @PathVariable("cid") Integer authorId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
+
+        }
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
@@ -265,7 +292,12 @@ public class UserController {
     }
 
     @RequestMapping("/booklist-by-publisher/{cid}")
-    public String listByPublisher(Model model, @PathVariable("cid") Integer categoryId) {
+    public String listByPublisher(Model model, @PathVariable("cid") Integer categoryId, HttpSession session ) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
+
+        }
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("authors",authorService.getAllAuthors());
         model.addAttribute("publishers",publisherService.getAllPublishers());
