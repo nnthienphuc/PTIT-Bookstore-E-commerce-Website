@@ -33,10 +33,10 @@
                     <div class="card bg-primary text-white">
                         <div class="card-body">
                             <h5 class="card-title">Doanh thu hôm nay</h5>
-                            <p class="card-text h3" th:text="${todayRevenue}">2.500.000 ₫</p>
+                            <p class="card-text h3" th:text="${todayRevenue}"></p>
                             <p class="card-text">
                                 <small>
-                                    <i class="bi bi-arrow-up"></i> 15% so với hôm qua
+                                    <i class="bi bi-arrow-up"></i>
                                 </small>
                             </p>
                         </div>
@@ -46,10 +46,10 @@
                     <div class="card bg-success text-white">
                         <div class="card-body">
                             <h5 class="card-title">Doanh thu tháng này</h5>
-                            <p class="card-text h3" th:text="${monthRevenue}">45.000.000 ₫</p>
+                            <p class="card-text h3" th:text="${monthRevenue}">/p>
                             <p class="card-text">
                                 <small>
-                                    <i class="bi bi-arrow-up"></i> 10% so với tháng trước
+                                    <i class="bi bi-arrow-up"></i>
                                 </small>
                             </p>
                         </div>
@@ -59,10 +59,10 @@
                     <div class="card bg-info text-white">
                         <div class="card-body">
                             <h5 class="card-title">Doanh thu năm nay</h5>
-                            <p class="card-text h3" th:text="${yearRevenue}">520.000.000 ₫</p>
+                            <p class="card-text h3" th:text="${yearRevenue}"></p>
                             <p class="card-text">
                                 <small>
-                                    <i class="bi bi-arrow-up"></i> 25% so với năm trước
+                                    <i class="bi bi-arrow-up"></i>
                                 </small>
                             </p>
                         </div>
@@ -72,10 +72,10 @@
                     <div class="card bg-warning text-white">
                         <div class="card-body">
                             <h5 class="card-title">Số đơn hàng</h5>
-                            <p class="card-text h3" th:text="${totalOrders}">150</p>
+                            <p class="card-text h3" th:text="${totalOrders}"></p>
                             <p class="card-text">
                                 <small>
-                                    <i class="bi bi-arrow-up"></i> 5% so với tháng trước
+                                    <i class="bi bi-arrow-up"></i>
                                 </small>
                             </p>
                         </div>
@@ -83,109 +83,111 @@
                 </div>
             </div>
 
-            <!-- Filter -->
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form class="row g-3">
-                                <div class="col-md-3">
-                                    <label class="form-label">Loại thống kê</label>
-                                    <select class="form-select" id="statisticType" onchange="changeStatisticType()">
-                                        <option value="day">Theo ngày</option>
-                                        <option value="month">Theo tháng</option>
-                                        <option value="year">Theo năm</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3" id="dayFilter">
-                                    <label class="form-label">Chọn ngày</label>
-                                    <input type="date" class="form-control" value="2024-01-15">
-                                </div>
-                                <div class="col-md-3" id="monthFilter" style="display:none;">
-                                    <label class="form-label">Chọn tháng</label>
-                                    <input type="month" class="form-control" value="2024-01">
-                                </div>
-                                <div class="col-md-3" id="yearFilter" style="display:none;">
-                                    <label class="form-label">Chọn năm</label>
-                                    <select class="form-select">
-                                        <option>2024</option>
-                                        <option>2023</option>
-                                        <option>2022</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">&nbsp;</label>
-                                    <button type="submit" class="btn btn-primary d-block">
-                                        <i class="bi bi-search"></i> Xem thống kê
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Charts -->
-            <div class="row mb-4">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Biểu đồ doanh thu</h5>
-                            <canvas id="revenueChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Tỷ lệ đơn hàng</h5>
-                            <canvas id="orderPieChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            cmt từ đoạn này.-->
+<!--            &lt;!&ndash; Filter &ndash;&gt;-->
+<!--            <div class="row mb-4">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--                            <form class="row g-3">-->
+<!--                                <div class="col-md-3">-->
+<!--                                    <label class="form-label">Loại thống kê</label>-->
+<!--                                    <select class="form-select" id="statisticType" onchange="changeStatisticType()">-->
+<!--                                        <option value="day">Theo ngày</option>-->
+<!--                                        <option value="month">Theo tháng</option>-->
+<!--                                        <option value="year">Theo năm</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-3" id="dayFilter">-->
+<!--                                    <label class="form-label">Chọn ngày</label>-->
+<!--                                    <input type="date" class="form-control" value="2024-01-15">-->
+<!--                                </div>-->
+<!--                                <div class="col-md-3" id="monthFilter" style="display:none;">-->
+<!--                                    <label class="form-label">Chọn tháng</label>-->
+<!--                                    <input type="month" class="form-control" value="2024-01">-->
+<!--                                </div>-->
+<!--                                <div class="col-md-3" id="yearFilter" style="display:none;">-->
+<!--                                    <label class="form-label">Chọn năm</label>-->
+<!--                                    <select class="form-select">-->
+<!--                                        <option>2024</option>-->
+<!--                                        <option>2023</option>-->
+<!--                                        <option>2022</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-3">-->
+<!--                                    <label class="form-label">&nbsp;</label>-->
+<!--                                    <button type="submit" class="btn btn-primary d-block">-->
+<!--                                        <i class="bi bi-search"></i> Xem thống kê-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <!-- Data Table -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Chi tiết doanh thu</h5>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Thời gian</th>
-                                <th>Số đơn hàng</th>
-                                <th>Doanh thu</th>
-                                <th>Tăng trưởng</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>15/01/2024</td>
-                                <td>25</td>
-                                <td>2.500.000 ₫</td>
-                                <td class="text-success">+15%</td>
-                            </tr>
-                            <tr>
-                                <td>14/01/2024</td>
-                                <td>22</td>
-                                <td>2.100.000 ₫</td>
-                                <td class="text-danger">-5%</td>
-                            </tr>
-                            <tr>
-                                <td>13/01/2024</td>
-                                <td>28</td>
-                                <td>2.800.000 ₫</td>
-                                <td class="text-success">+20%</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-</div>
+<!--            &lt;!&ndash; Charts &ndash;&gt;-->
+<!--            <div class="row mb-4">-->
+<!--                <div class="col-md-8">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">Biểu đồ doanh thu</h5>-->
+<!--                            <canvas id="revenueChart"></canvas>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-4">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">Tỷ lệ đơn hàng</h5>-->
+<!--                            <canvas id="orderPieChart"></canvas>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Data Table &ndash;&gt;-->
+<!--            <div class="card">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Chi tiết doanh thu</h5>-->
+<!--                    <div class="table-responsive">-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>Thời gian</th>-->
+<!--                                <th>Số đơn hàng</th>-->
+<!--                                <th>Doanh thu</th>-->
+<!--                                <th>Tăng trưởng</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr>-->
+<!--                                <td>15/01/2024</td>-->
+<!--                                <td>25</td>-->
+<!--                                <td>2.500.000 ₫</td>-->
+<!--                                <td class="text-success">+15%</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>14/01/2024</td>-->
+<!--                                <td>22</td>-->
+<!--                                <td>2.100.000 ₫</td>-->
+<!--                                <td class="text-danger">-5%</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>13/01/2024</td>-->
+<!--                                <td>28</td>-->
+<!--                                <td>2.800.000 ₫</td>-->
+<!--                                <td class="text-success">+20%</td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </main>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -148,7 +148,7 @@ public class OrderService {
                 .filter(order ->
                         order.getOrderDate().isAfter(startOfDay) &&
                                 order.getOrderDate().isBefore(endOfDay) &&
-                                order.getOrderStatus().equals("COMPLETED"))
+                                order.getOrderStatus().equals("DELIVERED"))
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
@@ -162,7 +162,7 @@ public class OrderService {
                 .filter(order ->
                         order.getOrderDate().isAfter(startInstant) &&
                                 order.getOrderDate().isBefore(endInstant) &&
-                                order.getOrderStatus().equals("COMPLETED"))
+                                order.getOrderStatus().equals("DELIVERED"))
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
