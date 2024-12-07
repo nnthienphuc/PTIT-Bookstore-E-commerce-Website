@@ -1,6 +1,7 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CookieService;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.MailService;
@@ -192,5 +193,12 @@ public class AdminController {
     @RequestMapping("/account/unauthorized")
     public String unauthorized() {
         return "admin/account/unauthorized";
+    }
+
+    @GetMapping("/account")
+    public String account(Model model) {
+        Staff staff = (Staff) session.getAttribute("staff");  // Lấy thông tin nhân viên từ dịch vụ
+        model.addAttribute("staff", staff);  // Thêm thông tin vào model
+        return "admin/account";  // Trả về tên của view
     }
 }

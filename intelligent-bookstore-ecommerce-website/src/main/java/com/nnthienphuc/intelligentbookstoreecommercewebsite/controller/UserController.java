@@ -293,7 +293,6 @@ public class UserController {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);// Người dùng đã đăng nhập
-
         }
 
         return "user/historyOrder";
