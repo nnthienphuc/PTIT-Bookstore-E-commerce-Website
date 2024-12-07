@@ -65,33 +65,36 @@
                                         <form th:action="@{/admin/account}" method="get" id="profileForm">
                                             <div class="mb-3">
                                                 <label class="form-label">Username</label>
-                                                <input type="text" class="form-control" th:value="${staff.staffId}" readonly>
+                                                <input type="text" class="form-control" th:value="${staff.staffId}" name="staffId" readonly>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Họ và tên</label>
-                                                <input type="text" class="form-control" th:value="${staff.fullName}">
+                                                <input type="text" class="form-control" th:value="${staff.fullName}" name="fullName">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" th:value="${staff.email}" readonly>
+                                                <input type="email" class="form-control" th:value="${staff.email}" name="email" readonly>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Số điện thoại</label>
-                                                <input type="tel" class="form-control" th:value="${staff.phone}">
+                                                <input type="tel" class="form-control" th:value="${staff.phone}" name="phone">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Chứng minh thư</label>
-                                                <input class="text" th:text="${staff.idCard}">
+                                                <input type="text" class="form-control" th:value="${staff.idCard}" name="idCard" readonly>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Giới tính</label>
-                                                <input type="text" class="form-control" th:value="${staff.gender}">
+                                                <select class="form-control" name="gender">
+                                                    <option value="true" th:selected="${staff.gender == true}">Nữ</option>
+                                                    <option value="false" th:selected="${staff.gender == false}">Nam</option>
+                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Địa chỉ</label>
-                                                <textarea class="form-control" rows="3" th:text="${staff.address}"></textarea>
+                                                <textarea class="form-control" rows="3" th:text="${staff.address}" name="address"></textarea>
                                             </div>
-                                            <button type="button" class="btn btn-primary" onclick="updateProfile()">
+                                            <button type="submit" class="btn btn-primary">
                                                 <i class="bi bi-save"></i> Lưu thay đổi
                                             </button>
                                         </form>
