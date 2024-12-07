@@ -465,8 +465,15 @@
                     <i class="fas fa-user"></i>
                     <div>Tài khoản</div>
                     <div class="sub-menu">
-                        <a th:href="@{'/user/account/login'}">Đăng nhập</a>
-                        <a th:href="@{'/user/account/register'}">Đăng ký</a>
+                        <li th:if="${user == null}">
+                            <a th:href="@{'/user/account/login'}">Đăng nhập</a>
+                            <a th:href="@{'/user/account/register'}">Đăng ký</a>
+                        </li>
+                        <li th:if="${user != null}">
+                            <a th:href="@{'/user/infor'}">Thông tin tài khoản</a>
+                            <a th:href="@{'/user/historyOder'}">Lịch sử mua hàng</a>
+                            <a th:href="@{'/user/account/logout'}">Đăng xuất</a>
+                        </li>
                     </div>
                 </div>
             </div>

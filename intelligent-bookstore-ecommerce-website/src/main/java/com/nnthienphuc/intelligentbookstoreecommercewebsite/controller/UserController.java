@@ -171,7 +171,11 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(HttpSession session,Model model) {
+        Object user = session.getAttribute("loggedInUser");
+        if (user != null) {
+            model.addAttribute("user", user);  // Người dùng đã đăng nhập
+        }
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("books", bookService.getAllBooks());
         return "user/home";
@@ -229,15 +233,18 @@ public class UserController {
 
         return "user/booklist";
     }
-//    @GetMapping("/booklist/nguyennhatanh")
-//    public String booklistnna(Model model) {
-//
-//        model.addAttribute("cates", categoryService.getAllCategories());
-//        model.addAttribute("authors",authorService.getAllAuthors());
-//        model.addAttribute("publishers",publisherService.getAllPublishers());
-//        model.addAttribute("books", bookService.getBookByAuthorID(1));
-//        return "user/booklistnna";
-//    }
+    @GetMapping("/infor")
+    public String infor(Model model) {
+
+
+        return "user/infor";
+    }
+    @GetMapping("/historyOder")
+    public String history(Model model) {
+
+
+        return "user/historyOder";
+    }
     @RequestMapping("/booklist-by-category/{cid}")
     public String listByCategory(Model model, @PathVariable("cid") Integer categoryId) {
         model.addAttribute("cates", categoryService.getAllCategories());
