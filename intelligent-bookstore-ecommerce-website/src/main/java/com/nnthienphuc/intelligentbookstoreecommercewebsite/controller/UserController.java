@@ -173,9 +173,10 @@ public class UserController {
 
     @GetMapping("/home")
     public String home(HttpSession session,Model model) {
-        Object user = session.getAttribute("loggedInUser");
+        User user = (User) session.getAttribute("user");
         if (user != null) {
-            model.addAttribute("user", user);  // Người dùng đã đăng nhập
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
+
         }
         model.addAttribute("cates", categoryService.getAllCategories());
         model.addAttribute("books", bookService.getAllBooks());
@@ -240,11 +241,11 @@ public class UserController {
 
         return "user/infor";
     }
-    @GetMapping("/historyOder")
+    @GetMapping("/historyOrder")
     public String history(Model model) {
 
 
-        return "user/historyOder";
+        return "user/historyOrder";
     }
     @RequestMapping("/booklist-by-category/{cid}")
     public String listByCategory(Model model, @PathVariable("cid") Integer categoryId) {
