@@ -1,8 +1,11 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.RevenueDetailsDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,4 +34,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     	List<Object[]> countOrdersByStatus();
     // Đếm số lượng theo trạng thái
     Long countByOrderStatus(String status);
+
 }

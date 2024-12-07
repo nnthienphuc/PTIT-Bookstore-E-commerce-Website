@@ -1,5 +1,10 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.RevenueDetailsDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.OrderRepository;
 
 import jakarta.transaction.Transactional;
@@ -131,5 +137,38 @@ public class OrderService {
 
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    // Phương thức tính doanh thu theo ngày
+    public BigDecimal calculateRevenueByDate(LocalDate date) {
+        Instant startOfDay = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant endOfDay = date.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant();
+
+        return orderRepository.findAll().stream()
+                .filter(order ->
+                        order.getOrderDate().isAfter(startOfDay) &&
+                                order.getOrderDate().isBefore(endOfDay) &&
+                                order.getOrderStatus().equals("COMPLETED"))
+                .map(Order::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    // Phương thức tính doanh thu theo khoảng thời gian
+    public BigDecimal calculateRevenueByDateRange(LocalDate startDate, LocalDate endDate) {
+        Instant startInstant = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant endInstant = endDate.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant();
+
+        return orderRepository.findAll().stream()
+                .filter(order ->
+                        order.getOrderDate().isAfter(startInstant) &&
+                                order.getOrderDate().isBefore(endInstant) &&
+                                order.getOrderStatus().equals("COMPLETED"))
+                .map(Order::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    // Format tiền tệ
+    private String formatCurrency(BigDecimal amount) {
+        return String.format("%,.0f ₫", amount.setScale(0, RoundingMode.HALF_UP).doubleValue());
     }
 }
