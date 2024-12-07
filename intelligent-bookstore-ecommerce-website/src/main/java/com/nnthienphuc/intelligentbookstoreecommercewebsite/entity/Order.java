@@ -56,6 +56,6 @@ public class Order {
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
 }
