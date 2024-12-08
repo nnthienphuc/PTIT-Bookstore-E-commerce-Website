@@ -183,6 +183,7 @@
         .price-column {
             text-align: right;
             min-width: 120px;
+            position: relative;
         }
 
         .original-price {
@@ -192,7 +193,7 @@
         }
 
         .current-price {
-            color: #333;
+            color: #999;
             font-weight: 500;
             margin: 0.2rem 0;
         }
@@ -200,6 +201,9 @@
         .total-price {
             color: #f00;
             font-weight: 500;
+            position: absolute;
+            bottom: 0;
+            right: 0;
         }
 
         .order-footer {
@@ -467,7 +471,7 @@
 
 <!--                <div class="original-price" th:text="${#numbers.formatDecimal(d.getPrice(), 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>-->
                 <!-- Hiển thị giá hiện tại -->
-                <div class="original-price" th:text="${#numbers.formatDecimal(d.getPrice() , 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>
+                <div class="current-price" th:text="${#numbers.formatDecimal(d.getPrice() , 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>
                 <!-- Hiển thị tổng giá -->
                 <div class="total-price" th:text="${#numbers.formatDecimal(d.getPrice() * d.getQuantity(), 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>
             </div>
