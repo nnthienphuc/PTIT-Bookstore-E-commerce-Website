@@ -1,9 +1,6 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Cart;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.OrderDetail;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.*;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.UserRepository;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
@@ -433,6 +430,19 @@ public class UserController {
         return "redirect:/user/cart";
     }
 
+    @GetMapping("/booklist/search")
+    public String searchBooks(@RequestParam("keyword") String keyword, Model model) {
+        List<Book> books = bookService.searchBooks(keyword);
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);// Người dùng đã đăng nhập
 
+        }
+        model.addAttribute("cates", categoryService.getAllCategories());
+        model.addAttribute("authors",authorService.getAllAuthors());
+        model.addAttribute("publishers",publisherService.getAllPublishers());
 
+        model.addAttribute("books", books);
+        return "user/booklist";
+    }
 }

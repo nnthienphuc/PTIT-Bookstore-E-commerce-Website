@@ -26,6 +26,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     @Query("SELECT b FROM Book b WHERE b.publisherId.publisherId = :publisherId")
     List<Book> getBooksByPublisherID(@Param("publisherId") Integer publisherId);
+
     Page<Book> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 
     Page<Book> findByCategoryId(Category category, Pageable pageable);
@@ -41,4 +42,6 @@ public interface BookRepository extends JpaRepository<Book, String> {
     Page<Book> findByTitleContainingIgnoreCaseAndCategoryIdAndAuthorId(
         String title, Category category, Author author, Pageable pageable);
 
+    // Tìm sách theo title hoặc theo tên tác giả
+//    List<Book> findByTitleContainingIgnoreCase(String title);
 }

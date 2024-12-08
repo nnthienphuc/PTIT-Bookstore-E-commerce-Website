@@ -52,6 +52,11 @@ public class BookService {
         return bookRepository.findAll(pageable);
     }
 
+    public List<Book> searchBooks(String keyword) {
+        // Tìm kiếm theo title
+        return bookRepository.findByTitleContainingIgnoreCase(keyword);
+    }
+
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
