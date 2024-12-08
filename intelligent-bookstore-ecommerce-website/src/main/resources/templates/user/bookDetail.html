@@ -325,7 +325,7 @@
 <!--            <button onclick="increaseQuantity()">+</button>-->
 <!--        </div>-->
 
-        <form th:action="@{/user/bookDetail/{id}(id=${book.getIsbn()})}" method="post">
+        <form th:action="@{/user/bookdetail/{id}(id=${book.getIsbn()})}" method="post">
             <div class="quantity">
                 <span>Số lượng:</span>
                 <button type="button" onclick="decreaseQuantity()">-</button>

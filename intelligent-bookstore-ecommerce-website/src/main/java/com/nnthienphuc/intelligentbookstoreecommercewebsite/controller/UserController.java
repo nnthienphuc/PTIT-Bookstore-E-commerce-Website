@@ -204,9 +204,9 @@ public class UserController {
 
         }
         model.addAttribute("book", bookService.getBookByIsbn(id));
-        return "user/bookDetail";
+        return "user/bookdetail";
     }
-    @PostMapping("/bookDetail/{id}")
+    @PostMapping("/bookdetail/{id}")
     public String bookDetail(
             @PathVariable("id") String bookId,  // Lấy {id} từ URL
             @RequestParam("quantity") short quantity,  // Lấy số lượng sách từ form
