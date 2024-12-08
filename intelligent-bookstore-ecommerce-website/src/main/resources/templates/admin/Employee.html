@@ -1,230 +1,167 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý nhân viên</title>
-    
-    <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-</head>
-<body>
-    <div class="row">
-        <!-- Navbar -->
-        <div class="col-2">
-            <div style="margin-left: 5px !important;">
-                <div th:replace="~{admin/Navbar :: navbar}"></div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="col-10">
-            <main class="container-fluid mt-4">
-                <h1>Quản lý nhân viên</h1>
-
-                <!-- Search -->
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <form class="row g-3">
-                            <div class="col-md-4">
-                                <input type="text" 
-                                       class="form-control" 
-                                       placeholder="Tìm theo mã, tên hoặc email">
-                            </div>
-                            
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-search"></i> Tìm kiếm
-                                </button>
-                                <button type="reset" class="btn btn-secondary">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Đặt lại
-                                </button>
-                            </div>
-                        </form>
-                    </div>                  
-                </div>
-
-                <!-- Add New Button -->
-                <div class="mb-3">
-                    <button class="btn btn-success" onclick="addEmployee()">
-                        <i class="bi bi-plus-circle"></i> Thêm nhân viên mới
-                    </button>
-                </div>
-
-                <!-- Employees Table -->
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Mã NV</th>
-                                <th>Email</th>
-                                <th>Họ và tên</th>
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                                <th>Quyền</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>NV001</td>
-                                <td>nguyenvana@gmail.com</td>
-                                <td>Nguyễn Văn A</td>
-                                <td>Nam</td>
-                                <td>01/01/1990</td>
-                                <td><span class="badge bg-primary">Quản lý</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                       
-                                        <button class="btn btn-sm btn-warning" onclick="editEmployee('NV001')">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteEmployee('NV001')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>NV002</td>
-                                <td>tranthib@gmail.com</td>
-                                <td>Trần Thị B</td>
-                                <td>Nữ</td>
-                                <td>15/03/1995</td>
-                                <td><span class="badge bg-success">Nhân viên</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                         
-                                             
-                                       
-                                        <button class="btn btn-sm btn-warning" onclick="editEmployee('NV002')">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteEmployee('NV002')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- Thêm dữ liệu mẫu khác -->
-                        </tbody>
-                    </table>
-                </div>
-
-                
-            </main>
-        </div>
-    </div>
-
-    <!-- View Employee Modal -->
-    <div class="modal fade" id="viewEmployeeModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Chi tiết nhân viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Mã NV:</strong> <span id="viewUserId"></span></p>
-                    <p><strong>Email:</strong> <span id="viewEmail"></span></p>
-                    <p><strong>Họ và tên:</strong> <span id="viewFullName"></span></p>
-                    <p><strong>Giới tính:</strong> <span id="viewGender"></span></p>
-                    <p><strong>Ngày sinh:</strong> <span id="viewBirthday"></span></p>
-                    <p><strong>Quyền:</strong> <span id="viewRole"></span></p>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nhân viên</title>
+        
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" th:href="@{/admin/css/style.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript" src="/admin/Employee/js/main.js"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-2">
+                <div style="margin-left: 20px !important;">
+                    <div th:replace="~{admin/Navbar :: navbar}" ></div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Add/Edit Employee Modal -->
-    <div class="modal fade" id="employeeModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thêm/Sửa nhân viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="employeeForm">
-                        <div class="mb-3">
-                            <label class="form-label">Mã NV</label>
-                            <input type="text" class="form-control" id="editUserId" readonly>
+            <div class="col-9">
+                <main>
+                    <h1>Nhân viên</h1>         
+                    <form th:action="@{/admin/employee}" method="get" class="mb-3">
+                        <div class="input-group" style="width: 80vw;">
+                            <input type="text" 
+                                   name="keyword" 
+                                   id="searchInput" 
+                                   class="form-control" 
+                                   placeholder="Nhập tên nhân viên cần tìm" 
+                                   th:value="${keyword}"
+                                   style="margin-right:10px;">
+                            <button type="submit" class="btn btn-primary" style="margin-right:10px;">Tìm kiếm</button>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" id="editEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" id="editFullName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Giới tính</label>
-                            <select class="form-select" id="editGender" required>
-                                <option value="1">Nam</option>
-                                <option value="0">Nữ</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ngày sinh</label>
-                            <input type="date" class="form-control" id="editBirthday" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Quyền</label>
-                            <select class="form-select" id="editRole" required>
-                                <option value="ADMIN">Quản lý</option>
-                                <option value="STAFF">Nhân viên</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
                     </form>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>                            
+                                    <th>Mã NV</th>
+                                    <th>Email</th>
+                                    <th>Họ và tên</th>
+                                    <th>Giới tính</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Chức vụ</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="staff, iterStat : ${staffs}">
+                                    <td th:text="${iterStat.count}"></td>
+                                    <td th:text="${staff.staffId}"></td>
+                                    <td th:text="${staff.email}"></td>
+                                    <td th:text="${staff.fullName}"></td>
+                                    <td th:text="${staff.gender ? 'Nữ' : 'Nam'}"></td>
+                                    <td th:text="${staff.birthday}"></td>
+                                    <td th:text="${staff.phone}"></td>
+                                 	<td th:text="${staff.role.roleName}"></td> 
+                                    <td>                                   
+                                        <button class="btn btn-warning btn-sm" 
+                                                th:data-staffid="${staff.staffId}" 
+                                                th:data-isactive="${staff.isActive}" 
+                                                onclick="editStaff(this.getAttribute('data-staffid'))">
+                                            <i class="bi" 
+                                               th:classappend="${staff.isActive ? 'bi-unlock' : 'bi-lock'}"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <div class="text-muted">
+                            Hiển thị 
+                            <span th:text="${staffs.numberOfElements}">0</span> 
+                            trong tổng số 
+                            <span th:text="${staffs.totalElements}">0</span> 
+                            nhân viên
+                        </div>
+                        
+                        <nav th:if="${staffs.totalPages > 1}">
+                            <ul class="pagination mb-0">
+                                <li class="page-item" th:classappend="${staffs.first ? 'disabled' : ''}">
+                                    <a class="page-link" th:href="@{/admin/employee(page=0, size=${staffs.size}, keyword=${param.keyword})}" 
+                                    aria-label="First">
+                                        <span aria-hidden="true">&laquo;&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${staffs.first ? 'disabled' : ''}">
+                                    <a class="page-link" 
+                                    th:href="@{/admin/employee(page=${staffs.number - 1}, size=${staffs.size}, keyword=${param.keyword})}" 
+                                    aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" 
+                                    th:each="pageNumber : ${#numbers.sequence(0, staffs.totalPages - 1)}"
+                                    th:classappend="${pageNumber == staffs.number ? 'active' : ''}"
+                                    th:if="${pageNumber >= staffs.number - 2 and pageNumber <= staffs.number + 2}">
+                                    <a class="page-link" 
+                                    th:href="@{/admin/employee(page=${pageNumber}, size=${staffs.size}, keyword=${param.keyword})}"
+                                    th:text="${pageNumber + 1}">1</a>
+                                </li>
+                                <li class="page-item" th:classappend="${staffs.last ? 'disabled' : ''}">
+                                    <a class="page-link" 
+                                    th:href="@{/admin/employee(page=${staffs.number + 1}, size=${staffs.size}, keyword=${param.keyword})}" 
+                                    aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${staffs.last ? 'disabled' : ''}">
+                                    <a class="page-link" 
+                                    th:href="@{/admin/employee(page=${staffs.totalPages - 1}, size=${staffs.size}, keyword=${param.keyword})}"
+                                    aria-label="Last">
+                                        <span aria-hidden="true">&raquo;&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Sửa Nhân Viên</h5> <!-- Change title -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/admin/employee/edit}" method="post"> <!-- Change action -->
+                            <input type="hidden" id="editStaffId" name="staffId"> <!-- Use staffId -->
+                            <div class="mb-3">
+                                <label class="form-label">Tên Nhân Viên</label>
+                                <input type="text" class="form-control" id="editStaffName" name="fullName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email Nhân Viên</label>
+                                <input type="email" class="form-control" id="editStaffEmail" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Số Điện Thoại</label>
+                                <input type="text" class="form-control" id="editStaffPhone" name="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Địa Chỉ</label>
+                                <input type="text" class="form-control" id="editStaffAddress" name="address" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <script>
-        function addEmployee() {
-            $('#editUserId').val('');
-            $('#employeeForm').trigger('reset');
-            $('#employeeModal').modal('show');
-        }
-
-        function viewEmployee(id) {
-            $('#viewEmployeeModal').modal('show');
-        }
-
-        function editEmployee(id) {
-            $('#employeeModal').modal('show');
-        }
-
-        function deleteEmployee(id) {
-            Swal.fire({
-                title: 'Xác nhận xóa?',
-                text: "Bạn không thể hoàn tác sau khi xóa!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Xóa',
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Đã xóa!',
-                        'Nhân viên đã được xóa.',
-                        'success'
-                    )
-                }
-            })
-        }
-    </script>
-</body>
-</html>
+        

@@ -1,5 +1,5 @@
-function editUser(id) {
-	fetch(`/admin/customer/ban/${id}`, {
+function editStaff(id) {
+	fetch(`/admin/employee/ban/${id}`, {
 	                method: 'POST',
 	                headers: {
 	                    'Content-Type': 'application/json'

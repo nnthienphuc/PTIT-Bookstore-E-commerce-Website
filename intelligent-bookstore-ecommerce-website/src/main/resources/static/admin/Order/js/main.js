@@ -125,4 +125,3 @@ document.getElementById('searchInput').addEventListener('keypress', function(e) 
         window.location.href = '/admin/author?keyword=' + encodeURIComponent(keyword);
     }
 });
-
