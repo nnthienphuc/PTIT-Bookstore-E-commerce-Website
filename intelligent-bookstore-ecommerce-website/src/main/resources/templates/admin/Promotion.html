@@ -67,10 +67,10 @@
                                     <td th:text="${iterStat.count}"></td>
                                     <td th:text="${promotion.promotionId}"></td>
                                     <td th:text="${promotion.promotionName}"></td>
-                                    <td th:text="${#temporals.format(promotion.startDate, 'dd/MM/yyyy HH:mm')}"></td>
-                                    <td th:text="${#temporals.format(promotion.endDate, 'dd/MM/yyyy HH:mm')}"></td>
+                                    <td th:text="${#temporals.format(promotion.startDate, 'dd/MM/yyyy')}"></td>
+                                    <td th:text="${#temporals.format(promotion.endDate, 'dd/MM/yyyy')}"></td>
                                     <td th:text="${#numbers.formatDecimal(promotion.condition, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
-                                    <td th:text="${promotion.discountPercent + '%'}"></td>
+                                    <td th:text="${promotion.discountPercent*100 + '%'}"></td>
                                     <td>
                                         <button class="btn btn-warning btn-sm" 
                                                 th:onclick="'editPromotion(' + ${promotion.promotionId} + ')'">Sửa</button>
@@ -162,11 +162,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Ngày Bắt Đầu</label>
-                                <input type="datetime-local" class="form-control" name="startDate" required>
+                                 <input type="date" class="form-control" name="startDate" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Ngày Kết Thúc</label>
-                                <input type="datetime-local" class="form-control" name="endDate" required>
+                                <input type="date" class="form-control" name="endDate" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Điều Kiện (VNĐ)</label>
@@ -174,7 +174,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Phần Trăm Giảm (%)</label>
-                                <input type="number" class="form-control" name="discountPercent" required min="0" max="100" step="0.1" placeholder="Nhập từ 0.1 đến 100">
+                                <input type="number" class="form-control" name="discountPercent" required min="0" max="100" step="1" placeholder="Nhập từ 0 đến 100">
                             </div>
                             <button type="submit" class="btn btn-primary">Thêm mới</button>
                         </form>
@@ -200,11 +200,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Ngày Bắt Đầu</label>
-                                <input type="datetime-local" class="form-control" id="editStartDate" name="startDate" required>
+                                <input type="date" class="form-control" id="editStartDate" name="startDate" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Ngày Kết Thúc</label>
-                                <input type="datetime-local" class="form-control" id="editEndDate" name="endDate" required>
+                                <input type="date" class="form-control" id="editEndDate" name="endDate" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Điều Kiện (VNĐ)</label>
@@ -212,7 +212,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Phần Trăm Giảm (%)</label>
-                                <input type="number" class="form-control" id="editDiscountPercent" name="discountPercent" required min="0" max="100" step="0.1" placeholder="Nhập từ 0.1 đến 100">
+                                <input type="number" class="form-control" id="editDiscountPercent" name="discountPercent" required min="0" max="100" step="1" placeholder="Nhập từ 0 đến 100">
                             </div>
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                         </form>

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Promotion;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.PromotionRepository;
 
@@ -35,12 +36,17 @@ public class PromotionService {
 
 
     public Promotion savePromotion(Promotion Promotion) {
+    	if(Promotion.getDiscountPercent() != null && Promotion.getDiscountPercent() >= 1)
+    		Promotion.setDiscountPercent(Promotion.getDiscountPercent()/100); 
         return PromotionRepository.save(Promotion);
     }
 
 
     public void deletePromotion(Long id) {
         PromotionRepository.deleteById(id);
+    }
+    public List<Promotion> getAllCategoriesNoPaging() {
+        return PromotionRepository.findAll();
     }
     
 }
