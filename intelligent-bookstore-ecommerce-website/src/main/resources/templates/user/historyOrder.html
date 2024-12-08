@@ -467,7 +467,7 @@
 
 <!--                <div class="original-price" th:text="${#numbers.formatDecimal(d.getPrice(), 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>-->
                 <!-- Hiển thị giá hiện tại -->
-                <div class="current-price" th:text="${#numbers.formatDecimal(d.getPrice() , 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>
+                <div class="original-price" th:text="${#numbers.formatDecimal(d.getPrice() , 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>
                 <!-- Hiển thị tổng giá -->
                 <div class="total-price" th:text="${#numbers.formatDecimal(d.getPrice() * d.getQuantity(), 0, 'COMMA', 0, 'POINT') + ' đ'}"></div>
             </div>

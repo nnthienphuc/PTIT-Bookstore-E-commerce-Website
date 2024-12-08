@@ -224,8 +224,7 @@ public class OrderService {
         BigDecimal totalPrice = cartItems.stream()
                 .map(item -> item.getIsbn().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        // Tạo đơn hàng mới
+        totalPrice = totalPrice.add(BigDecimal.valueOf(30000));        // Tạo đơn hàng mới
         Order order = new Order();
         order.setUser(userService.getUserById(userId));
         order.setTotalPrice(totalPrice);
