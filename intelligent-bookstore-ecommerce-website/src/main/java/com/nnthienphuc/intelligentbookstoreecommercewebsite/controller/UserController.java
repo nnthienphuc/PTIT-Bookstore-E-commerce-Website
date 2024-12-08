@@ -5,6 +5,8 @@ import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
@@ -15,12 +17,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequestMapping("/user")
 @Controller
 public class UserController {
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private CartService cartService;
@@ -338,5 +345,39 @@ public class UserController {
         return "user/booklist";
     }
 
+    @PostMapping("/cart/checkout")
+
+//    public ResponseEntity<Map<String, String>> checkout(HttpSession session, Model model) {
+//        try {
+//            User user = (User) session.getAttribute("user");
+//            orderService.processCheckout(user.getUserId());
+//            Map<String, String> response = new HashMap<>();
+//            response.put("message", "Thanh toán thành công!");
+//            response.put("redirectUrl", "/user/historyOrder"); // Đường dẫn cần chuyển hướng
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(Map.of("message", "Đã xảy ra lỗi: " + e.getMessage()));
+//        }
+//    }
+    public String checkout(HttpSession session, Model model) {
+        // Lấy thông tin user từ session
+        User currentUser = (User) session.getAttribute("user");
+
+        try {
+            // Gọi service xử lý thanh toán
+            orderService.processCheckout(currentUser.getUserId());
+
+            // Thêm thông báo thành công vào model
+            model.addAttribute("message", "Đặt hàng thành công!");
+
+        } catch (Exception e) {
+            // Thêm thông báo thất bại vào model
+            model.addAttribute("message", "Đặt hàng thất bại: " + e.getMessage());
+        }
+
+        // Quay lại trang giỏ hàng (hoặc trang khác nếu cần)
+        return "redirect:/user/cart";
+    }
 
 }

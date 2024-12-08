@@ -293,10 +293,12 @@
             <div>Hình thức bìa:</div>
             <div th:if="${book.getCover()}">Bìa Cứng</div>
             <div th:if="${not book.getCover()}">Bìa Mềm</div>
+            <div>Số lượng tồn:</div>
+            <div th:text="${book.getQuantity()}"></div>
         </div>
 
         <div class="rating">
-            <span class="star-rating">★★★★★</span>
+            <span class="star-rating"  >★★★★★</span>
             5.0 (95) | Đã bán 1k
         </div>
 

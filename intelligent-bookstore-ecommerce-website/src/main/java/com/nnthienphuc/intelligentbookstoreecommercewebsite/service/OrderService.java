@@ -2,6 +2,7 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -12,10 +13,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.BookRepository;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.OrderDetailRepository;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.*;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.*;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.RevenueDetailsDTO;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.OrderRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -29,25 +29,26 @@ import org.springframework.stereotype.Service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDetailDTO;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.OrderDetail;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.OrderStatus;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.OrderRepository;
 
 @Service
 @Transactional
 public class OrderService {
-    
+    @Autowired
+    private CartRepository cartRepository;
+
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private BookRepository bookRepository;
-    
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PromotionService promotionService;
+
     // Tìm theo tên người đặt
     public Page<Order> findByBuyerName(String buyerName, Pageable pageable) {
         return orderRepository.findByBuyerName(buyerName, pageable);
@@ -210,5 +211,63 @@ public class OrderService {
     // Format tiền tệ
     private String formatCurrency(BigDecimal amount) {
         return String.format("%,.0f ₫", amount.setScale(0, RoundingMode.HALF_UP).doubleValue());
+    }
+
+    public void processCheckout(String userId) {
+        // Lấy tất cả sản phẩm trong giỏ hàng của user
+        List<Cart> cartItems = cartRepository.findByCustomerId(userId);
+        if (cartItems.isEmpty()) {
+            throw new RuntimeException("Giỏ hàng trống. Không thể thanh toán.");
+        }
+
+        // Tính tổng giá trị đơn hàng
+        BigDecimal totalPrice = cartItems.stream()
+                .map(item -> item.getIsbn().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Tạo đơn hàng mới
+        Order order = new Order();
+        order.setUser(userService.getUserById(userId));
+        order.setTotalPrice(totalPrice);
+        order.setOrderDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        order.setOrderStatus("Chờ xác nhận");
+        order.setAddress(userService.getUserById(userId).getAddress());
+        order.setPaymentMethod("Cash");
+        order.setReceiver(userService.getUserById(userId).getFullName());
+        order.setPromotion(promotionService.getPromotionById(8L));
+
+        order = orderRepository.save(order);
+
+        // Tạo chi tiết đơn hàng và cập nhật số lượng sách
+        for (Cart cartItem : cartItems) {
+            // Tạo OrderDetail
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrder(order);
+            orderDetail.setIsbn(cartItem.getIsbn());
+            orderDetail.setQuantity(cartItem.getQuantity());
+            BigDecimal price = cartItem.getIsbn().getPrice();
+            BigDecimal discountPercent = BigDecimal.valueOf(cartItem.getIsbn().getDiscount_percent());
+
+            // Tính toán giá sau khi giảm giá
+            BigDecimal discountedPrice = price.multiply(BigDecimal.ONE.subtract(discountPercent));
+
+// Gán giá trị đã tính toán
+            orderDetail.setPrice(discountedPrice);
+
+//            orderDetail.setPrice(cartItem.getIsbn().getPrice()*(1-cartItem.getIsbn().getDiscount_percent()));
+            orderDetailRepository.save(orderDetail);
+
+            // Giảm số lượng sách
+            Book book = cartItem.getIsbn();
+            int remainingQuantity = book.getQuantity() - cartItem.getQuantity();
+            if (remainingQuantity < 0) {
+                throw new RuntimeException("Số lượng sách không đủ: " + book.getTitle());
+            }
+            book.setQuantity(remainingQuantity);
+            bookRepository.save(book);
+        }
+
+        // Xóa giỏ hàng của user
+        cartRepository.deleteByUserId(userId);
     }
 }

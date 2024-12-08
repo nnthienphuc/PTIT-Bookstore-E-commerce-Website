@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Giỏ hàng</title>
+    <script>
+        // Lấy thông báo từ model nếu có
+        var message = /*[[${message}]]*/ '';
+
+        // Kiểm tra nếu có thông báo, thì hiển thị popup
+        if (message) {
+            alert(message); // Hiển thị thông báo
+        }
+    </script>
     <style>
         * {
             margin: 0;
@@ -571,7 +580,10 @@
             </div>
         </div>
 
-        <button class="checkout-button">Thanh toán</button>
+        <form th:action="@{/user/cart/checkout}" method="post">
+            <button class="checkout-button" type="submit">Thanh toán</button>
+        </form>
+
     </div>
 </div>
 <footer class="footer">
@@ -661,6 +673,7 @@
 </footer>
 <!-- Font Awesome for icons -->
 <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/user/cart/js/script.js"></script></body>
 
-</body>
+
 </html>
