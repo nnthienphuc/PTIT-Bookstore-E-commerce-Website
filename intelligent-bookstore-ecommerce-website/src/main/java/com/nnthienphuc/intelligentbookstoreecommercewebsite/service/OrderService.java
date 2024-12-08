@@ -222,8 +222,14 @@ public class OrderService {
 
         // Tính tổng giá trị đơn hàng
         BigDecimal totalPrice = cartItems.stream()
-                .map(item -> item.getIsbn().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .map(item -> {
+                    BigDecimal priceAfterDiscount = item.getIsbn().getPrice()
+                            .multiply(BigDecimal.valueOf(item.getQuantity()))
+                            .multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(item.getIsbn().getDiscount_percent()))); // Giảm giá
+                    return priceAfterDiscount;
+                })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         totalPrice = totalPrice.add(BigDecimal.valueOf(30000));        // Tạo đơn hàng mới
         Order order = new Order();
         order.setUser(userService.getUserById(userId));
