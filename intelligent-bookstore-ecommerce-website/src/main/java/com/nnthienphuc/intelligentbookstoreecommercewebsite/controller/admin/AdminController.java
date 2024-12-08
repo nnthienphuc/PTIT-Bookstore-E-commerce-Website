@@ -57,30 +57,30 @@ public class AdminController {
 
     @PostMapping("/account/login")
     public String login(
-            Model model,
+            RedirectAttributes redirectAttributes,
             @RequestParam("staffid") @NotEmpty(message = "Username is required!") String staffId,
             @RequestParam("pass") @NotEmpty(message = "Password is required!") String pwd,
             @RequestParam(value = "rm", defaultValue = "true") boolean rememberMe) {
 
         Optional<Staff> staffOptional = staffService.findById(staffId);
         if (staffOptional.isEmpty()) {
-            model.addAttribute("message", "Invalid username!");
+            redirectAttributes.addFlashAttribute("error", "Invalid username!");
             return "redirect:/admin/account/login";
         }
 
         Staff staff = staffOptional.get();
 
         if (!passwordEncoder.matches(pwd, staff.getPwd())) {
-            model.addAttribute("message", "Invalid password!");
+            redirectAttributes.addFlashAttribute("error", "Invalid password!");
             return "redirect:/admin/account/login";
         }
 
         if (!staff.getIsActive()) {
-            model.addAttribute("message", "Your account is Inactivated!");
+            redirectAttributes.addFlashAttribute("error", "Your account is Inactivated!");
             return "redirect:/admin/account/login";
         }
 
-        model.addAttribute("message", "Login successfully!");
+        redirectAttributes.addFlashAttribute("success", "Login successfully!");
         session.setAttribute("staff", staff);
 
         if (rememberMe) {
@@ -91,15 +91,9 @@ public class AdminController {
             cookie.delete("pass");
         }
 
-//        String backUrl = (String) session.getAttribute("back-url");
-
-//        if (backUrl != null) {
-//            return "redirect:" + backUrl;
-//        }
         return "redirect:/admin/book";
-
-//        return (backUrl != null) ? "redirect:" + backUrl : "admin/Author";
     }
+
 
 
     @GetMapping("/account/register")

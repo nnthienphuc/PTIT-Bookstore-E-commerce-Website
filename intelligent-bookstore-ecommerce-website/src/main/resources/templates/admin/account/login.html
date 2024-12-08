@@ -17,6 +17,14 @@
 	</div>
 	<div class="login-content">
 		<form id="loginForm" th:action="@{login}" method="post">
+			<!-- Thêm thông báo error và success -->
+			<div th:if="${error}" class="alert alert-danger" style="color: red; text-align: center; margin-bottom: 15px;">
+				<p th:text="${error}"></p>
+			</div>
+			<div th:if="${success}" class="alert alert-success" style="color: green; text-align: center; margin-bottom: 15px;">
+				<p th:text="${success}"></p>
+			</div>
+
 			<img src="/admin/loginform/img/logo.png" style="max-width: 250px; height: 250px; position: relative;">
 			<h2 class="title">Welcome Staff</h2>
 
@@ -43,8 +51,6 @@
 				<span class="toggle-password" onclick="togglePassword()"></span>
 			</div>
 
-<!--			<p class="error-message" style="display:none;">Password must include number, lowercase, uppercase, and special character</p>-->
-
 			<!-- Thêm checkbox "Remember Me" -->
 			<div class="remember-me">
 				<label for="rememberMe" class="remember-me-label">
@@ -53,13 +59,14 @@
 					Remember Me
 				</label>
 			</div>
-			<div class = "account-option" >
+			<div class="account-option">
 				<a href="register">I don't have an account</a>
 				<a href="#">Forgot Password?</a>
 			</div>
 
 			<input type="submit" class="btn" value="Login">
 		</form>
+
 	</div>
 </div>
 <script type="text/javascript" src="/admin/loginform/js/main.js"></script>
