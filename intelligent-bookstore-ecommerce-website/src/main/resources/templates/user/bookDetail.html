@@ -312,12 +312,24 @@
         <!--            <span class="discount" th:text="${book.getDiscount_percent() *100 + '%'}"></span>-->
         <!--        </div>-->
 
-        <div class="quantity">
-            <span>Số lượng:</span>
-            <button onclick="decreaseQuantity()">-</button>
-            <input type="number" value="1" min="1" id="quantity">
-            <button onclick="increaseQuantity()">+</button>
-        </div>
+<!--        <div class="quantity">-->
+<!--            <span>Số lượng:</span>-->
+<!--            <button onclick="decreaseQuantity()">-</button>-->
+<!--            <input type="number" value="1" min="1" id="quantity">-->
+<!--            <button onclick="increaseQuantity()">+</button>-->
+<!--        </div>-->
+
+        <form th:action="@{/user/bookDetail/{id}(id=${book.getIsbn()})}" method="post">
+            <div class="quantity">
+                <span>Số lượng:</span>
+                <button type="button" onclick="decreaseQuantity()">-</button>
+                <input type="number" name="quantity" value="1" min="1" id="quantity">
+                <button type="button" onclick="increaseQuantity()">+</button>
+            </div>
+            <button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
+
+        </form>
+
 
         <div class="buttons">
             <button class="add-to-cart">Thêm vào giỏ hàng</button>

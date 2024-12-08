@@ -14,7 +14,9 @@ import org.hibernate.annotations.Nationalized;
 @NoArgsConstructor
 @Table(name = "Cart")
 public class Cart {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id", nullable = false)
     private Long cartId;
 

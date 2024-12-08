@@ -193,6 +193,26 @@ public class UserController {
         model.addAttribute("book", bookService.getBookByIsbn(id));
         return "user/bookDetail";
     }
+    @PostMapping("/bookDetail/{id}")
+    public String bookDetail(
+            @PathVariable("id") String bookId,  // Lấy {id} từ URL
+            @RequestParam("quantity") short quantity,  // Lấy số lượng sách từ form
+            HttpSession session, Model model) {
+
+
+        // Lấy user từ session
+        User user = (User) session.getAttribute("user");
+        String userId = user != null ? user.getUserId() : null;
+        if(cartService.isExist(userId,bookId)){
+
+            cartService.updateCart(quantity,userId,bookId);
+        }
+        else{
+        cartService.createCartRecord(userId,bookId,quantity);}
+        model.addAttribute("book", bookService.getBookByIsbn(bookId));
+        return "redirect:/user/bookdetail/" + bookId;
+    }
+
 
 //    @GetMapping("/search")
 //    public String searchUserByName(
@@ -230,6 +250,20 @@ public class UserController {
 
     }
 
+    @PostMapping("/cart/remove/{isbn}")
+    public String removeItemFromCart(@PathVariable("isbn") String isbn, HttpSession session) {
+        // Lấy thông tin người dùng từ session
+        User user = (User) session.getAttribute("user");
+
+        if (user != null) {
+            // Gọi service để xóa sản phẩm khỏi giỏ
+            cartService.removeItem( user.getUserId(),isbn);
+            System.out.println(isbn + ' '+ user.getUserId());
+        }
+        return "redirect:/user/cart";  // Sau khi xóa, điều hướng lại đến giỏ hàng
+    }
+
+
     @GetMapping("/booklist")
     public String booklist(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
@@ -259,7 +293,6 @@ public class UserController {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);// Người dùng đã đăng nhập
-
         }
 
         return "user/historyOrder";

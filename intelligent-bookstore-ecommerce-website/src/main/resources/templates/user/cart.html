@@ -494,7 +494,6 @@
 <!--        </div>-->
         <tr th:each="car, iterStat : ${cart}">
             <div class="cart-item">
-<!--            <input type="checkbox" class="item-checkbox" checked>-->
             <img class="item-image"
                  th:src="@{'/bookImage/' + ${car.getIsbn().getUrl1()}}"
                  th:alt="${car.getIsbn().getTitle()}">
@@ -514,7 +513,9 @@
 
                 <button>+</button>
             </div>
-            <div class="remove-item">🗑️</div>
+                <form th:action="@{/user/cart/remove/{isbn}(isbn=${car.getIsbn().getIsbn()})}" method="post">
+                    <button type="submit" class="remove-item" aria-label="Remove item">🗑️</button>
+                </form>
         </div>
 
     </div>

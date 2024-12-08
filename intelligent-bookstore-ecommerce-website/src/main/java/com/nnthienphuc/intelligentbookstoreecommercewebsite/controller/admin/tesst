@@ -1,0 +1,60 @@
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.OrderService;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/admin/dashboard")
+public class DashboardController {
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderService orderService;
+
+    @GetMapping
+    public String getDashboard(Model model) {
+        // Doanh thu
+        BigDecimal todayRevenue = orderRepository.calculateTodayRevenue();
+        BigDecimal monthRevenue = orderRepository.calculateMonthlyRevenue();
+        BigDecimal yearRevenue = orderRepository.calculateYearlyRevenue();
+
+        // Định dạng tiền tệ
+        model.addAttribute("todayRevenue", formatCurrency(todayRevenue));
+        model.addAttribute("monthRevenue", formatCurrency(monthRevenue));
+        model.addAttribute("yearRevenue", formatCurrency(yearRevenue));
+
+        // Số đơn hàng
+        long totalOrders = orderRepository.count();
+        model.addAttribute("totalOrders", totalOrders);
+
+        // Chi tiết doanh thu
+        List<Map<String, Object>> revenueDetails = orderService.getRevenueDetails();
+        model.addAttribute("revenueDetails", revenueDetails);
+
+        // Dữ liệu biểu đồ doanh thu
+        model.addAttribute("revenueChartData", orderService.getRevenueChartData());
+        model.addAttribute("revenueChartLabels", orderService.getRevenueChartLabels());
+
+        // Trạng thái đơn hàng
+        Map<String, Long> orderStatusCounts = new HashMap<>();
+        orderStatusCounts.put("PENDING", orderRepository.countByOrderStatus("PENDING"));
+        orderStatusCounts.put("CONFIRMED", orderRepository.countByOrderStatus("CONFIRMED"));
+        orderStatusCounts.put("IN_PROCESS", orderRepository.countByOrderStatus("IN_PROCESS"));
+        orderStatusCounts.put("DELIVERED", orderRepository.countByOrderStatus("DELIVERED"));
+        orderStatusCounts.put("CANCELED", orderRepository.countByOrderStatus("CANCELED"));
+        model.addAttribute("orderStatusCounts", orderStatusCounts);
+
+        return "admin/dashboard";
+    }
+
+    // Định dạng tiền tệ
+    private String formatCurrency(BigDecimal amount) {
+        return String.format("%,.0f ₫", amount.setScale(0, RoundingMode.HALF_UP).doubleValue());
+    }
+}
