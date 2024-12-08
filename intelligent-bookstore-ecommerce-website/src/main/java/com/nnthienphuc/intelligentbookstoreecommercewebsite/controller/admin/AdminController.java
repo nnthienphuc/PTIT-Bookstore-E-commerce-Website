@@ -207,7 +207,7 @@ public class AdminController {
     }
 
     @PostMapping("/account")
-    public String updateAccount(@ModelAttribute Staff updatedStaff) {
+    public String updateAccount(@ModelAttribute Staff updatedStaff, RedirectAttributes redirectAttributes) {
         Staff existingStaff = (Staff) session.getAttribute("staff");
 
         existingStaff.setFullName(updatedStaff.getFullName());
@@ -218,6 +218,8 @@ public class AdminController {
         staffRepository.save(existingStaff);
 
         session.setAttribute("staff", existingStaff);
+
+        redirectAttributes.addFlashAttribute("message", "Thông tin cá nhân đã được cập nhật thành công!");
 
         return "redirect:/admin/account";
     }
@@ -250,6 +252,7 @@ public class AdminController {
 
         return "redirect:/admin/account/login";
     }
+
 
 
 
