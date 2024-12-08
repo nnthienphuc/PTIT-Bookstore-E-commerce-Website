@@ -588,15 +588,15 @@
                                 class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start"
                         >
                             <div class="banner-content">
-                                <h2>How Innovation works</h2>
-                                <p>Discount available. Grab it now!</p>
-                                <a href="index.jsp" class="btn mt-3">Shop Product</a>
+                                <h2>One Piece</h2>
+                                <p>Cùng Luffy tham gia hành trình đầy nguy hiểm để tìm kho báu huyền thoại.</p>
+                                <a href="booklist-by-author/17" class="btn mt-3">Khởi hành thôi</a>
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
                             <div class="image-holder">
                                 <img
-                                        src="/user/homepage/images/banner-image1.png"
+                                        src="/user/homepage/images/one-piece.jpg"
                                         class="img-fluid"
                                         alt="banner"
                                 />
@@ -614,15 +614,15 @@
                                 class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start"
                         >
                             <div class="banner-content">
-                                <h2>Your Heart is the Sea</h2>
-                                <p>Limited stocks available. Grab it now!</p>
-                                <a href="index.jsp" class="btn mt-3">View Detail</a>
+                                <h2>Nhà xuất bản Kim Đồng</h2>
+                                <p>NXB nổi tiếng với các ấn phẩm chất lượng, đặc biệt là sách tranh, sách giáo dục và sách văn học.</p>
+                                <a href="booklist-by-publisher/1" class="btn mt-3">Bộ sưu tập</a>
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
                             <div class="image-holder">
                                 <img
-                                        src="/user/homepage/images/banner-image.png"
+                                        src="/user/homepage/images/kimdong.png"
                                         class="img-fluid"
                                         alt="banner"
                                 />
@@ -685,7 +685,7 @@
                                     alt="product item"
                             />
                             <h6 class="mt-4 mb-0 fw-bold">
-                                <a href="index.html" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
+                                <a th:href="@{'/user/bookdetail/' + ${book.getIsbn()}}" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
                             </h6>
 
                             <div class="review-content d-flex">
@@ -744,113 +744,114 @@
     </div>
 </section>
 
-<section id="best-selling-items-2" class="position-relative padding-large">
-    <div class="container">
-        <div
-                class="section-title d-md-flex justify-content-between align-items-center mb-4"
-        >
-            <h3 class="d-flex align-items-center">Sách nổi bật</h3>
-            <a href="index.html" class="btn">View All</a>
-        </div>
-        <div
-                class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next"
-        >
-            <svg
-                    class="chevron-forward-circle d-flex justify-content-center align-items-center p-2"
-                    width="80"
-                    height="80"
-            >
-                <use xlink:href="#alt-arrow-right-outline"></use>
-            </svg>
-        </div>
-        <div
-                class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev"
-        >
-            <svg
-                    class="chevron-back-circle d-flex justify-content-center align-items-center p-2"
-                    width="80"
-                    height="80"
-            >
-                <use xlink:href="#alt-arrow-left-outline"></use>
-            </svg>
-        </div>
-        <div class="swiper product-swiper">
-            <div class="swiper-wrapper">
-                <tr th:each="book, iterStat : ${bookct}">
-                    <div class="swiper-slide">
-                        <div class="card position-relative p-4 border rounded-3">
-                            <div class="position-absolute">
-                                <!-- Kiểm tra nếu là sách có giảm giá -->
-                                <span th:if="${book.getIs_discount()}">
-                                <!-- Hiển thị tỷ lệ giảm giá -->
-                                <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"
-                                   th:text="${book.getDiscount_percent() + ' % off'}"></p>
-                            </span>
-                            </div>
+<!--<section id="best-selling-items-2" class="position-relative padding-large">-->
+<!--    <div class="container">-->
+<!--        <div-->
+<!--                class="section-title d-md-flex justify-content-between align-items-center mb-4"-->
+<!--        >-->
+<!--            <h3 class="d-flex align-items-center">Sách nổi bật</h3>-->
+<!--            <a href="index.html" class="btn">View All</a>-->
+<!--        </div>-->
+<!--        <div-->
+<!--                class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next"-->
+<!--        >-->
+<!--            <svg-->
+<!--                    class="chevron-forward-circle d-flex justify-content-center align-items-center p-2"-->
+<!--                    width="80"-->
+<!--                    height="80"-->
+<!--            >-->
+<!--                <use xlink:href="#alt-arrow-right-outline"></use>-->
+<!--            </svg>-->
+<!--        </div>-->
+<!--        <div-->
+<!--                class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev"-->
+<!--        >-->
+<!--            <svg-->
+<!--                    class="chevron-back-circle d-flex justify-content-center align-items-center p-2"-->
+<!--                    width="80"-->
+<!--                    height="80"-->
+<!--            >-->
+<!--                <use xlink:href="#alt-arrow-left-outline"></use>-->
+<!--            </svg>-->
+<!--        </div>-->
+<!--        <div class="swiper product-swiper">-->
+<!--            <div class="swiper-wrapper">-->
+<!--                <tr th:each="book, iterStat : ${bookct}">-->
+<!--                    <div class="swiper-slide">-->
+<!--                        <div class="card position-relative p-4 border rounded-3">-->
+<!--                            <div class="position-absolute">-->
+<!--                                &lt;!&ndash; Kiểm tra nếu là sách có giảm giá &ndash;&gt;-->
+<!--                                <span th:if="${book.getIs_discount()}">-->
+<!--                                &lt;!&ndash; Hiển thị tỷ lệ giảm giá &ndash;&gt;-->
+<!--                                <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"-->
+<!--                                   th:text="${book.getDiscount_percent() + ' % off'}"></p>-->
+<!--                            </span>-->
+<!--                            </div>-->
 
-                            <img
-                                    th:src="'/bookImage/' + ${book.getUrl1()}"
-                                    class="img-fluid shadow-sm"
-                                    alt="product item"
-                            />
-                            <h6 class="mt-4 mb-0 fw-bold">
-                                <a href="index.html" th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>
-                            </h6>
-
-                            <div class="review-content d-flex">
-                                <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthor_id().getAuthorName()}"></p>
+<!--                            <img-->
+<!--                                    th:src="'/bookImage/' + ${book.getUrl1()}"-->
+<!--                                    class="img-fluid shadow-sm"-->
+<!--                                    alt="product item"-->
+<!--                            />-->
+<!--                            <h6 class="mt-4 mb-0 fw-bold">-->
+<!--                                <a th:href="@{'/user/bookdetail/' + ${book.}}"  th:text="${#strings.length(book.getTitle()) > 23 ? book.getTitle().substring(0, 15) + '...' : book.getTitle()}"></a>-->
+<!--                            </h6>-->
 
 
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                </div>
-                            </div>
-                            <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>
+<!--                            <div class="review-content d-flex">-->
+<!--                                <p class="my-2 me-2 fs-6 text-black-50" th:text="${book.getAuthor_id().getAuthorName()}"></p>-->
 
-                            <div
-                                    class="card-concern position-absolute start-0 end-0 d-flex gap-2"
-                            >
-                                <button
-                                        type="button"
-                                        href="#"
-                                        class="btn btn-dark"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Tooltip on top"
-                                >
-                                    <svg class="cart">
-                                        <use xlink:href="#cart"></use>
-                                    </svg>
-                                </button>
-                                <a href="#" class="btn btn-dark">
-                    <span>
-                      <svg class="wishlist">
-                        <use xlink:href="#heart"></use>
-                      </svg>
-                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
 
-            </div>
-        </div>
-    </div>
-</section>
+<!--                                <div class="rating text-warning d-flex align-items-center">-->
+<!--                                    <svg class="star star-fill">-->
+<!--                                        <use xlink:href="#star-fill"></use>-->
+<!--                                    </svg>-->
+<!--                                    <svg class="star star-fill">-->
+<!--                                        <use xlink:href="#star-fill"></use>-->
+<!--                                    </svg>-->
+<!--                                    <svg class="star star-fill">-->
+<!--                                        <use xlink:href="#star-fill"></use>-->
+<!--                                    </svg>-->
+<!--                                    <svg class="star star-fill">-->
+<!--                                        <use xlink:href="#star-fill"></use>-->
+<!--                                    </svg>-->
+<!--                                    <svg class="star star-fill">-->
+<!--                                        <use xlink:href="#star-fill"></use>-->
+<!--                                    </svg>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <span class="price text-primary fw-bold mb-2 fs-5" th:text="${book.getPrice()} + ' Đ'"></span>-->
+
+<!--                            <div-->
+<!--                                    class="card-concern position-absolute start-0 end-0 d-flex gap-2"-->
+<!--                            >-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        href="#"-->
+<!--                                        class="btn btn-dark"-->
+<!--                                        data-bs-toggle="tooltip"-->
+<!--                                        data-bs-placement="top"-->
+<!--                                        data-bs-title="Tooltip on top"-->
+<!--                                >-->
+<!--                                    <svg class="cart">-->
+<!--                                        <use xlink:href="#cart"></use>-->
+<!--                                    </svg>-->
+<!--                                </button>-->
+<!--                                <a href="#" class="btn btn-dark">-->
+<!--                    <span>-->
+<!--                      <svg class="wishlist">-->
+<!--                        <use xlink:href="#heart"></use>-->
+<!--                      </svg>-->
+<!--                    </span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 
 <section id="items-listing" class="padding-large">
 
