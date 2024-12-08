@@ -370,6 +370,7 @@ public class UserController {
 
             // Thêm thông báo thành công vào model
             model.addAttribute("message", "Đặt hàng thành công!");
+            return "redirect:/user/historyOrder";
 
         } catch (Exception e) {
             // Thêm thông báo thất bại vào model
