@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @RequestMapping("/user")
 @Controller
@@ -61,8 +61,12 @@ public class UserController {
 
     @Autowired
     private MailService mailService;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    HistoryService historyService;
 
     @GetMapping("/account/login")
     public String loginForm(Model model) {
@@ -199,10 +203,17 @@ public class UserController {
     @GetMapping("/bookdetail/{id}")
     public String bookDetail(Model model, @PathVariable("id") String id, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        Book book = bookService.getBookByIsbn(id);
         if (user != null) {
             model.addAttribute("user", user);// Người dùng đã đăng nhập
 
         }
+        History history = new History();
+        history.setUser(user);
+        history.setIsbn(book);
+        history.setRequestTime(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        history.setSessionId(session.getId());
+        historyService.save(history);
         model.addAttribute("book", bookService.getBookByIsbn(id));
         return "user/bookdetail";
     }
