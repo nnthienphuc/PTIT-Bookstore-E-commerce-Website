@@ -1,8 +1,10 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller.admin;
 
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.StaffUpdateDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.StaffRepository;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.CookieService;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.MailService;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.StaffService;
@@ -39,6 +41,8 @@ public class AdminController {
 
     @Autowired
     MailService mailService;
+    @Autowired
+    private StaffRepository staffRepository;
 
     @GetMapping("/account/login")
     public String loginForm(org.springframework.ui.Model model) {
@@ -201,4 +205,17 @@ public class AdminController {
         model.addAttribute("staff", staff);  // Thêm thông tin vào model
         return "admin/account";  // Trả về tên của view
     }
+
+    @PostMapping("/admin/account")
+    public String updateAccount(@ModelAttribute Staff updatedStaff) {
+        Staff existingStaff = (Staff) session.getAttribute("staff");
+        existingStaff.setFullName(updatedStaff.getFullName());
+        existingStaff.setPhone(updatedStaff.getPhone());
+        existingStaff.setGender(updatedStaff.getGender());
+        existingStaff.setAddress(updatedStaff.getAddress());
+        staffRepository.save(existingStaff);
+        return "redirect:/admin/account";
+    }
+
+
 }
