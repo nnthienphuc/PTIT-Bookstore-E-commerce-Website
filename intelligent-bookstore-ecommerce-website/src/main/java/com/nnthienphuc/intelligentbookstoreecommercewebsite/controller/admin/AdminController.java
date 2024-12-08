@@ -206,16 +206,86 @@ public class AdminController {
         return "admin/account";  // Trả về tên của view
     }
 
-    @PostMapping("/admin/account")
-    public String updateAccount(@ModelAttribute Staff updatedStaff) {
+    @PostMapping("/account")
+    public String updateAccount(@ModelAttribute Staff updatedStaff, RedirectAttributes redirectAttributes) {
         Staff existingStaff = (Staff) session.getAttribute("staff");
+
         existingStaff.setFullName(updatedStaff.getFullName());
         existingStaff.setPhone(updatedStaff.getPhone());
         existingStaff.setGender(updatedStaff.getGender());
         existingStaff.setAddress(updatedStaff.getAddress());
+
         staffRepository.save(existingStaff);
+
+        session.setAttribute("staff", existingStaff);
+
+        redirectAttributes.addFlashAttribute("message", "Thông tin cá nhân đã được cập nhật thành công!");
+
         return "redirect:/admin/account";
     }
 
+    @PostMapping("/account/change-password")
+    public String changePassword(
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword,
+            RedirectAttributes redirectAttributes) {
+
+        Staff staff = (Staff) session.getAttribute("staff");
+
+        if (!passwordEncoder.matches(currentPassword, staff.getPwd())) {
+            redirectAttributes.addFlashAttribute("message", "Mật khẩu cũ không đúng!");
+            return "redirect:/admin/account";
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("message", "Mật khẩu mới và xác nhận không khớp!");
+            return "redirect:/admin/account";
+        }
+
+        staff.setPwd(passwordEncoder.encode(newPassword));
+        staffRepository.save(staff);
+
+        session.invalidate();
+
+        redirectAttributes.addFlashAttribute("message", "Đổi mật khẩu thành công! Vui lòng đăng nhập lại.");
+
+        return "redirect:/admin/account/login";
+    }
+
+
+
+
+
+//    @PostMapping("/account/change-password")
+//    public String changePassword(
+//            @RequestParam("currentPassword") String currentPassword,
+//            @RequestParam("newPassword") String newPassword,
+//            @RequestParam("confirmPassword") String confirmPassword,
+//            Model model) {
+//
+//        Staff staff = (Staff) session.getAttribute("staff");
+//
+//        // Kiểm tra mật khẩu cũ có đúng không
+//        if (!passwordEncoder.matches(currentPassword, staff.getPwd())) {
+//            model.addAttribute("message", "Mật khẩu cũ không đúng!");
+//            return "redirect:/admin/account";
+//        }
+//
+//        // Kiểm tra mật khẩu mới và xác nhận mật khẩu mới có khớp không
+//        if (!newPassword.equals(confirmPassword)) {
+//            model.addAttribute("message", "Mật khẩu mới và xác nhận không khớp!");
+//            return "redirect:/admin/account";
+//        }
+//
+//        // Mã hóa mật khẩu mới và cập nhật vào cơ sở dữ liệu
+//        staff.setPwd(passwordEncoder.encode(newPassword));
+//        staffRepository.save(staff); // Lưu lại mật khẩu mới vào database
+//
+//        session.setAttribute("staff", staff); // Cập nhật thông tin nhân viên trong session
+//
+//        model.addAttribute("message", "Đổi mật khẩu thành công!");
+//        return "redirect:/admin/account";
+//    }
 
 }
