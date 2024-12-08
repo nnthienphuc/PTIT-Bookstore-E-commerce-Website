@@ -230,7 +230,7 @@ public class OrderService {
         order.setUser(userService.getUserById(userId));
         order.setTotalPrice(totalPrice);
         order.setOrderDate(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        order.setOrderStatus("Chờ xác nhận");
+        order.setOrderStatus("PENDING");
         order.setAddress(userService.getUserById(userId).getAddress());
         order.setPaymentMethod("Cash");
         order.setReceiver(userService.getUserById(userId).getFullName());
