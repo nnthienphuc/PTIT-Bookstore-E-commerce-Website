@@ -206,14 +206,19 @@ public class AdminController {
         return "admin/account";  // Trả về tên của view
     }
 
-    @PostMapping("/admin/account")
+    @PostMapping("/account")
     public String updateAccount(@ModelAttribute Staff updatedStaff) {
         Staff existingStaff = (Staff) session.getAttribute("staff");
+
         existingStaff.setFullName(updatedStaff.getFullName());
         existingStaff.setPhone(updatedStaff.getPhone());
         existingStaff.setGender(updatedStaff.getGender());
         existingStaff.setAddress(updatedStaff.getAddress());
+
         staffRepository.save(existingStaff);
+
+        session.setAttribute("staff", existingStaff);
+
         return "redirect:/admin/account";
     }
 
