@@ -7,7 +7,8 @@ function editPromotion(id) {
             document.getElementById('editStartDate').value = formatDateTimeForInput(data.startDate);
             document.getElementById('editEndDate').value = formatDateTimeForInput(data.endDate);
             document.getElementById('editCondition').value = data.condition;
-            document.getElementById('editDiscountPercent').value = data.discountPercent;
+            document.getElementById('editDiscountPercent').value = Math.round(data.discountPercent * 100);
+
             
             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
             editModal.show();
@@ -28,10 +29,20 @@ function editPromotion(id) {
 }
 
 // Hàm format datetime cho input
-function formatDateTimeForInput(dateTimeString) {
-    if (!dateTimeString) return '';
-    const date = new Date(dateTimeString);
-    return date.toISOString().slice(0, 16); // Format: YYYY-MM-DDTHH:mm
+function formatDateTimeForInput(date) {
+    // Check if the date is a valid string
+    const formattedDate = new Date(date);
+
+    if (isNaN(formattedDate.getTime())) {
+        return "";  // If invalid date, return empty string
+    }
+
+    // Format the date as YYYY-MM-DD
+    let year = formattedDate.getFullYear();
+    let month = String(formattedDate.getMonth() + 1).padStart(2, '0'); // month is 0-indexed
+    let day = String(formattedDate.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
 }
 
 // Hàm format datetime cho hiển thị

@@ -66,7 +66,6 @@
 					            	<th>STT</th>
 					                <th>ID</th>
 					                <th>Tên Danh Mục</th>
-					                <th>Mô Tả</th>
 					                <th>Thao Tác</th>
 					            </tr>
 					        </thead>
@@ -75,7 +74,6 @@
 						            <td th:text="${iterStat.count}"></td>
 						            <td th:text="${category.categoryId}"></td>
 						            <td th:text="${category.categoryName}"></td>
-						            <td ></td>
 						            <td>
 						                <button class="btn btn-warning btn-sm" 
 						                        th:onclick="'editCategory(' + ${category.categoryId} + ')'">Sửa</button>
@@ -156,13 +154,13 @@
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <h5 class="modal-title">Thêm Danh Mục Mới</h5>
+		                <h5 class="modal-title">Thêm Thể Loại Mới</h5>
 		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 		            </div>
 		            <div class="modal-body">
 		                <form th:action="@{/admin/category/add}" method="post">
 		                    <div class="mb-3">
-		                        <label class="form-label">Tên Danh Mục</label>
+		                        <label class="form-label">Tên Thể Loại</label>
 		                        <input type="text" class="form-control" name="categoryName" required>
 		                    </div>
 		                    <button type="submit" class="btn btn-primary">Thêm mới</button>
@@ -177,14 +175,14 @@
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <h5 class="modal-title">Sửa Danh Mục</h5>
+		                <h5 class="modal-title">Sửa Thể Loại</h5>
 		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 		            </div>
 		            <div class="modal-body">
 		                <form th:action="@{/admin/category/edit}" method="post">
 		                    <input type="hidden" id="editCategoryId" name="categoryId">
 		                    <div class="mb-3">
-		                        <label class="form-label">Tên Danh Mục</label>
+		                        <label class="form-label">Tên Thể Loại</label>
 		                        <input type="text" class="form-control" id="editCategoryName" name="categoryName" required>
 		                    </div>
 		                    <button type="submit" class="btn btn-primary">Cập nhật</button>

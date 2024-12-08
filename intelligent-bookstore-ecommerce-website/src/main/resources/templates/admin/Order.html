@@ -127,7 +127,7 @@
                                     <td th:text="${order.orderId}"></td>
                                     <td th:text="${order.receiver}"></td>
                                     <td th:text="${order.promotionName}"></td>
-                                    <td th:text="${#dates.format(order.orderDate, 'HH:mm:ss dd/MM/yyyy')}"></td>
+                                    <td th:text="${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></td>
                                     <td th:text="${order.address}"></td>
                                     <td th:text="${order.paymentMethod}"></td>
                                     <td >

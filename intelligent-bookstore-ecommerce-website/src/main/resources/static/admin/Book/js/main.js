@@ -41,7 +41,7 @@ function editBook(isbn) {
         $('#editYear').val(book.year_of_publication);
         $('#editQuantity').val(book.quantity);
         $('#editPrice').val(book.price);
-        $('#editDiscountPercent').val(book.discount_percent);
+        $('#editDiscountPercent').val(Math.round(book.discount_percent * 100));
         $('#editDescription').val(book.description);
         
         // Checkbox

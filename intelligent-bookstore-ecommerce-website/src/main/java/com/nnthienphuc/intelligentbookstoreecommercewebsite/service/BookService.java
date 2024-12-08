@@ -226,6 +226,12 @@ public class BookService {
                 }
             }
 
+            if(book.getDiscount_percent() == 0)
+            	book.setIs_discount(false);
+            if(book.getIs_discount() == null)
+            	book.setIs_discount(false);
+            if(book.getDiscount_percent() >= 1)
+            	book.setDiscount_percent(book.getDiscount_percent()/100);
             return bookRepository.save(book);
         } catch (Exception e) {
             throw new RuntimeException("Could not save book", e);
