@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.OrderService;
-import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.UserService;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.StaffService;
 
 @Controller
-@RequestMapping("/admin/customer")
-public class CustomerController {
+@RequestMapping("/admin/employee")
+public class StaffController {
 
     @Autowired
-    private UserService userService;
+    private StaffService StaffService;
 
     @GetMapping("")
-    public String showUsers(
+    public String showStaffs(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             Model model) {
         
         try {
-            Page<User> userPage = userService.searchUsers(keyword, PageRequest.of(page, size));
-            model.addAttribute("users", userPage);
+            Page<Staff> StaffPage = StaffService.searchStaffs(keyword, PageRequest.of(page, size));
+            model.addAttribute("staffs", StaffPage);
             model.addAttribute("keyword", keyword);
             
-            return "admin/Customer";
+            return "admin/Employee";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,38 +48,38 @@ public class CustomerController {
     }
     @GetMapping("/{id}")
     @ResponseBody
-    public User getUserById(@PathVariable String id) {
-        return userService.getUserById(id);
+    public Staff getStaffById(@PathVariable String id) {
+        return StaffService.getStaffById(id);
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable String id) {
-        userService.deleteUser(id);
-        return "redirect:/admin/customer";
+    public String deleteStaff(@PathVariable String id) {
+        StaffService.deleteStaff(id);
+        return "redirect:/admin/employee";
     }
 
     @PostMapping("/edit")
-    public String editUser(@ModelAttribute User User, RedirectAttributes redirectAttributes) {
+    public String editStaff(@ModelAttribute Staff Staff, RedirectAttributes redirectAttributes) {
         try {
-            userService.saveUser(User);
+            StaffService.saveStaff(Staff);
             redirectAttributes.addFlashAttribute("success", "edit");
-            return "redirect:/admin/customer";
+            return "redirect:/admin/employee";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "edit");
-            return "redirect:/admin/customer";
+            return "redirect:/admin/employee";
         }
     }
     @PostMapping("/ban/{id}")
-    public String banUser(@PathVariable String id, RedirectAttributes redirectAttributes) {
+    public String banStaff(@PathVariable String id, RedirectAttributes redirectAttributes) {
         try {
-        	User user = userService.getUserById(id);  
-        	user.setIsActive(!user.getIsActive());
-            userService.saveUser(user);
+        	Staff Staff = StaffService.getStaffById(id);  
+        	Staff.setIsActive(!Staff.getIsActive());
+            StaffService.saveStaff(Staff);
             redirectAttributes.addFlashAttribute("success", "edit");
-            return "redirect:/admin/customer";
+            return "redirect:/admin/employee";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "edit");
-            return "redirect:/admin/customer";
+            return "redirect:/admin/employee";
         }
     }
 }

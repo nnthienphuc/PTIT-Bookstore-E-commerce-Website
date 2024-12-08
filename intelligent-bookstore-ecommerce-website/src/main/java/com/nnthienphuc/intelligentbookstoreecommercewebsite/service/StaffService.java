@@ -4,6 +4,7 @@ import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Role;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -74,15 +75,30 @@ public class StaffService {
         return staffRepository.findByFullNameContainingIgnoreCase(fullName);
     }
     
-    public Page<Staff> searchStaffs(String keyword, Pageable pageable) {
-        try {
-        	return staffRepository.findByFullNameContainingIgnoreCaseOrStaffIdContainingIgnoreCase(keyword, keyword,pageable);
-        } catch (Exception e) {
-            throw new RuntimeException("Error searching staff", e);
-        }
+    public Page<Staff> searchStaffs(String keyword,Pageable pageable) {
+    	Page<Staff> StaffPage;
+    	if (keyword != null && !keyword.trim().isEmpty()) {
+       	 try {
+       	        // Gọi phương thức getStaffById(), nếu không tìm thấy sẽ ném lỗi
+       	        Staff Staff = getStaffById(keyword);  // Có thể sẽ ném RuntimeException nếu không tìm thấy StaffId
+       	        
+       	        // Nếu tìm thấy StaffId hợp lệ, thực hiện tìm kiếm theo StaffId
+       	        StaffPage = staffRepository.findByStaffId(keyword, pageable);
+       	    } catch (RuntimeException e) {
+       	        // Nếu không tìm thấy StaffId, tìm kiếm theo fullName (tên khách hàng)
+       	    	StaffPage = staffRepository.findByFullNameContainingIgnoreCase(keyword.trim(),pageable);
+       	    }
+       	
+       } else {
+           // Lấy tất cả có phân trang
+       	StaffPage = getAllStaffsPagging(pageable);
+       }
+    	return StaffPage;
     }
  
-
+    public Page<Staff> getAllStaffsPagging(Pageable pageable) {
+        return staffRepository.findAll(pageable);
+    }
     public Staff getStaffById(String id) {
         return staffRepository.findByStaffId(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên với id: " + id));

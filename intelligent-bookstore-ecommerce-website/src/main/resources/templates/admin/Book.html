@@ -101,7 +101,8 @@
                                     <span th:text="${book.title}"></span>
                                     <span th:if="${book.is_discount}" 
                                           class="badge bg-danger">
-                                        -[[${book.discount_percent}]]%
+                                        -[[${#numbers.formatDecimal(book.discount_percent*100, 0, 'COMMA', 0, 'POINT')}]]%
+                                        
                                     </span>
                                 </td>
                                 <td th:text="${book.authorId.authorName}"></td>
@@ -112,7 +113,7 @@
                                         [[${#numbers.formatDecimal(book.price, 0, 'COMMA', 0, 'POINT')}]]đ
                                     </span>
                                     <br th:if="${book.is_discount}">
-                                    <span th:text="${#numbers.formatDecimal(book.price * (1 - book.discount_percent/100), 0, 'COMMA', 0, 'POINT')}">
+                                    <span th:text="${#numbers.formatDecimal(book.price * (1 - book.discount_percent), 0, 'COMMA', 0, 'POINT')}">
                                     </span>đ
                                 </td>
                                 <td>

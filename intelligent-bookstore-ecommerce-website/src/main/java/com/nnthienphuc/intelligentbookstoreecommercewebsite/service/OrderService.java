@@ -2,6 +2,7 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -11,7 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.BookRepository;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.OrderDetailRepository;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.RevenueDetailsDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.OrderRepository;
 
@@ -26,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDTO;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDetailDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Book;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
@@ -40,6 +43,10 @@ public class OrderService {
     
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+    @Autowired
+    private BookRepository bookRepository;
     
     // Tìm theo tên người đặt
     public Page<Order> findByBuyerName(String buyerName, Pageable pageable) {
@@ -129,9 +136,42 @@ public class OrderService {
             throw new RuntimeException("Could not delete book", e);
         }
     }
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng với id: " + id));
+    public OrderDetailDTO getOrderById(Long id) {
+    	Order order = orderRepository.findById(id)
+    	        .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng với id: " + id));
+
+    	if (order != null) {
+    	    List<OrderDetail> orderDetail = orderDetailRepository.getAllByOrder(id);
+    	    
+    	    // Khởi tạo các danh sách
+    	    List<String> bookNames = new ArrayList<>();
+    	    List<String> bookImgs = new ArrayList<>();
+    	    List<Short> quantity = new ArrayList<>();
+    	    List<BigDecimal> price = new ArrayList<>();
+    	    
+    	    if (orderDetail != null) {
+    	        for (int i = 0; i < orderDetail.size(); i++) { // Sử dụng size() để lấy kích thước
+    	        	bookImgs.add(orderDetail.get(i).getIsbn().getUrl1());
+    	        	bookNames.add(orderDetail.get(i).getIsbn().getTitle()); // Sử dụng get() để truy cập phần tử
+    	            quantity.add(orderDetail.get(i).getQuantity()); // Giả sử có phương thức getQuantity()
+    	            price.add(orderDetail.get(i).getPrice()); // Giả sử có phương thức getPrice()
+    	        }
+    	    }
+    	
+        	 OrderDetailDTO orderDetailDTO = new OrderDetailDTO(
+                     order.getOrderId(),
+                     order.getUser().getFullName(), // Giả sử có phương thức getUser() trong Order
+                     order.getPromotion().getPromotionName(), // Giả sử có phương thức getPromotion() trong Order
+                     order.getOrderDate(),
+                     order.getReceiver(),
+                     order.getAddress(),
+                     order.getPaymentMethod(),
+                     order.getOrderStatus(),
+                     order.getTotalPrice(),
+                     bookNames,bookImgs, quantity,price);
+        	 return orderDetailDTO;
+        }
+        return null;
     }
 
 

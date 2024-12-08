@@ -21,7 +21,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findByFullNameContainingIgnoreCase(@Param("fullName") String fullName);
 
  // Tìm kiếm theo categoryName chứa keyword (không phân biệt hoa thường)
- 	 Page<User> findByFullNameContainingIgnoreCase(String keyword,  Pageable pageable);
+    Page<User> findByFullNameContainingIgnoreCase(String fullNameKeyword, Pageable pageable);
+    Page<User> findByUserId(String fullNameKeyword, Pageable pageable);
      // Optional: Nên dùng Optional để xử lý null safety
      Optional<User> findByUserId(String userId);
 }

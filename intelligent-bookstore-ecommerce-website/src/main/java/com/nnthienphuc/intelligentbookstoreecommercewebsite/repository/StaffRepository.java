@@ -2,6 +2,7 @@ package com.nnthienphuc.intelligentbookstoreecommercewebsite.repository;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Category;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Staff;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,6 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
  	 Page<Staff> findByFullNameContainingIgnoreCaseOrStaffIdContainingIgnoreCase(String keyword,String staffId, Pageable pageable);
      // Optional: Nên dùng Optional để xử lý null safety
      Optional<Staff> findByStaffId(String staffId);
+     Page<Staff> findByFullNameContainingIgnoreCase(String fullNameKeyword, Pageable pageable);
+     Page<Staff> findByStaffId(String fullNameKeyword, Pageable pageable);
 }

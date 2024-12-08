@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quản lý đơn hàng</title>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -140,7 +141,7 @@
                                    <td>
                         
 							            <div class="btn-group">
-							                <button class="btn btn-sm btn-info" th:onclick="viewOrder(order.orderId,order.orderStatus)">
+							                <button class="btn btn-sm btn-info" th:onclick="'viewOrder(' + ${order.orderId} + ')'">
 							                    <i class="bi bi-eye"></i>
 							                </button>
 							          
@@ -170,7 +171,7 @@
                             <ul class="pagination mb-0">
                                 <!-- First Page -->
                                 <li class="page-item" th:classappend="${orders.first ? 'disabled' : ''}">
-                                    <a class="page-link" th:href="@{/admin/order(page=0, size=${orders.size}, keyword=${param.keyword})}"
+                                    <a class="page-link" th:href="@{/admin/order(page=0, size=${orders.size})}"
                                     aria-label="First">
                                         <span aria-hidden="true">&laquo;&laquo;</span>
                                     </a>
@@ -179,7 +180,7 @@
                                 <!-- Previous Page -->
                                 <li class="page-item" th:classappend="${orders.first ? 'disabled' : ''}">
                                     <a class="page-link" 
-                                    th:href="@{/admin/order(page=${orders.number - 1}, size=${orders.size}, keyword=${param.keyword})}"
+                                    th:href="@{/admin/order(page=${orders.number - 1}, size=${orders.size})}"
                                     aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
@@ -191,14 +192,14 @@
                                     th:classappend="${pageNumber == orders.number ? 'active' : ''}"
                                     th:if="${pageNumber >= orders.number - 2 and pageNumber <= orders.number + 2}">
                                     <a class="page-link" 
-                                    th:href="@{/admin/order(page=${pageNumber}, size=${orders.size}, keyword=${param.keyword})}"
+                                    th:href="@{/admin/order(page=${pageNumber}, size=${orders.size})}"
                                     th:text="${pageNumber + 1}">1</a>
                                 </li>
                                 
                                 <!-- Next Page -->
                                 <li class="page-item" th:classappend="${orders.last ? 'disabled' : ''}">
                                     <a class="page-link" 
-                                    th:href="@{/admin/order(page=${orders.number + 1}, size=${orders.size}, keyword=${param.keyword})}"
+                                    th:href="@{/admin/order(page=${orders.number + 1}, size=${orders.size})}"
                                     aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
@@ -207,7 +208,7 @@
                                 <!-- Last Page -->
                                 <li class="page-item" th:classappend="${orders.last ? 'disabled' : ''}">
                                     <a class="page-link" 
-                                    th:href="@{/admin/order(page=${orders.totalPages - 1}, size=${orders.size}, keyword=${param.keyword})}"
+                                    th:href="@{/admin/order(page=${orders.totalPages - 1}, size=${orders.size})}"
                                     aria-label="Last">
                                         <span aria-hidden="true">&raquo;&raquo;</span>
                                     </a>
@@ -219,57 +220,69 @@
         </div>
     </div>
 
-    <!-- View Order Modal -->
-    <div class="modal fade" id="viewOrderModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Chi tiết đơn hàng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Mã đơn:</strong> <span>1</span></p>
-                            <p><strong>Ngày đặt:</strong> <span>01/01/2024 10:00</span></p>
-                            <p><strong>Người mua:</strong> <span>Nguyễn Văn A</span></p>
-                            <p><strong>Người nhận:</strong> <span>Nguyễn Văn A</span></p>
-                            <p><strong>Địa chỉ:</strong> <span>123 ABC Street</span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Phương thức:</strong> <span>COD</span></p>
-                            <p><strong>Trạng thái:</strong> <span>Chờ xác nhận</span></p>
-                            <p><strong>Mã giảm giá:</strong> <span>Không có</span></p>
-                            <p><strong>Tổng tiền:</strong> <span>100.000 ₫</span></p>
-                        </div>
-                        
-                    </div>
-                    
-                    <h6>Chi tiết sản phẩm</h6>
-                    <div class="table-responsive">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Sản phẩm</th>
-                                    <th>Giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Sách A</td>
-                                    <td>50.000 ₫</td>
-                                    <td>2</td>
-                                    <td>100.000 ₫</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+   <!-- Modal -->
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderModalLabel">Thông Tin Đơn Hàng #1</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <table class="table table-borderless order-details-table">
+            <tr>
+              <th>Mã Đơn Hàng:</th>
+              <td id="orderId"></td>
+            </tr>
+            <tr>
+              <th>Họ Tên Người Mua:</th>
+              <td id="userName"></td>
+            </tr>
+            <tr>
+              <th>Khuyến Mãi:</th>
+              <td id="promotionName"></td>
+            </tr>
+            <tr>
+              <th>Ngày Đặt Hàng:</th>
+              <td id="orderDate"></td>
+            </tr>
+            <tr>
+              <th>Người Nhận:</th>
+              <td id="receiver"></td>
+            </tr>
+            <tr>
+              <th>Địa Chỉ:</th>
+              <td id="address"></td>
+            </tr>
+            <tr>
+              <th>Phương Thức Thanh Toán:</th>
+              <td id="paymentMethod"></td>
+            </tr>
+            <tr>
+              <th>Tình Trạng Đơn Hàng:</th>
+              <td id="orderStatus">
+              <span  class="badge bg-warning" th:if="${orderStatus == 'PENDING'}">Chờ xác nhận</span>
+									    <span class="badge bg-info" th:if="${orderStatus == 'CONFIRMED'}">Đã xác nhận</span>
+									    <span class="badge bg-primary" th:if="${orderStatus == 'IN_PROGRESS'}">Đang giao</span>
+									    <span class="badge bg-success" th:if="${orderStatus == 'DELIVERED'}">Đã giao</span>
+									    <span class="badge bg-danger" th:if="${orderStatus == 'CANCELED'}">Đã hủy</span>
+              </td>
+            </tr>
+          </table>
+
+          <h5 class="mt-4">Sản Phẩm Đặt Mua</h5>
+          <div id="productList"></div>
+
+          <div class="total-price">
+            <p>Tổng Tiền: <strong id="totalPrice"></strong></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
     </div>
+  </div>
 
 		<div class="modal fade" id="updateStatusModal" tabindex="-1">
 		    <div class="modal-dialog">
@@ -297,6 +310,173 @@
 		        </div>
 		    </div>	
 		</div>
-   
+<style>
+    body {
+      background-color: #f4f7fc;
+    }
+
+    .modal-content {
+      border-radius: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      background-color: #4e73df;
+      color: white;
+      border-bottom: 2px solid #ddd;
+      padding: 15px;
+    }
+
+    .modal-header .btn-close {
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .modal-body {
+      font-size: 1.1rem;
+      padding: 20px;
+    }
+
+    .book-img {
+      width: 120px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .order-details-table th, .order-details-table td {
+      text-align: left;
+      padding: 12px 15px;
+      vertical-align: middle;
+    }
+
+    .order-details-table th {
+      background-color: #f1f1f1;
+      font-weight: bold;
+    }
+
+    .order-summary {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .order-summary img {
+      margin-right: 15px;
+    }
+
+    .order-summary h6 {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .total-price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #4e73df;
+      border-top: 2px solid #f1f1f1;
+      padding-top: 15px;
+      margin-top: 20px;
+    }
+
+    .btn-secondary {
+      background-color: #f56c6c;
+      border-color: #f56c6c;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f44336;
+      border-color: #f44336;
+    }
+    .book-img {
+    width: 120px;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .book-item {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    transition: background-color 0.3s ease;
+  }
+
+  .book-item:hover {
+    background-color: #f7f7f7;
+  }
+
+  .book-item img {
+    width: 120px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .book-item img:hover {
+    transform: scale(1.05);
+  }
+
+  .book-item .book-details {
+    flex-grow: 1;
+  }
+
+  .book-item .book-details h6 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+
+  .book-item .book-details p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+  }
+
+  .book-item .book-details p strong {
+    color: #4e73df;
+  }
+
+  .total-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #4e73df;
+    border-top: 2px solid #f1f1f1;
+    padding-top: 15px;
+    margin-top: 20px;
+  }
+
+  .btn-secondary {
+    background-color: #f56c6c;
+    border-color: #f56c6c;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #f44336;
+    border-color: #f44336;
+  }
+
+  /* Add responsiveness */
+  @media (max-width: 768px) {
+    .book-item {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .book-item img {
+      margin-right: 0;
+      margin-bottom: 15px;
+      width: 100px;
+    }
+  }
+  </style>   
 </body>
+
 </html>

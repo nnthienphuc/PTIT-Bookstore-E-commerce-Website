@@ -6,6 +6,7 @@ import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -69,12 +70,25 @@ public class UserService {
         return userRepository.findByFullNameContainingIgnoreCase(fullName);
     }
     
-    public Page<User> searchUsers(String keyword, Pageable pageable) {
-        try {
-        	return userRepository.findByFullNameContainingIgnoreCase(keyword,pageable);
-        } catch (Exception e) {
-            throw new RuntimeException("Error searching staff", e);
-        }
+    public Page<User> searchUsers(String keyword,Pageable pageable) {
+    	Page<User> userPage;
+    	if (keyword != null && !keyword.trim().isEmpty()) {
+       	 try {
+       	        // Gọi phương thức getUserById(), nếu không tìm thấy sẽ ném lỗi
+       	        User user = getUserById(keyword);  // Có thể sẽ ném RuntimeException nếu không tìm thấy userId
+       	        
+       	        // Nếu tìm thấy userId hợp lệ, thực hiện tìm kiếm theo userId
+       	        userPage = userRepository.findByUserId(keyword, pageable);
+       	    } catch (RuntimeException e) {
+       	        // Nếu không tìm thấy userId, tìm kiếm theo fullName (tên khách hàng)
+       	    	userPage = userRepository.findByFullNameContainingIgnoreCase(keyword.trim(),pageable);
+       	    }
+       	
+       } else {
+           // Lấy tất cả có phân trang
+       	userPage = getAllUsersPagging(pageable);
+       }
+    	return userPage;
     }
     public Page<User> getAllUsersPagging(Pageable pageable) {
         return userRepository.findAll(pageable);
@@ -85,6 +99,7 @@ public class UserService {
         return userRepository.findByUserId(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên với id: " + id));
     }
+
 
 
     public User saveUser(User user) {
