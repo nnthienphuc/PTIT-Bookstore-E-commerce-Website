@@ -397,49 +397,99 @@
         </div>
     </div>
 </header>
-<main class="main-content">
-    <a href="#" class="back-button">
-        ← Lịch sử mua hàng
-    </a>
+<!--<main class="main-content">-->
+<!--    <a href="#" class="back-button">-->
+<!--        ← Lịch sử mua hàng-->
+<!--    </a>-->
 
-    <div class="order-card">
+<!--    <div th:each="cc : ${c}" class="order-card">-->
+<!--        <div class="order-header">-->
+<!--            <div class="order-date" >16-11-2024</div>-->
+<!--            <div class="order-status">Đơn hàng đang chờ xác nhận</div>-->
+<!--        </div>-->
+
+<!--        <div th:each="d : ${cc}" class="order-item">-->
+<!--            <img src="/bookImage/NNA2-1.jpg" alt="Mùa Hè Không Tên" class="item-image">-->
+<!--            <div class="item-details">-->
+<!--               -->
+<!--                <h3 class="item-title" th:text="${d.getQuantity()}" ></h3>-->
+<!--                <div class="item-quantity">x1</div>-->
+<!--            </div>-->
+<!--            <div class="price-column">-->
+<!--                <div class="original-price">135.000 đ</div>-->
+<!--                <div class="current-price">101.250 đ</div>-->
+<!--                <div class="total-price">131.250 đ</div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="order-footer">-->
+<!--            <div class="delivery-info">-->
+<!--                <span>📍</span>-->
+<!--                <div class="delivery-address">-->
+<!--                    <div>Trần Song Nguyên | 0908172140</div>-->
+<!--                    <div>145 ấp Tây</div>-->
+<!--                    <div>xã Đông Thạnh, huyện Cần Giuộc, tỉnh Long An</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="order-total">-->
+<!--                Thành tiền: <span class="total-amount">131.250 đ</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+
+<!--</main>-->
+<main class="main-content">
+    <a href="#" class="back-button">← Lịch sử mua hàng</a>
+
+    <!-- Duyệt qua các đơn hàng -->
+    <div th:each="cc : ${c}" class="order-card">
         <div class="order-header">
-            <div class="order-date">16-11-2024</div>
-            <div class="order-status">Đơn hàng đang chờ xác nhận</div>
+            <!-- Hiển thị ngày đơn hàng -->
+            <div class="order-date" th:text="${cc[0].order.getOrderDate()}">16-11-2024</div>
+            <!-- Hiển thị trạng thái đơn hàng -->
+            <div class="order-status" th:text="${cc[0].order.getOrderStatus()}">Đơn hàng đang chờ xác nhận</div>
         </div>
 
-        <div class="order-item">
-            <img src="/bookImage/NNA2-1.jpg" alt="Mùa Hè Không Tên" class="item-image">
+        <!-- Duyệt qua các chi tiết đơn hàng (d) -->
+        <div th:each="d : ${cc}" class="order-item">
+            <img th:src="@{/bookImage/{imageName}(imageName=${d.getIsbn().getUrl1()})}" alt="Mùa Hè Không Tên" class="item-image">
             <div class="item-details">
-                <h3 class="item-title">Nguyễn Nhật Ánh Trong Mắt Đồng Nghiệp</h3>
-                <div class="item-quantity">x1</div>
+                <!-- Hiển thị tên sách -->
+                <h3 class="item-title" th:text="${d.getIsbn().getTitle()}"></h3>
+                <!-- Hiển thị số lượng -->
+                <div class="item-quantity" th:text="'x ' + ${d.getQuantity()}"></div>
             </div>
             <div class="price-column">
-                <div class="original-price">135.000 đ</div>
-                <div class="current-price">101.250 đ</div>
-                <div class="total-price">131.250 đ</div>
+                <!-- Hiển thị giá gốc -->
+                <div class="original-price" th:text="${d.getPrice()}"></div>
+                <!-- Hiển thị giá hiện tại -->
+                <div class="current-price" th:text="${d.getPrice()}"></div>
+                <!-- Hiển thị tổng giá -->
+                <div class="total-price" th:text="${d.getPrice()*d.getQuantity()}"></div>
             </div>
         </div>
-
-
 
         <div class="order-footer">
             <div class="delivery-info">
                 <span>📍</span>
                 <div class="delivery-address">
-                    <div>Trần Song Nguyên | 0908172140</div>
-                    <div>145 ấp Tây</div>
-                    <div>xã Đông Thạnh, huyện Cần Giuộc, tỉnh Long An</div>
+                    <!-- Hiển thị thông tin người nhận -->
+                    <div th:text="${cc[0].order.getUser().getFullName()}"></div>
+                    <div th:text="${cc[0].order.getUser().getPhone()}"></div>
+                    <div th:text="${cc[0].order.getUser().getAddress()}"></div>
                 </div>
             </div>
             <div class="order-total">
-                Thành tiền: <span class="total-amount">131.250 đ</span>
+                <!-- Hiển thị tổng tiền -->
+                Thành tiền: <span class="total-amount" th:text="${cc[0].order.getTotalPrice()}"></span>
             </div>
         </div>
     </div>
-
-
 </main>
+
 </body>
 <footer class="footer">
     <div class="footer-container">

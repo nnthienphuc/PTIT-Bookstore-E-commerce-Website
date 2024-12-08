@@ -270,4 +270,8 @@ public class OrderService {
         // Xóa giỏ hàng của user
         cartRepository.deleteByUserId(userId);
     }
+
+    public List<Order> findByUserId(String userId) {
+        return orderRepository.findByUserId(userId);
+    }
 }

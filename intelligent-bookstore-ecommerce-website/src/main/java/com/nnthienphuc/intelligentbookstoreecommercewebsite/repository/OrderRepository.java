@@ -35,4 +35,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // Đếm số lượng theo trạng thái
     Long countByOrderStatus(String status);
 
+
+    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId")
+    List<Order> findByUserId(String userId);
 }
