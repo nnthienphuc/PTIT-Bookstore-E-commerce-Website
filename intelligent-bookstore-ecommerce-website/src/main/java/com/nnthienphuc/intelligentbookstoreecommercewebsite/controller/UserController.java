@@ -1,6 +1,8 @@
 package com.nnthienphuc.intelligentbookstoreecommercewebsite.controller;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Cart;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.OrderDetail;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
@@ -25,6 +27,9 @@ import java.util.Optional;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     @Autowired
     private OrderService orderService;
@@ -301,6 +306,8 @@ public class UserController {
         if (user != null) {
             model.addAttribute("user", user);// Người dùng đã đăng nhập
         }
+        List<List<OrderDetail>> c = orderDetailService.laylistcaclistdetail(user);
+        model.addAttribute("c",c);
 
         return "user/historyOrder";
     }
