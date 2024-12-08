@@ -82,29 +82,31 @@ public class UserController {
             @RequestParam("pwd") @NotEmpty(message = "Password is required!") String pwd,
             @RequestParam(value = "rm", defaultValue = "true") boolean rememberMe) {
 
+        // Kiểm tra username và password không được null
         if (userId.isEmpty() || pwd.isEmpty()) {
-            model.addAttribute("message", "Password, Username is not null!");
-            return "redirect:/user/account/login";
+            model.addAttribute("message", "Password and Username must not be null!");
+            return "user/account/login"; // Trả về view login trực tiếp
         }
 
         Optional<User> userOptional = userService.findById(userId);
         if (userOptional.isEmpty()) {
             model.addAttribute("message", "Invalid username!");
-            return "redirect:/user/account/login";
+            return "user/account/login";
         }
 
         User user = userOptional.get();
 
         if (!passwordEncoder.matches(pwd, user.getPwd())) {
             model.addAttribute("message", "Invalid password!");
-            return "redirect:/user/account/login";
+            return "user/account/login";
         }
 
         if (!user.getIsActive()) {
             model.addAttribute("message", "Your account is Inactivated!");
-            return "redirect:/user/account/login";
+            return "user/account/login";
         }
 
+        // Đăng nhập thành công
         model.addAttribute("message", "Login successfully!");
         session.setAttribute("user", user);
 
@@ -116,8 +118,7 @@ public class UserController {
             cookie.delete("pass");
         }
 
-//        return (backUrl != null) ? "redirect:" + backUrl : "user/home";
-        return "redirect:/user/home";
+        return "redirect:/user/home"; // Điều hướng đến trang home
     }
 
     @GetMapping("/account/register")
