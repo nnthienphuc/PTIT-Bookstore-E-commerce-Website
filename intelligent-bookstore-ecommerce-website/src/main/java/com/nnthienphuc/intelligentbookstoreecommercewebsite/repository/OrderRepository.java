@@ -31,4 +31,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     	List<Object[]> countOrdersByStatus();
     // Đếm số lượng theo trạng thái
     Long countByOrderStatus(String status);
+    
 }

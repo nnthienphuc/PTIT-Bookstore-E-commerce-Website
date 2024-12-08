@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDTO;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.DTO.OrderDetailDTO;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Author;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.OrderStatus;
@@ -74,11 +75,11 @@ public class OrderController {
 //                return "redirect:/admin/author";
 //            }
 //        }
-//        @GetMapping("/{id}")
-//        @ResponseBody
-//        public Order getOrderById(@PathVariable Long id) {
-//            return orderService.getOrderById(id);
-//        }
+        @GetMapping("/{id}")
+        @ResponseBody
+        public OrderDetailDTO getOrderById(@PathVariable Long id) {
+            return orderService.getOrderById(id);
+        }
         @PostMapping("/edit")
         public String changeStatus(@RequestParam Long orderId, @RequestParam String orderStatus) {
             try {
