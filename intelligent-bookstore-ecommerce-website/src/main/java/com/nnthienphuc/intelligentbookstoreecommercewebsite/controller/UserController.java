@@ -5,6 +5,7 @@ import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.Order;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.OrderDetail;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.entity.User;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.model.MailInfo;
+import com.nnthienphuc.intelligentbookstoreecommercewebsite.repository.UserRepository;
 import com.nnthienphuc.intelligentbookstoreecommercewebsite.service.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,8 @@ public class UserController {
 
     @Autowired
     private MailService mailService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/account/login")
     public String loginForm(Model model) {
@@ -292,15 +295,55 @@ public class UserController {
         return "user/booklist";
     }
     @GetMapping("/infor")
-    public String infor(HttpSession session, Model model) {
+    public String infor(Model model) {
         User user = (User) session.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user);// Người dùng đã đăng nhập
-
-        }
+        model.addAttribute("user", user);
 
         return "user/infor";
     }
+
+    @PostMapping("infor")
+    public String updateUser(@ModelAttribute User updatedUser, RedirectAttributes redirectAttributes) {
+        User existingUser = (User) session.getAttribute("user");
+
+        existingUser.setFullName(updatedUser.getFullName());
+        existingUser.setPhone(updatedUser.getPhone());
+        existingUser.setGender(updatedUser.getGender());
+        existingUser.setAddress(updatedUser.getAddress());
+
+        userRepository.save(existingUser);
+
+        session.setAttribute("user", existingUser);
+
+        redirectAttributes.addFlashAttribute("message", "Thông tin cá nhân đã được cập nhật thành công!");
+
+        return "redirect:/user/infor";
+    }
+
+    @PostMapping("infor/change-password")
+    public String changePassword(@RequestParam("currentPassword") String currentPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        if (!passwordEncoder.matches(currentPassword, user.getPwd())) {
+            redirectAttributes.addFlashAttribute("message", "Mật khẩu cũ không đúng!");
+            return "redirect:/user/infor";
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("message", "Mật khẩu mới và xác nhận không khớp!");
+            return "redirect:/user/infor";
+        }
+        user.setPwd(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        session.setAttribute("user", user);
+
+        redirectAttributes.addFlashAttribute("success", "Password changed successfully!");
+        return "redirect:/user/account/login";
+    }
+
     @GetMapping("/historyOrder")
     public String history(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
@@ -353,8 +396,8 @@ public class UserController {
         return "user/booklist";
     }
 
-    @PostMapping("/cart/checkout")
 
+//    @PostMapping("/cart/checkout")
 //    public ResponseEntity<Map<String, String>> checkout(HttpSession session, Model model) {
 //        try {
 //            User user = (User) session.getAttribute("user");
@@ -368,6 +411,7 @@ public class UserController {
 //                    .body(Map.of("message", "Đã xảy ra lỗi: " + e.getMessage()));
 //        }
 //    }
+    @PostMapping("/cart/checkout")
     public String checkout(HttpSession session, Model model) {
         // Lấy thông tin user từ session
         User currentUser = (User) session.getAttribute("user");
@@ -388,5 +432,7 @@ public class UserController {
         // Quay lại trang giỏ hàng (hoặc trang khác nếu cần)
         return "redirect:/user/cart";
     }
+
+
 
 }
