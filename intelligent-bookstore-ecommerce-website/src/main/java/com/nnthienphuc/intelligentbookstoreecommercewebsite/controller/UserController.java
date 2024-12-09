@@ -196,6 +196,8 @@ public class UserController {
 
         }
         model.addAttribute("cates", categoryService.getAllCategories());
+        model.addAttribute("bookvanhoc", bookService.getBookByCategoryID(8));
+        model.addAttribute("booktt", bookService.getBookByCategoryID(1));
         model.addAttribute("books", bookService.getAllBooks());
         return "user/home";
     }
@@ -204,19 +206,19 @@ public class UserController {
     public String bookDetail(Model model, @PathVariable("id") String id, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Book book = bookService.getBookByIsbn(id);
+        model.addAttribute("book", bookService.getBookByIsbn(id));
         if (user != null) {
             model.addAttribute("user", user);// Người dùng đã đăng nhập
-
+            History history = new History();
+            history.setUser(user);
+            history.setIsbn(book);
+            history.setRequestTime(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+            history.setSessionId(session.getId());
+            historyService.save(history);
         }
-        History history = new History();
-        history.setUser(user);
-        history.setIsbn(book);
-        history.setRequestTime(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        history.setSessionId(session.getId());
-        historyService.save(history);
-        model.addAttribute("book", bookService.getBookByIsbn(id));
         return "user/bookdetail";
     }
+
     @PostMapping("/bookdetail/{id}")
     public String bookDetail(
             @PathVariable("id") String bookId,  // Lấy {id} từ URL
@@ -226,15 +228,19 @@ public class UserController {
 
         // Lấy user từ session
         User user = (User) session.getAttribute("user");
-        String userId = user != null ? user.getUserId() : null;
-        if(cartService.isExist(userId,bookId)){
+        if (user != null) {
+            String userId = user != null ? user.getUserId() : null;
+            if(cartService.isExist(userId,bookId)){
 
-            cartService.updateCart(quantity,userId,bookId);
+                cartService.updateCart(quantity,userId,bookId);
+            }
+            else{
+                cartService.createCartRecord(userId,bookId,quantity);}
+            model.addAttribute("book", bookService.getBookByIsbn(bookId));
+            return "redirect:/user/bookdetail/" + bookId;
         }
-        else{
-        cartService.createCartRecord(userId,bookId,quantity);}
-        model.addAttribute("book", bookService.getBookByIsbn(bookId));
-        return "redirect:/user/bookdetail/" + bookId;
+
+        return "redirect:/user/account/login";
     }
 
 
