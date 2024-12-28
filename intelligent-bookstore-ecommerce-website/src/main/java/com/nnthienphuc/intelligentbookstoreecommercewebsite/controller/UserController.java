@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
-@RequestMapping("/user")
+@RequestMapping("/user")    
 @Controller
 public class UserController {
 
